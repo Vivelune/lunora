@@ -1,9 +1,18 @@
 import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 
-export const GRADE_VALUES = ["9", "10", "11", "12", "other"] as const;
+export const GRADE_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "other"] as const;
 
 export const GRADE_LABELS: Record<(typeof GRADE_VALUES)[number], string> = {
+   
+  "1": "Grade 1",
+  "2": "Grade 2",
+  "3": "Grade 3",
+  "4": "Grade 4",
+  "5": "Grade 5",
+  "6": "Grade 6",
+  "7": "Grade 7",
+  "8": "Grade 8",
   "9": "Grade 9",
   "10": "Grade 10",
   "11": "Grade 11",
