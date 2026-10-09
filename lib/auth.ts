@@ -21,3 +21,13 @@ export async function getCurrentProfile() {
   });
   return { userId, profile };
 }
+
+export async function requireCompletedProfile() {
+  const { userId, profile } = await getCurrentProfile();
+
+  if (!profile || !profile.onboardingCompletedAt) {
+    redirect("/onboarding");
+  }
+
+  return { userId, profile };
+}
