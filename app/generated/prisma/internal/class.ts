@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.10.0",
   "engineVersion": "0edf323efd1d98336f3f0a68684b56f689b900d3",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel StudentProfile {\n  id                    String    @id @default(cuid())\n  clerkUserId           String    @unique\n  firstName             String?\n  lastName              String?\n  phone                 String?\n  gradeLevel            String?\n  onboardingCompletedAt DateTime?\n  createdAt             DateTime  @default(now())\n  updatedAt             DateTime  @updatedAt\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -32,10 +32,10 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"StudentProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"clerkUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gradeLevel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"onboardingCompletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null,\"schema\":null}},\"enums\":{},\"types\":{}}")
 config.parameterizationSchema = {
-  strings: JSON.parse("[]"),
-  graph: "AAAA"
+  strings: JSON.parse("[\"where\",\"StudentProfile.findUnique\",\"StudentProfile.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"StudentProfile.findFirst\",\"StudentProfile.findFirstOrThrow\",\"StudentProfile.findMany\",\"data\",\"StudentProfile.createOne\",\"StudentProfile.createMany\",\"StudentProfile.createManyAndReturn\",\"StudentProfile.updateOne\",\"StudentProfile.updateMany\",\"StudentProfile.updateManyAndReturn\",\"create\",\"update\",\"StudentProfile.upsertOne\",\"StudentProfile.deleteOne\",\"StudentProfile.deleteMany\",\"having\",\"_count\",\"_min\",\"_max\",\"StudentProfile.groupBy\",\"StudentProfile.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"clerkUserId\",\"firstName\",\"lastName\",\"phone\",\"gradeLevel\",\"onboardingCompletedAt\",\"createdAt\",\"updatedAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\"]"),
+  graph: "NQkQDBoAACkAMBsAAAQAEBwAACkAMB0BAAAAAR4BAAAAAR8BACsAISABACsAISEBACsAISIBACsAISNAACwAISRAAC0AISVAAC0AIQEAAAABACABAAAAAQAgDBoAACkAMBsAAAQAEBwAACkAMB0BACoAIR4BACoAIR8BACsAISABACsAISEBACsAISIBACsAISNAACwAISRAAC0AISVAAC0AIQUfAAAuACAgAAAuACAhAAAuACAiAAAuACAjAAAuACADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAJHQEAAAABHgEAAAABHwEAAAABIAEAAAABIQEAAAABIgEAAAABI0AAAAABJEAAAAABJUAAAAABAQgAAAkAIAkdAQAAAAEeAQAAAAEfAQAAAAEgAQAAAAEhAQAAAAEiAQAAAAEjQAAAAAEkQAAAAAElQAAAAAEBCAAACwAwAQgAAAsAMAkdAQAyACEeAQAyACEfAQAzACEgAQAzACEhAQAzACEiAQAzACEjQAA0ACEkQAA1ACElQAA1ACECAAAAAQAgCAAADgAgCR0BADIAIR4BADIAIR8BADMAISABADMAISEBADMAISIBADMAISNAADQAISRAADUAISVAADUAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgCBUAAC8AIBYAADEAIBcAADAAIB8AAC4AICAAAC4AICEAAC4AICIAAC4AICMAAC4AIAwaAAAaADAbAAAXABAcAAAaADAdAQAbACEeAQAbACEfAQAcACEgAQAcACEhAQAcACEiAQAcACEjQAAdACEkQAAeACElQAAeACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAwaAAAaADAbAAAXABAcAAAaADAdAQAbACEeAQAbACEfAQAcACEgAQAcACEhAQAcACEiAQAcACEjQAAdACEkQAAeACElQAAeACEOFQAAIAAgFgAAKAAgFwAAKAAgJgEAAAABJwEAAAAEKAEAAAAEKQEAAAABKgEAAAABKwEAAAABLAEAAAABLQEAJwAhLgEAAAABLwEAAAABMAEAAAABDhUAACMAIBYAACYAIBcAACYAICYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BACUAIS4BAAAAAS8BAAAAATABAAAAAQsVAAAjACAWAAAkACAXAAAkACAmQAAAAAEnQAAAAAUoQAAAAAUpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEtQAAiACELFQAAIAAgFgAAIQAgFwAAIQAgJkAAAAABJ0AAAAAEKEAAAAAEKUAAAAABKkAAAAABK0AAAAABLEAAAAABLUAAHwAhCxUAACAAIBYAACEAIBcAACEAICZAAAAAASdAAAAABChAAAAABClAAAAAASpAAAAAAStAAAAAASxAAAAAAS1AAB8AIQgmAgAAAAEnAgAAAAQoAgAAAAQpAgAAAAEqAgAAAAErAgAAAAEsAgAAAAEtAgAgACEIJkAAAAABJ0AAAAAEKEAAAAAEKUAAAAABKkAAAAABK0AAAAABLEAAAAABLUAAIQAhCxUAACMAIBYAACQAIBcAACQAICZAAAAAASdAAAAABShAAAAABSlAAAAAASpAAAAAAStAAAAAASxAAAAAAS1AACIAIQgmAgAAAAEnAgAAAAUoAgAAAAUpAgAAAAEqAgAAAAErAgAAAAEsAgAAAAEtAgAjACEIJkAAAAABJ0AAAAAFKEAAAAAFKUAAAAABKkAAAAABK0AAAAABLEAAAAABLUAAJAAhDhUAACMAIBYAACYAIBcAACYAICYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BACUAIS4BAAAAAS8BAAAAATABAAAAAQsmAQAAAAEnAQAAAAUoAQAAAAUpAQAAAAEqAQAAAAErAQAAAAEsAQAAAAEtAQAmACEuAQAAAAEvAQAAAAEwAQAAAAEOFQAAIAAgFgAAKAAgFwAAKAAgJgEAAAABJwEAAAAEKAEAAAAEKQEAAAABKgEAAAABKwEAAAABLAEAAAABLQEAJwAhLgEAAAABLwEAAAABMAEAAAABCyYBAAAAAScBAAAABCgBAAAABCkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BACgAIS4BAAAAAS8BAAAAATABAAAAAQwaAAApADAbAAAEABAcAAApADAdAQAqACEeAQAqACEfAQArACEgAQArACEhAQArACEiAQArACEjQAAsACEkQAAtACElQAAtACELJgEAAAABJwEAAAAEKAEAAAAEKQEAAAABKgEAAAABKwEAAAABLAEAAAABLQEAKAAhLgEAAAABLwEAAAABMAEAAAABCyYBAAAAAScBAAAABSgBAAAABSkBAAAAASoBAAAAASsBAAAAASwBAAAAAS0BACYAIS4BAAAAAS8BAAAAATABAAAAAQgmQAAAAAEnQAAAAAUoQAAAAAUpQAAAAAEqQAAAAAErQAAAAAEsQAAAAAEtQAAkACEIJkAAAAABJ0AAAAAEKEAAAAAEKUAAAAABKkAAAAABK0AAAAABLEAAAAABLUAAIQAhAAAAAAExAQAAAAEBMQEAAAABATFAAAAAAQExQAAAAAEAAAAAAxUABhYABxcACAAAAAMVAAYWAAcXAAgBAgECAwEFBgEGBwEHCAEJCgEKDAILDQMMDwENEQIOEgQREwESFAETFQIYGAUZGQk"
 }
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
@@ -70,8 +70,8 @@ export interface PrismaClientConstructor {
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more StudentProfiles
+   * const studentProfiles = await prisma.studentProfile.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -94,8 +94,8 @@ export interface PrismaClientConstructor {
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more StudentProfiles
+ * const studentProfiles = await prisma.studentProfile.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -188,7 +188,15 @@ export interface PrismaClient<
     extArgs: ExtArgs
   }>>
 
-    
+      /**
+   * `prisma.studentProfile`: Exposes CRUD operations for the **StudentProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudentProfiles
+    * const studentProfiles = await prisma.studentProfile.findMany()
+    * ```
+    */
+  get studentProfile(): Prisma.StudentProfileDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
