@@ -28,3 +28,36 @@ model StudentProfile {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
+
+model Subject {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  name        String
+  description String?
+  parentId    String?
+  parent      Subject?   @relation("SubjectTree", fields: [parentId], references: [id], onDelete: Restrict)
+  children    Subject[]  @relation("SubjectTree")
+  sortOrder   Int        @default(0)
+  isActive    Boolean    @default(true)
+  categories  Category[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([parentId])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  slug        String
+  name        String
+  description String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([subjectId, slug])
+  @@index([subjectId])
+}
