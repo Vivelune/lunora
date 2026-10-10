@@ -1,6 +1,6 @@
 import "server-only";
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import prisma from "./prisma";
 
 
@@ -27,6 +27,16 @@ export async function requireCompletedProfile() {
 
   if (!profile || !profile.onboardingCompletedAt) {
     redirect("/onboarding");
+  }
+
+  return { userId, profile };
+}
+
+export async function requireAdmin() {
+  const { userId, profile } = await getCurrentProfile();
+
+  if (!profile || profile.role !== "ADMIN") {
+    notFound();
   }
 
   return { userId, profile };
