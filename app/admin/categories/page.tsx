@@ -2,7 +2,7 @@ import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import  prisma  from "@/lib/prisma";
 import { createCategory, updateCategory, setCategoryActive } from "./actions";
-
+export const instant = false;
 export default async function AdminCategoriesPage({
   searchParams,
 }: {
