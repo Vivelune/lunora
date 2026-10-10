@@ -11,11 +11,15 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
+enum Role {
+  STUDENT
+  ADMIN
+}
 
 model StudentProfile {
   id                    String    @id @default(cuid())
   clerkUserId           String    @unique
+  role                  Role      @default(STUDENT)
   firstName             String?
   lastName              String?
   phone                 String?

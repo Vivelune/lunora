@@ -27,6 +27,7 @@ export type AggregateStudentProfile = {
 export type StudentProfileMinAggregateOutputType = {
   id: string | null
   clerkUserId: string | null
+  role: $Enums.Role | null
   firstName: string | null
   lastName: string | null
   phone: string | null
@@ -39,6 +40,7 @@ export type StudentProfileMinAggregateOutputType = {
 export type StudentProfileMaxAggregateOutputType = {
   id: string | null
   clerkUserId: string | null
+  role: $Enums.Role | null
   firstName: string | null
   lastName: string | null
   phone: string | null
@@ -51,6 +53,7 @@ export type StudentProfileMaxAggregateOutputType = {
 export type StudentProfileCountAggregateOutputType = {
   id: number
   clerkUserId: number
+  role: number
   firstName: number
   lastName: number
   phone: number
@@ -65,6 +68,7 @@ export type StudentProfileCountAggregateOutputType = {
 export type StudentProfileMinAggregateInputType = {
   id?: true
   clerkUserId?: true
+  role?: true
   firstName?: true
   lastName?: true
   phone?: true
@@ -77,6 +81,7 @@ export type StudentProfileMinAggregateInputType = {
 export type StudentProfileMaxAggregateInputType = {
   id?: true
   clerkUserId?: true
+  role?: true
   firstName?: true
   lastName?: true
   phone?: true
@@ -89,6 +94,7 @@ export type StudentProfileMaxAggregateInputType = {
 export type StudentProfileCountAggregateInputType = {
   id?: true
   clerkUserId?: true
+  role?: true
   firstName?: true
   lastName?: true
   phone?: true
@@ -174,6 +180,7 @@ export type StudentProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type StudentProfileGroupByOutputType = {
   id: string
   clerkUserId: string
+  role: $Enums.Role
   firstName: string | null
   lastName: string | null
   phone: string | null
@@ -207,6 +214,7 @@ export type StudentProfileWhereInput = {
   NOT?: Prisma.StudentProfileWhereInput | Prisma.StudentProfileWhereInput[]
   id?: Prisma.StringFilter<"StudentProfile"> | string
   clerkUserId?: Prisma.StringFilter<"StudentProfile"> | string
+  role?: Prisma.EnumRoleFilter<"StudentProfile"> | $Enums.Role
   firstName?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
   lastName?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
   phone?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
@@ -219,6 +227,7 @@ export type StudentProfileWhereInput = {
 export type StudentProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clerkUserId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -234,6 +243,7 @@ export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.StudentProfileWhereInput | Prisma.StudentProfileWhereInput[]
   OR?: Prisma.StudentProfileWhereInput[]
   NOT?: Prisma.StudentProfileWhereInput | Prisma.StudentProfileWhereInput[]
+  role?: Prisma.EnumRoleFilter<"StudentProfile"> | $Enums.Role
   firstName?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
   lastName?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
   phone?: Prisma.StringNullableFilter<"StudentProfile"> | string | null
@@ -246,6 +256,7 @@ export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
 export type StudentProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clerkUserId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -264,6 +275,7 @@ export type StudentProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.StudentProfileScalarWhereWithAggregatesInput | Prisma.StudentProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"StudentProfile"> | string
   clerkUserId?: Prisma.StringWithAggregatesFilter<"StudentProfile"> | string
+  role?: Prisma.EnumRoleWithAggregatesFilter<"StudentProfile"> | $Enums.Role
   firstName?: Prisma.StringNullableWithAggregatesFilter<"StudentProfile"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"StudentProfile"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"StudentProfile"> | string | null
@@ -276,6 +288,7 @@ export type StudentProfileScalarWhereWithAggregatesInput = {
 export type StudentProfileCreateInput = {
   id?: string
   clerkUserId: string
+  role?: $Enums.Role
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
@@ -288,6 +301,7 @@ export type StudentProfileCreateInput = {
 export type StudentProfileUncheckedCreateInput = {
   id?: string
   clerkUserId: string
+  role?: $Enums.Role
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
@@ -300,6 +314,7 @@ export type StudentProfileUncheckedCreateInput = {
 export type StudentProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -312,6 +327,7 @@ export type StudentProfileUpdateInput = {
 export type StudentProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -324,6 +340,7 @@ export type StudentProfileUncheckedUpdateInput = {
 export type StudentProfileCreateManyInput = {
   id?: string
   clerkUserId: string
+  role?: $Enums.Role
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
@@ -336,6 +353,7 @@ export type StudentProfileCreateManyInput = {
 export type StudentProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -348,6 +366,7 @@ export type StudentProfileUpdateManyMutationInput = {
 export type StudentProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -360,6 +379,7 @@ export type StudentProfileUncheckedUpdateManyInput = {
 export type StudentProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkUserId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -372,6 +392,7 @@ export type StudentProfileCountOrderByAggregateInput = {
 export type StudentProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkUserId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -384,6 +405,7 @@ export type StudentProfileMaxOrderByAggregateInput = {
 export type StudentProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clerkUserId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -395,6 +417,10 @@ export type StudentProfileMinOrderByAggregateInput = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -414,6 +440,7 @@ export type DateTimeFieldUpdateOperationsInput = {
 export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkUserId?: boolean
+  role?: boolean
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
@@ -426,6 +453,7 @@ export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type StudentProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkUserId?: boolean
+  role?: boolean
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
@@ -438,6 +466,7 @@ export type StudentProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 export type StudentProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   clerkUserId?: boolean
+  role?: boolean
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
@@ -450,6 +479,7 @@ export type StudentProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type StudentProfileSelectScalar = {
   id?: boolean
   clerkUserId?: boolean
+  role?: boolean
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
@@ -459,7 +489,7 @@ export type StudentProfileSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StudentProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "firstName" | "lastName" | "phone" | "gradeLevel" | "onboardingCompletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["studentProfile"]>
+export type StudentProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "role" | "firstName" | "lastName" | "phone" | "gradeLevel" | "onboardingCompletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["studentProfile"]>
 
 export type $StudentProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StudentProfile"
@@ -467,6 +497,7 @@ export type $StudentProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     clerkUserId: string
+    role: $Enums.Role
     firstName: string | null
     lastName: string | null
     phone: string | null
@@ -899,6 +930,7 @@ export interface Prisma__StudentProfileClient<T, Null = never, ExtArgs extends r
 export interface StudentProfileFieldRefs {
   readonly id: Prisma.FieldRef<"StudentProfile", 'String'>
   readonly clerkUserId: Prisma.FieldRef<"StudentProfile", 'String'>
+  readonly role: Prisma.FieldRef<"StudentProfile", 'Role'>
   readonly firstName: Prisma.FieldRef<"StudentProfile", 'String'>
   readonly lastName: Prisma.FieldRef<"StudentProfile", 'String'>
   readonly phone: Prisma.FieldRef<"StudentProfile", 'String'>
