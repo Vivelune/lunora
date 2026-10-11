@@ -55,7 +55,9 @@ export const ModelName = {
   Subject: 'Subject',
   Category: 'Category',
   Lesson: 'Lesson',
-  LearningResource: 'LearningResource'
+  LearningResource: 'LearningResource',
+  StudentGroup: 'StudentGroup',
+  StudentGroupMembership: 'StudentGroupMembership'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -153,6 +155,29 @@ export const LearningResourceScalarFieldEnum = {
 } as const
 
 export type LearningResourceScalarFieldEnum = (typeof LearningResourceScalarFieldEnum)[keyof typeof LearningResourceScalarFieldEnum]
+
+
+export const StudentGroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentGroupScalarFieldEnum = (typeof StudentGroupScalarFieldEnum)[keyof typeof StudentGroupScalarFieldEnum]
+
+
+export const StudentGroupMembershipScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  studentId: 'studentId',
+  addedAt: 'addedAt'
+} as const
+
+export type StudentGroupMembershipScalarFieldEnum = (typeof StudentGroupMembershipScalarFieldEnum)[keyof typeof StudentGroupMembershipScalarFieldEnum]
 
 
 export const SortOrder = {

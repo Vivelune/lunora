@@ -66,3 +66,13 @@ export type Lesson = Prisma.LessonModel
  * 
  */
 export type LearningResource = Prisma.LearningResourceModel
+/**
+ * Model StudentGroup
+ * 
+ */
+export type StudentGroup = Prisma.StudentGroupModel
+/**
+ * Model StudentGroupMembership
+ * 
+ */
+export type StudentGroupMembership = Prisma.StudentGroupMembershipModel

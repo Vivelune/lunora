@@ -401,7 +401,9 @@ export const ModelName = {
   Subject: 'Subject',
   Category: 'Category',
   Lesson: 'Lesson',
-  LearningResource: 'LearningResource'
+  LearningResource: 'LearningResource',
+  StudentGroup: 'StudentGroup',
+  StudentGroupMembership: 'StudentGroupMembership'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource"
+    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource" | "studentGroup" | "studentGroupMembership"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -791,6 +793,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StudentGroup: {
+      payload: Prisma.$StudentGroupPayload<ExtArgs>
+      fields: Prisma.StudentGroupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StudentGroupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StudentGroupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        findFirst: {
+          args: Prisma.StudentGroupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StudentGroupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        findMany: {
+          args: Prisma.StudentGroupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>[]
+        }
+        create: {
+          args: Prisma.StudentGroupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        createMany: {
+          args: Prisma.StudentGroupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StudentGroupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>[]
+        }
+        delete: {
+          args: Prisma.StudentGroupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        update: {
+          args: Prisma.StudentGroupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        deleteMany: {
+          args: Prisma.StudentGroupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StudentGroupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StudentGroupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>[]
+        }
+        upsert: {
+          args: Prisma.StudentGroupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupPayload>
+        }
+        aggregate: {
+          args: Prisma.StudentGroupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudentGroup>
+        }
+        groupBy: {
+          args: Prisma.StudentGroupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentGroupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StudentGroupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentGroupCountAggregateOutputType> | number
+        }
+      }
+    }
+    StudentGroupMembership: {
+      payload: Prisma.$StudentGroupMembershipPayload<ExtArgs>
+      fields: Prisma.StudentGroupMembershipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StudentGroupMembershipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StudentGroupMembershipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        findFirst: {
+          args: Prisma.StudentGroupMembershipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StudentGroupMembershipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        findMany: {
+          args: Prisma.StudentGroupMembershipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>[]
+        }
+        create: {
+          args: Prisma.StudentGroupMembershipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        createMany: {
+          args: Prisma.StudentGroupMembershipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StudentGroupMembershipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>[]
+        }
+        delete: {
+          args: Prisma.StudentGroupMembershipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        update: {
+          args: Prisma.StudentGroupMembershipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        deleteMany: {
+          args: Prisma.StudentGroupMembershipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StudentGroupMembershipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StudentGroupMembershipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>[]
+        }
+        upsert: {
+          args: Prisma.StudentGroupMembershipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StudentGroupMembershipPayload>
+        }
+        aggregate: {
+          args: Prisma.StudentGroupMembershipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudentGroupMembership>
+        }
+        groupBy: {
+          args: Prisma.StudentGroupMembershipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentGroupMembershipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StudentGroupMembershipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudentGroupMembershipCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -909,6 +1059,29 @@ export const LearningResourceScalarFieldEnum = {
 } as const
 
 export type LearningResourceScalarFieldEnum = (typeof LearningResourceScalarFieldEnum)[keyof typeof LearningResourceScalarFieldEnum]
+
+
+export const StudentGroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentGroupScalarFieldEnum = (typeof StudentGroupScalarFieldEnum)[keyof typeof StudentGroupScalarFieldEnum]
+
+
+export const StudentGroupMembershipScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  studentId: 'studentId',
+  addedAt: 'addedAt'
+} as const
+
+export type StudentGroupMembershipScalarFieldEnum = (typeof StudentGroupMembershipScalarFieldEnum)[keyof typeof StudentGroupMembershipScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1187,6 +1360,8 @@ export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
   lesson?: Prisma.LessonOmit
   learningResource?: Prisma.LearningResourceOmit
+  studentGroup?: Prisma.StudentGroupOmit
+  studentGroupMembership?: Prisma.StudentGroupMembershipOmit
 }
 
 /* Types for Logging */
