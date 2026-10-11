@@ -41,3 +41,16 @@ export async function requireAdmin() {
 
   return { userId, profile };
 }
+
+export async function getAdminProfile() {
+  const { userId } = await auth();
+  if (!userId) {
+    return null;
+  }
+
+  const profile = await prisma.studentProfile.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  return profile?.role === "ADMIN" ? profile : null;
+}

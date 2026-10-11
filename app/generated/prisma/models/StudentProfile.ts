@@ -223,6 +223,7 @@ export type StudentProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"StudentProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentProfile"> | Date | string
   lessonsCreated?: Prisma.LessonListRelationFilter
+  resourcesUploaded?: Prisma.LearningResourceListRelationFilter
 }
 
 export type StudentProfileOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type StudentProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   lessonsCreated?: Prisma.LessonOrderByRelationAggregateInput
+  resourcesUploaded?: Prisma.LearningResourceOrderByRelationAggregateInput
 }
 
 export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -254,6 +256,7 @@ export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"StudentProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentProfile"> | Date | string
   lessonsCreated?: Prisma.LessonListRelationFilter
+  resourcesUploaded?: Prisma.LearningResourceListRelationFilter
 }, "id" | "clerkUserId">
 
 export type StudentProfileOrderByWithAggregationInput = {
@@ -300,6 +303,7 @@ export type StudentProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
 }
 
 export type StudentProfileUncheckedCreateInput = {
@@ -314,6 +318,7 @@ export type StudentProfileUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type StudentProfileUpdateInput = {
@@ -328,6 +333,7 @@ export type StudentProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
 }
 
 export type StudentProfileUncheckedUpdateInput = {
@@ -342,6 +348,7 @@ export type StudentProfileUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
 export type StudentProfileCreateManyInput = {
@@ -461,6 +468,20 @@ export type StudentProfileUpdateOneRequiredWithoutLessonsCreatedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutLessonsCreatedInput, Prisma.StudentProfileUpdateWithoutLessonsCreatedInput>, Prisma.StudentProfileUncheckedUpdateWithoutLessonsCreatedInput>
 }
 
+export type StudentProfileCreateNestedOneWithoutResourcesUploadedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedCreateWithoutResourcesUploadedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutResourcesUploadedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+}
+
+export type StudentProfileUpdateOneRequiredWithoutResourcesUploadedNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedCreateWithoutResourcesUploadedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutResourcesUploadedInput
+  upsert?: Prisma.StudentProfileUpsertWithoutResourcesUploadedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutResourcesUploadedInput, Prisma.StudentProfileUpdateWithoutResourcesUploadedInput>, Prisma.StudentProfileUncheckedUpdateWithoutResourcesUploadedInput>
+}
+
 export type StudentProfileCreateWithoutLessonsCreatedInput = {
   id?: string
   clerkUserId: string
@@ -472,6 +493,7 @@ export type StudentProfileCreateWithoutLessonsCreatedInput = {
   onboardingCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
 }
 
 export type StudentProfileUncheckedCreateWithoutLessonsCreatedInput = {
@@ -485,6 +507,7 @@ export type StudentProfileUncheckedCreateWithoutLessonsCreatedInput = {
   onboardingCompletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
 }
 
 export type StudentProfileCreateOrConnectWithoutLessonsCreatedInput = {
@@ -514,6 +537,7 @@ export type StudentProfileUpdateWithoutLessonsCreatedInput = {
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
@@ -527,6 +551,79 @@ export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
   onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+}
+
+export type StudentProfileCreateWithoutResourcesUploadedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+}
+
+export type StudentProfileUncheckedCreateWithoutResourcesUploadedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type StudentProfileCreateOrConnectWithoutResourcesUploadedInput = {
+  where: Prisma.StudentProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedCreateWithoutResourcesUploadedInput>
+}
+
+export type StudentProfileUpsertWithoutResourcesUploadedInput = {
+  update: Prisma.XOR<Prisma.StudentProfileUpdateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedUpdateWithoutResourcesUploadedInput>
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedCreateWithoutResourcesUploadedInput>
+  where?: Prisma.StudentProfileWhereInput
+}
+
+export type StudentProfileUpdateToOneWithWhereWithoutResourcesUploadedInput = {
+  where?: Prisma.StudentProfileWhereInput
+  data: Prisma.XOR<Prisma.StudentProfileUpdateWithoutResourcesUploadedInput, Prisma.StudentProfileUncheckedUpdateWithoutResourcesUploadedInput>
+}
+
+export type StudentProfileUpdateWithoutResourcesUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+}
+
+export type StudentProfileUncheckedUpdateWithoutResourcesUploadedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -536,10 +633,12 @@ export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
 
 export type StudentProfileCountOutputType = {
   lessonsCreated: number
+  resourcesUploaded: number
 }
 
 export type StudentProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessonsCreated?: boolean | StudentProfileCountOutputTypeCountLessonsCreatedArgs
+  resourcesUploaded?: boolean | StudentProfileCountOutputTypeCountResourcesUploadedArgs
 }
 
 /**
@@ -559,6 +658,13 @@ export type StudentProfileCountOutputTypeCountLessonsCreatedArgs<ExtArgs extends
   where?: Prisma.LessonWhereInput
 }
 
+/**
+ * StudentProfileCountOutputType without action
+ */
+export type StudentProfileCountOutputTypeCountResourcesUploadedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LearningResourceWhereInput
+}
+
 
 export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -572,6 +678,7 @@ export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   lessonsCreated?: boolean | Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>
+  resourcesUploaded?: boolean | Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentProfile"]>
 
@@ -617,6 +724,7 @@ export type StudentProfileSelectScalar = {
 export type StudentProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "role" | "firstName" | "lastName" | "phone" | "gradeLevel" | "onboardingCompletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["studentProfile"]>
 export type StudentProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessonsCreated?: boolean | Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>
+  resourcesUploaded?: boolean | Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -626,6 +734,7 @@ export type $StudentProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "StudentProfile"
   objects: {
     lessonsCreated: Prisma.$LessonPayload<ExtArgs>[]
+    resourcesUploaded: Prisma.$LearningResourcePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1033,6 +1142,7 @@ readonly fields: StudentProfileFieldRefs;
 export interface Prisma__StudentProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lessonsCreated<T extends Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  resourcesUploaded<T extends Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LearningResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1486,6 +1596,30 @@ export type StudentProfile$lessonsCreatedArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.LessonScalarFieldEnum | Prisma.LessonScalarFieldEnum[]
+}
+
+/**
+ * StudentProfile.resourcesUploaded
+ */
+export type StudentProfile$resourcesUploadedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LearningResource
+   */
+  select?: Prisma.LearningResourceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LearningResource
+   */
+  omit?: Prisma.LearningResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LearningResourceInclude<ExtArgs> | null
+  where?: Prisma.LearningResourceWhereInput
+  orderBy?: Prisma.LearningResourceOrderByWithRelationInput | Prisma.LearningResourceOrderByWithRelationInput[]
+  cursor?: Prisma.LearningResourceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LearningResourceScalarFieldEnum | Prisma.LearningResourceScalarFieldEnum[]
 }
 
 /**

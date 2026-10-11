@@ -27,7 +27,13 @@ export function Markdown({ children }: { children: string }) {
             <pre className="overflow-x-auto rounded bg-gray-100 p-3 text-sm">{children}</pre>
           ),
           // Images are intentionally not rendered until secure uploads exist.
-          img: () => null,
+          img: ({ src, alt }) => {
+            if (typeof src !== "string" || !/^\/api\/resources\/[a-z0-9]+$/.test(src)) {
+              return null;
+            }
+            // eslint-disable-next-line @next/next/no-img-element
+            return <img src={src} alt={alt ?? ""} loading="lazy" className="max-w-full rounded border" />;
+          },
         }}
       >
         {children}

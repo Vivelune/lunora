@@ -54,7 +54,8 @@ export const ModelName = {
   StudentProfile: 'StudentProfile',
   Subject: 'Subject',
   Category: 'Category',
-  Lesson: 'Lesson'
+  Lesson: 'Lesson',
+  LearningResource: 'LearningResource'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -136,6 +137,22 @@ export const LessonScalarFieldEnum = {
 } as const
 
 export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
+
+
+export const LearningResourceScalarFieldEnum = {
+  id: 'id',
+  lessonId: 'lessonId',
+  title: 'title',
+  originalFilename: 'originalFilename',
+  pathname: 'pathname',
+  storageUrl: 'storageUrl',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt'
+} as const
+
+export type LearningResourceScalarFieldEnum = (typeof LearningResourceScalarFieldEnum)[keyof typeof LearningResourceScalarFieldEnum]
 
 
 export const SortOrder = {
