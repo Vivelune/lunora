@@ -28,6 +28,7 @@ model StudentProfile {
   lessonsCreated        Lesson[]
   resourcesUploaded     LearningResource[]
   groupsCreated         StudentGroup[]
+  plansCreated          LessonPlan[]
   groupMemberships      StudentGroupMembership[]
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
@@ -45,6 +46,7 @@ model Subject {
   isActive    Boolean    @default(true)
   categories  Category[] 
   lessons     Lesson[]
+  lessonPlans LessonPlan[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
@@ -56,6 +58,7 @@ model Category {
   subjectId   String
   subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Restrict)
   lessons     Lesson[]
+  lessonPlans LessonPlan[]
   slug        String
   name        String
   description String?
@@ -90,6 +93,7 @@ model Lesson {
   createdById      String
   createdBy        StudentProfile @relation(fields: [createdById], references: [id], onDelete: Restrict)
   resources        LearningResource[]
+  planItems        LessonPlanItem[]
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
@@ -136,4 +140,54 @@ model StudentGroupMembership {
 
   @@unique([groupId, studentId])
   @@index([studentId])
+}
+
+enum PlanItemType {
+  LESSON
+}
+
+model LessonPlan {
+  id          String              @id @default(cuid())
+  subjectId   String
+  subject     Subject             @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  categoryId  String?
+  category    Category?           @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title       String
+  description String?
+  objectives  String[]
+  status      ContentStatus       @default(DRAFT)
+  createdById String
+  createdBy   StudentProfile      @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  versions    LessonPlanVersion[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@index([subjectId, status])
+}
+
+model LessonPlanVersion {
+  id            String           @id @default(cuid())
+  planId        String
+  plan          LessonPlan       @relation(fields: [planId], references: [id], onDelete: Restrict)
+  versionNumber Int
+  publishedAt   DateTime?
+  items         LessonPlanItem[]
+  createdAt     DateTime         @default(now())
+
+  @@unique([planId, versionNumber])
+}
+
+model LessonPlanItem {
+  id         String            @id @default(cuid())
+  versionId  String
+  version    LessonPlanVersion @relation(fields: [versionId], references: [id], onDelete: Restrict)
+  position   Int
+  type       PlanItemType      @default(LESSON)
+  lessonId   String?
+  lesson     Lesson?           @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  isRequired Boolean           @default(true)
+
+  @@unique([versionId, position])
+  @@unique([versionId, lessonId])
+  @@index([lessonId])
 }

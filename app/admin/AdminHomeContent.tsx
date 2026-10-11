@@ -45,6 +45,8 @@ export default async function AdminHomeContent() {
         >
           Manage student groups →
         </Link>
+        <Link href="/admin/lesson-plans" className="underline">Lesson plans</Link>
+
       </nav>
     </main>
   );
