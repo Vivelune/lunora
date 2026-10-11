@@ -12,7 +12,7 @@ export default async function AdminCategoriesPage({
       fallback={
         <main className="mx-auto max-w-4xl p-8">
           <p className="text-sm text-gray-500">
-            Loading category management...
+            Loading category management..
           </p>
         </main>
       }
