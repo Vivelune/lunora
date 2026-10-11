@@ -25,6 +25,7 @@ model StudentProfile {
   phone                 String?
   gradeLevel            String?
   onboardingCompletedAt DateTime?
+  lessonsCreated        Lesson[]
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
@@ -39,7 +40,8 @@ model Subject {
   children    Subject[]  @relation("SubjectTree")
   sortOrder   Int        @default(0)
   isActive    Boolean    @default(true)
-  categories  Category[]
+  categories  Category[] 
+  lessons     Lesson[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
@@ -50,6 +52,7 @@ model Category {
   id          String   @id @default(cuid())
   subjectId   String
   subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  lessons     Lesson[]
   slug        String
   name        String
   description String?
@@ -60,4 +63,32 @@ model Category {
 
   @@unique([subjectId, slug])
   @@index([subjectId])
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Lesson {
+  id               String         @id @default(cuid())
+  subjectId        String
+  subject          Subject        @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+  categoryId       String?
+  category         Category?      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  title            String
+  description      String?
+  objectives       String[]
+  content          String         @default("")
+  estimatedMinutes Int?
+  status           ContentStatus  @default(DRAFT)
+  publishedAt      DateTime?
+  createdById      String
+  createdBy        StudentProfile @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([subjectId, status])
+  @@index([categoryId])
 }
