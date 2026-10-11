@@ -37,3 +37,8 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type Lesson = Prisma.LessonModel
+/**
+ * Model LearningResource
+ * 
+ */
+export type LearningResource = Prisma.LearningResourceModel

@@ -1,9 +1,12 @@
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { LessonForm } from "../lesson-form";
 import { setLessonStatus } from "../actions";
+import { deleteResource } from "../resource-actions";
+import { ResourceUploader } from "./resource-uploader";
 
 const STATUS_ACTIONS: Record<
   string,
@@ -31,7 +34,7 @@ export default async function EditLessonContent({
   params,
   searchParams,
 }: Props) {
-  // Server-side authorization.
+  // Always enforce admin authorization on the server.
   await requireAdmin();
 
   const [{ lessonId }, { error, saved }] = await Promise.all([
@@ -47,30 +50,44 @@ export default async function EditLessonContent({
     notFound();
   }
 
-  const subjects = await prisma.subject.findMany({
-    where: {
-      isActive: true,
-      children: {
-        none: { isActive: true },
-      },
-    },
-    orderBy: { sortOrder: "asc" },
-    select: {
-      id: true,
-      name: true,
-      parent: {
-        select: { name: true },
-      },
-      categories: {
-        where: { isActive: true },
-        orderBy: { sortOrder: "asc" },
-        select: {
-          id: true,
-          name: true,
+  const [subjects, resources] = await Promise.all([
+    prisma.subject.findMany({
+      where: {
+        isActive: true,
+        children: {
+          none: { isActive: true },
         },
       },
-    },
-  });
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true,
+        name: true,
+        parent: {
+          select: { name: true },
+        },
+        categories: {
+          where: { isActive: true },
+          orderBy: { sortOrder: "asc" },
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    }),
+
+    prisma.learningResource.findMany({
+      where: { lessonId },
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        title: true,
+        originalFilename: true,
+        contentType: true,
+        sizeBytes: true,
+      },
+    }),
+  ]);
 
   const options = subjects.map((subject) => ({
     id: subject.id,
@@ -87,6 +104,7 @@ export default async function EditLessonContent({
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">Edit lesson</h1>
+
           <p className="text-sm text-gray-600">
             Status: <strong>{lesson.status}</strong>
             {lesson.publishedAt &&
@@ -96,7 +114,10 @@ export default async function EditLessonContent({
           </p>
         </div>
 
-        <Link href="/admin/lessons" className="text-sm underline">
+        <Link
+          href="/admin/lessons"
+          className="text-sm underline"
+        >
           Back to lessons
         </Link>
       </header>
@@ -124,6 +145,7 @@ export default async function EditLessonContent({
           <form key={action.to} action={setLessonStatus}>
             <input type="hidden" name="id" value={lesson.id} />
             <input type="hidden" name="to" value={action.to} />
+
             <button
               type="submit"
               className="rounded border px-3 py-1.5 text-sm"
@@ -148,6 +170,76 @@ export default async function EditLessonContent({
             lesson.estimatedMinutes?.toString() ?? "",
         }}
       />
+
+      <section className="flex flex-col gap-4 rounded-lg border p-5">
+        <h2 className="text-lg font-semibold">Resources</h2>
+
+        <p className="text-sm text-gray-600">
+          To show an uploaded image inside the lesson, paste its
+          Markdown snippet into the lesson content.
+        </p>
+
+        {resources.length === 0 ? (
+          <p className="rounded border border-dashed p-4 text-sm text-gray-500">
+            No resources attached yet.
+          </p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {resources.map((resource) => (
+              <li
+                key={resource.id}
+                className="flex flex-col gap-1 rounded border p-3 text-sm"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-medium">
+                    {resource.title}
+                  </span>
+
+                  <span className="text-gray-500">
+                    {resource.originalFilename} -{" "}
+                    {resource.contentType} -{" "}
+                    {Math.ceil(resource.sizeBytes / 1024)} KB
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={`/api/resources/${resource.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    Open
+                  </a>
+
+                  <form action={deleteResource}>
+                    <input
+                      type="hidden"
+                      name="id"
+                      value={resource.id}
+                    />
+
+                    <button
+                      type="submit"
+                      className="text-red-700 underline"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                </div>
+
+                {resource.contentType.startsWith("image/") && (
+                  <code className="break-all rounded bg-gray-100 p-2">
+                    {`![${resource.title}](/api/resources/${resource.id})`}
+                  </code>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <ResourceUploader lessonId={lesson.id} />
+      </section>
     </main>
   );
 }
