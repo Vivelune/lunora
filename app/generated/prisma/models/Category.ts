@@ -249,6 +249,7 @@ export type CategoryWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
+  lessons?: Prisma.LessonListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -262,6 +263,7 @@ export type CategoryOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   subject?: Prisma.SubjectOrderByWithRelationInput
+  lessons?: Prisma.LessonOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -279,6 +281,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   subject?: Prisma.XOR<Prisma.SubjectScalarRelationFilter, Prisma.SubjectWhereInput>
+  lessons?: Prisma.LessonListRelationFilter
 }, "id" | "subjectId_slug">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -323,6 +326,7 @@ export type CategoryCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -335,6 +339,7 @@ export type CategoryUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -347,6 +352,7 @@ export type CategoryUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -359,6 +365,7 @@ export type CategoryUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -455,6 +462,11 @@ export type CategorySumOrderByAggregateInput = {
   sortOrder?: Prisma.SortOrder
 }
 
+export type CategoryNullableScalarRelationFilter = {
+  is?: Prisma.CategoryWhereInput | null
+  isNot?: Prisma.CategoryWhereInput | null
+}
+
 export type CategoryCreateNestedManyWithoutSubjectInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutSubjectInput, Prisma.CategoryUncheckedCreateWithoutSubjectInput> | Prisma.CategoryCreateWithoutSubjectInput[] | Prisma.CategoryUncheckedCreateWithoutSubjectInput[]
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutSubjectInput | Prisma.CategoryCreateOrConnectWithoutSubjectInput[]
@@ -497,6 +509,22 @@ export type CategoryUncheckedUpdateManyWithoutSubjectNestedInput = {
   deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
 }
 
+export type CategoryCreateNestedOneWithoutLessonsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutLessonsInput, Prisma.CategoryUncheckedCreateWithoutLessonsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutLessonsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutLessonsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutLessonsInput, Prisma.CategoryUncheckedCreateWithoutLessonsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutLessonsInput
+  upsert?: Prisma.CategoryUpsertWithoutLessonsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutLessonsInput, Prisma.CategoryUpdateWithoutLessonsInput>, Prisma.CategoryUncheckedUpdateWithoutLessonsInput>
+}
+
 export type CategoryCreateWithoutSubjectInput = {
   id?: string
   slug: string
@@ -506,6 +534,7 @@ export type CategoryCreateWithoutSubjectInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutSubjectInput = {
@@ -517,6 +546,7 @@ export type CategoryUncheckedCreateWithoutSubjectInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutSubjectInput = {
@@ -560,6 +590,70 @@ export type CategoryScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
 }
 
+export type CategoryCreateWithoutLessonsInput = {
+  id?: string
+  slug: string
+  name: string
+  description?: string | null
+  sortOrder?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
+}
+
+export type CategoryUncheckedCreateWithoutLessonsInput = {
+  id?: string
+  subjectId: string
+  slug: string
+  name: string
+  description?: string | null
+  sortOrder?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CategoryCreateOrConnectWithoutLessonsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutLessonsInput, Prisma.CategoryUncheckedCreateWithoutLessonsInput>
+}
+
+export type CategoryUpsertWithoutLessonsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutLessonsInput, Prisma.CategoryUncheckedUpdateWithoutLessonsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutLessonsInput, Prisma.CategoryUncheckedCreateWithoutLessonsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutLessonsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutLessonsInput, Prisma.CategoryUncheckedUpdateWithoutLessonsInput>
+}
+
+export type CategoryUpdateWithoutLessonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutLessonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subjectId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type CategoryCreateManySubjectInput = {
   id?: string
   slug: string
@@ -580,6 +674,7 @@ export type CategoryUpdateWithoutSubjectInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutSubjectInput = {
@@ -591,6 +686,7 @@ export type CategoryUncheckedUpdateWithoutSubjectInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutSubjectInput = {
@@ -605,6 +701,35 @@ export type CategoryUncheckedUpdateManyWithoutSubjectInput = {
 }
 
 
+/**
+ * Count Type CategoryCountOutputType
+ */
+
+export type CategoryCountOutputType = {
+  lessons: number
+}
+
+export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  lessons?: boolean | CategoryCountOutputTypeCountLessonsArgs
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CategoryCountOutputType
+   */
+  select?: Prisma.CategoryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountLessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -617,6 +742,8 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
+  lessons?: boolean | Prisma.Category$lessonsArgs<ExtArgs>
+  _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -660,6 +787,8 @@ export type CategorySelectScalar = {
 export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subjectId" | "slug" | "name" | "description" | "sortOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
+  lessons?: boolean | Prisma.Category$lessonsArgs<ExtArgs>
+  _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subject?: boolean | Prisma.SubjectDefaultArgs<ExtArgs>
@@ -672,6 +801,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Category"
   objects: {
     subject: Prisma.$SubjectPayload<ExtArgs>
+    lessons: Prisma.$LessonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1078,6 +1208,7 @@ readonly fields: CategoryFieldRefs;
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   subject<T extends Prisma.SubjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubjectDefaultArgs<ExtArgs>>): Prisma.Prisma__SubjectClient<runtime.Types.Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lessons<T extends Prisma.Category$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1514,6 +1645,30 @@ export type CategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Categories to delete.
    */
   limit?: number
+}
+
+/**
+ * Category.lessons
+ */
+export type Category$lessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lesson
+   */
+  select?: Prisma.LessonSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lesson
+   */
+  omit?: Prisma.LessonOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonInclude<ExtArgs> | null
+  where?: Prisma.LessonWhereInput
+  orderBy?: Prisma.LessonOrderByWithRelationInput | Prisma.LessonOrderByWithRelationInput[]
+  cursor?: Prisma.LessonWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonScalarFieldEnum | Prisma.LessonScalarFieldEnum[]
 }
 
 /**

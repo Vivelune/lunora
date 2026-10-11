@@ -56,3 +56,8 @@ export type Subject = Prisma.SubjectModel
  * 
  */
 export type Category = Prisma.CategoryModel
+/**
+ * Model Lesson
+ * 
+ */
+export type Lesson = Prisma.LessonModel
