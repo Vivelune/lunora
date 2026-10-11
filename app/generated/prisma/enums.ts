@@ -24,3 +24,10 @@ export const ContentStatus = {
 } as const
 
 export type ContentStatus = (typeof ContentStatus)[keyof typeof ContentStatus]
+
+
+export const PlanItemType = {
+  LESSON: 'LESSON'
+} as const
+
+export type PlanItemType = (typeof PlanItemType)[keyof typeof PlanItemType]

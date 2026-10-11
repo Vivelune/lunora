@@ -57,7 +57,10 @@ export const ModelName = {
   Lesson: 'Lesson',
   LearningResource: 'LearningResource',
   StudentGroup: 'StudentGroup',
-  StudentGroupMembership: 'StudentGroupMembership'
+  StudentGroupMembership: 'StudentGroupMembership',
+  LessonPlan: 'LessonPlan',
+  LessonPlanVersion: 'LessonPlanVersion',
+  LessonPlanItem: 'LessonPlanItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -178,6 +181,45 @@ export const StudentGroupMembershipScalarFieldEnum = {
 } as const
 
 export type StudentGroupMembershipScalarFieldEnum = (typeof StudentGroupMembershipScalarFieldEnum)[keyof typeof StudentGroupMembershipScalarFieldEnum]
+
+
+export const LessonPlanScalarFieldEnum = {
+  id: 'id',
+  subjectId: 'subjectId',
+  categoryId: 'categoryId',
+  title: 'title',
+  description: 'description',
+  objectives: 'objectives',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LessonPlanScalarFieldEnum = (typeof LessonPlanScalarFieldEnum)[keyof typeof LessonPlanScalarFieldEnum]
+
+
+export const LessonPlanVersionScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  versionNumber: 'versionNumber',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type LessonPlanVersionScalarFieldEnum = (typeof LessonPlanVersionScalarFieldEnum)[keyof typeof LessonPlanVersionScalarFieldEnum]
+
+
+export const LessonPlanItemScalarFieldEnum = {
+  id: 'id',
+  versionId: 'versionId',
+  position: 'position',
+  type: 'type',
+  lessonId: 'lessonId',
+  isRequired: 'isRequired'
+} as const
+
+export type LessonPlanItemScalarFieldEnum = (typeof LessonPlanItemScalarFieldEnum)[keyof typeof LessonPlanItemScalarFieldEnum]
 
 
 export const SortOrder = {

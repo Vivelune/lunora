@@ -52,3 +52,18 @@ export type StudentGroup = Prisma.StudentGroupModel
  * 
  */
 export type StudentGroupMembership = Prisma.StudentGroupMembershipModel
+/**
+ * Model LessonPlan
+ * 
+ */
+export type LessonPlan = Prisma.LessonPlanModel
+/**
+ * Model LessonPlanVersion
+ * 
+ */
+export type LessonPlanVersion = Prisma.LessonPlanVersionModel
+/**
+ * Model LessonPlanItem
+ * 
+ */
+export type LessonPlanItem = Prisma.LessonPlanItemModel

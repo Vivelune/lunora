@@ -403,7 +403,10 @@ export const ModelName = {
   Lesson: 'Lesson',
   LearningResource: 'LearningResource',
   StudentGroup: 'StudentGroup',
-  StudentGroupMembership: 'StudentGroupMembership'
+  StudentGroupMembership: 'StudentGroupMembership',
+  LessonPlan: 'LessonPlan',
+  LessonPlanVersion: 'LessonPlanVersion',
+  LessonPlanItem: 'LessonPlanItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource" | "studentGroup" | "studentGroupMembership"
+    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource" | "studentGroup" | "studentGroupMembership" | "lessonPlan" | "lessonPlanVersion" | "lessonPlanItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -941,6 +944,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LessonPlan: {
+      payload: Prisma.$LessonPlanPayload<ExtArgs>
+      fields: Prisma.LessonPlanFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LessonPlanFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LessonPlanFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        findFirst: {
+          args: Prisma.LessonPlanFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LessonPlanFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        findMany: {
+          args: Prisma.LessonPlanFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>[]
+        }
+        create: {
+          args: Prisma.LessonPlanCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        createMany: {
+          args: Prisma.LessonPlanCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LessonPlanCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>[]
+        }
+        delete: {
+          args: Prisma.LessonPlanDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        update: {
+          args: Prisma.LessonPlanUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        deleteMany: {
+          args: Prisma.LessonPlanDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LessonPlanUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LessonPlanUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>[]
+        }
+        upsert: {
+          args: Prisma.LessonPlanUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanPayload>
+        }
+        aggregate: {
+          args: Prisma.LessonPlanAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLessonPlan>
+        }
+        groupBy: {
+          args: Prisma.LessonPlanGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LessonPlanCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanCountAggregateOutputType> | number
+        }
+      }
+    }
+    LessonPlanVersion: {
+      payload: Prisma.$LessonPlanVersionPayload<ExtArgs>
+      fields: Prisma.LessonPlanVersionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LessonPlanVersionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LessonPlanVersionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        findFirst: {
+          args: Prisma.LessonPlanVersionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LessonPlanVersionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        findMany: {
+          args: Prisma.LessonPlanVersionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>[]
+        }
+        create: {
+          args: Prisma.LessonPlanVersionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        createMany: {
+          args: Prisma.LessonPlanVersionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LessonPlanVersionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>[]
+        }
+        delete: {
+          args: Prisma.LessonPlanVersionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        update: {
+          args: Prisma.LessonPlanVersionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        deleteMany: {
+          args: Prisma.LessonPlanVersionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LessonPlanVersionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LessonPlanVersionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>[]
+        }
+        upsert: {
+          args: Prisma.LessonPlanVersionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanVersionPayload>
+        }
+        aggregate: {
+          args: Prisma.LessonPlanVersionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLessonPlanVersion>
+        }
+        groupBy: {
+          args: Prisma.LessonPlanVersionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanVersionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LessonPlanVersionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanVersionCountAggregateOutputType> | number
+        }
+      }
+    }
+    LessonPlanItem: {
+      payload: Prisma.$LessonPlanItemPayload<ExtArgs>
+      fields: Prisma.LessonPlanItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LessonPlanItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LessonPlanItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        findFirst: {
+          args: Prisma.LessonPlanItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LessonPlanItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        findMany: {
+          args: Prisma.LessonPlanItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>[]
+        }
+        create: {
+          args: Prisma.LessonPlanItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        createMany: {
+          args: Prisma.LessonPlanItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LessonPlanItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>[]
+        }
+        delete: {
+          args: Prisma.LessonPlanItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        update: {
+          args: Prisma.LessonPlanItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.LessonPlanItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LessonPlanItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LessonPlanItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.LessonPlanItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonPlanItemPayload>
+        }
+        aggregate: {
+          args: Prisma.LessonPlanItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLessonPlanItem>
+        }
+        groupBy: {
+          args: Prisma.LessonPlanItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LessonPlanItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LessonPlanItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1084,6 +1309,45 @@ export const StudentGroupMembershipScalarFieldEnum = {
 export type StudentGroupMembershipScalarFieldEnum = (typeof StudentGroupMembershipScalarFieldEnum)[keyof typeof StudentGroupMembershipScalarFieldEnum]
 
 
+export const LessonPlanScalarFieldEnum = {
+  id: 'id',
+  subjectId: 'subjectId',
+  categoryId: 'categoryId',
+  title: 'title',
+  description: 'description',
+  objectives: 'objectives',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LessonPlanScalarFieldEnum = (typeof LessonPlanScalarFieldEnum)[keyof typeof LessonPlanScalarFieldEnum]
+
+
+export const LessonPlanVersionScalarFieldEnum = {
+  id: 'id',
+  planId: 'planId',
+  versionNumber: 'versionNumber',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type LessonPlanVersionScalarFieldEnum = (typeof LessonPlanVersionScalarFieldEnum)[keyof typeof LessonPlanVersionScalarFieldEnum]
+
+
+export const LessonPlanItemScalarFieldEnum = {
+  id: 'id',
+  versionId: 'versionId',
+  position: 'position',
+  type: 'type',
+  lessonId: 'lessonId',
+  isRequired: 'isRequired'
+} as const
+
+export type LessonPlanItemScalarFieldEnum = (typeof LessonPlanItemScalarFieldEnum)[keyof typeof LessonPlanItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1188,6 +1452,20 @@ export type EnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ContentStatus[]'
  */
 export type ListEnumContentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PlanItemType'
+ */
+export type EnumPlanItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanItemType'>
+    
+
+
+/**
+ * Reference to a field of type 'PlanItemType[]'
+ */
+export type ListEnumPlanItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlanItemType[]'>
     
 
 
@@ -1362,6 +1640,9 @@ export type GlobalOmitConfig = {
   learningResource?: Prisma.LearningResourceOmit
   studentGroup?: Prisma.StudentGroupOmit
   studentGroupMembership?: Prisma.StudentGroupMembershipOmit
+  lessonPlan?: Prisma.LessonPlanOmit
+  lessonPlanVersion?: Prisma.LessonPlanVersionOmit
+  lessonPlanItem?: Prisma.LessonPlanItemOmit
 }
 
 /* Types for Logging */

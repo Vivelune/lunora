@@ -225,6 +225,7 @@ export type StudentProfileWhereInput = {
   lessonsCreated?: Prisma.LessonListRelationFilter
   resourcesUploaded?: Prisma.LearningResourceListRelationFilter
   groupsCreated?: Prisma.StudentGroupListRelationFilter
+  plansCreated?: Prisma.LessonPlanListRelationFilter
   groupMemberships?: Prisma.StudentGroupMembershipListRelationFilter
 }
 
@@ -242,6 +243,7 @@ export type StudentProfileOrderByWithRelationInput = {
   lessonsCreated?: Prisma.LessonOrderByRelationAggregateInput
   resourcesUploaded?: Prisma.LearningResourceOrderByRelationAggregateInput
   groupsCreated?: Prisma.StudentGroupOrderByRelationAggregateInput
+  plansCreated?: Prisma.LessonPlanOrderByRelationAggregateInput
   groupMemberships?: Prisma.StudentGroupMembershipOrderByRelationAggregateInput
 }
 
@@ -262,6 +264,7 @@ export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
   lessonsCreated?: Prisma.LessonListRelationFilter
   resourcesUploaded?: Prisma.LearningResourceListRelationFilter
   groupsCreated?: Prisma.StudentGroupListRelationFilter
+  plansCreated?: Prisma.LessonPlanListRelationFilter
   groupMemberships?: Prisma.StudentGroupMembershipListRelationFilter
 }, "id" | "clerkUserId">
 
@@ -311,6 +314,7 @@ export type StudentProfileCreateInput = {
   lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
 }
 
@@ -328,6 +332,7 @@ export type StudentProfileUncheckedCreateInput = {
   lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -345,6 +350,7 @@ export type StudentProfileUpdateInput = {
   lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
 }
 
@@ -362,6 +368,7 @@ export type StudentProfileUncheckedUpdateInput = {
   lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -524,6 +531,20 @@ export type StudentProfileUpdateOneRequiredWithoutGroupMembershipsNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutGroupMembershipsInput, Prisma.StudentProfileUpdateWithoutGroupMembershipsInput>, Prisma.StudentProfileUncheckedUpdateWithoutGroupMembershipsInput>
 }
 
+export type StudentProfileCreateNestedOneWithoutPlansCreatedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutPlansCreatedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutPlansCreatedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+}
+
+export type StudentProfileUpdateOneRequiredWithoutPlansCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutPlansCreatedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutPlansCreatedInput
+  upsert?: Prisma.StudentProfileUpsertWithoutPlansCreatedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutPlansCreatedInput, Prisma.StudentProfileUpdateWithoutPlansCreatedInput>, Prisma.StudentProfileUncheckedUpdateWithoutPlansCreatedInput>
+}
+
 export type StudentProfileCreateWithoutLessonsCreatedInput = {
   id?: string
   clerkUserId: string
@@ -537,6 +558,7 @@ export type StudentProfileCreateWithoutLessonsCreatedInput = {
   updatedAt?: Date | string
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
 }
 
@@ -553,6 +575,7 @@ export type StudentProfileUncheckedCreateWithoutLessonsCreatedInput = {
   updatedAt?: Date | string
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -585,6 +608,7 @@ export type StudentProfileUpdateWithoutLessonsCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
 }
 
@@ -601,6 +625,7 @@ export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -617,6 +642,7 @@ export type StudentProfileCreateWithoutResourcesUploadedInput = {
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
 }
 
@@ -633,6 +659,7 @@ export type StudentProfileUncheckedCreateWithoutResourcesUploadedInput = {
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -665,6 +692,7 @@ export type StudentProfileUpdateWithoutResourcesUploadedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
 }
 
@@ -681,6 +709,7 @@ export type StudentProfileUncheckedUpdateWithoutResourcesUploadedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -697,6 +726,7 @@ export type StudentProfileCreateWithoutGroupsCreatedInput = {
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
 }
 
@@ -713,6 +743,7 @@ export type StudentProfileUncheckedCreateWithoutGroupsCreatedInput = {
   updatedAt?: Date | string
   lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
 }
 
@@ -745,6 +776,7 @@ export type StudentProfileUpdateWithoutGroupsCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
 }
 
@@ -761,6 +793,7 @@ export type StudentProfileUncheckedUpdateWithoutGroupsCreatedInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
 }
 
@@ -778,6 +811,7 @@ export type StudentProfileCreateWithoutGroupMembershipsInput = {
   lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
 }
 
 export type StudentProfileUncheckedCreateWithoutGroupMembershipsInput = {
@@ -794,6 +828,7 @@ export type StudentProfileUncheckedCreateWithoutGroupMembershipsInput = {
   lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type StudentProfileCreateOrConnectWithoutGroupMembershipsInput = {
@@ -826,6 +861,7 @@ export type StudentProfileUpdateWithoutGroupMembershipsInput = {
   lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutGroupMembershipsInput = {
@@ -842,6 +878,91 @@ export type StudentProfileUncheckedUpdateWithoutGroupMembershipsInput = {
   lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type StudentProfileCreateWithoutPlansCreatedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+}
+
+export type StudentProfileUncheckedCreateWithoutPlansCreatedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentProfileCreateOrConnectWithoutPlansCreatedInput = {
+  where: Prisma.StudentProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutPlansCreatedInput>
+}
+
+export type StudentProfileUpsertWithoutPlansCreatedInput = {
+  update: Prisma.XOR<Prisma.StudentProfileUpdateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedUpdateWithoutPlansCreatedInput>
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutPlansCreatedInput>
+  where?: Prisma.StudentProfileWhereInput
+}
+
+export type StudentProfileUpdateToOneWithWhereWithoutPlansCreatedInput = {
+  where?: Prisma.StudentProfileWhereInput
+  data: Prisma.XOR<Prisma.StudentProfileUpdateWithoutPlansCreatedInput, Prisma.StudentProfileUncheckedUpdateWithoutPlansCreatedInput>
+}
+
+export type StudentProfileUpdateWithoutPlansCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentProfileUncheckedUpdateWithoutPlansCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 
@@ -853,6 +974,7 @@ export type StudentProfileCountOutputType = {
   lessonsCreated: number
   resourcesUploaded: number
   groupsCreated: number
+  plansCreated: number
   groupMemberships: number
 }
 
@@ -860,6 +982,7 @@ export type StudentProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Ex
   lessonsCreated?: boolean | StudentProfileCountOutputTypeCountLessonsCreatedArgs
   resourcesUploaded?: boolean | StudentProfileCountOutputTypeCountResourcesUploadedArgs
   groupsCreated?: boolean | StudentProfileCountOutputTypeCountGroupsCreatedArgs
+  plansCreated?: boolean | StudentProfileCountOutputTypeCountPlansCreatedArgs
   groupMemberships?: boolean | StudentProfileCountOutputTypeCountGroupMembershipsArgs
 }
 
@@ -897,6 +1020,13 @@ export type StudentProfileCountOutputTypeCountGroupsCreatedArgs<ExtArgs extends 
 /**
  * StudentProfileCountOutputType without action
  */
+export type StudentProfileCountOutputTypeCountPlansCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanWhereInput
+}
+
+/**
+ * StudentProfileCountOutputType without action
+ */
 export type StudentProfileCountOutputTypeCountGroupMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.StudentGroupMembershipWhereInput
 }
@@ -916,6 +1046,7 @@ export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   lessonsCreated?: boolean | Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>
   resourcesUploaded?: boolean | Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>
   groupsCreated?: boolean | Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>
+  plansCreated?: boolean | Prisma.StudentProfile$plansCreatedArgs<ExtArgs>
   groupMemberships?: boolean | Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentProfile"]>
@@ -964,6 +1095,7 @@ export type StudentProfileInclude<ExtArgs extends runtime.Types.Extensions.Inter
   lessonsCreated?: boolean | Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>
   resourcesUploaded?: boolean | Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>
   groupsCreated?: boolean | Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>
+  plansCreated?: boolean | Prisma.StudentProfile$plansCreatedArgs<ExtArgs>
   groupMemberships?: boolean | Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -976,6 +1108,7 @@ export type $StudentProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
     lessonsCreated: Prisma.$LessonPayload<ExtArgs>[]
     resourcesUploaded: Prisma.$LearningResourcePayload<ExtArgs>[]
     groupsCreated: Prisma.$StudentGroupPayload<ExtArgs>[]
+    plansCreated: Prisma.$LessonPlanPayload<ExtArgs>[]
     groupMemberships: Prisma.$StudentGroupMembershipPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1386,6 +1519,7 @@ export interface Prisma__StudentProfileClient<T, Null = never, ExtArgs extends r
   lessonsCreated<T extends Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$lessonsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   resourcesUploaded<T extends Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$resourcesUploadedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LearningResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groupsCreated<T extends Prisma.StudentProfile$groupsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  plansCreated<T extends Prisma.StudentProfile$plansCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$plansCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groupMemberships<T extends Prisma.StudentProfile$groupMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentGroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1888,6 +2022,30 @@ export type StudentProfile$groupsCreatedArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.StudentGroupScalarFieldEnum | Prisma.StudentGroupScalarFieldEnum[]
+}
+
+/**
+ * StudentProfile.plansCreated
+ */
+export type StudentProfile$plansCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlan
+   */
+  select?: Prisma.LessonPlanSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlan
+   */
+  omit?: Prisma.LessonPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanWhereInput
+  orderBy?: Prisma.LessonPlanOrderByWithRelationInput | Prisma.LessonPlanOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanScalarFieldEnum | Prisma.LessonPlanScalarFieldEnum[]
 }
 
 /**
