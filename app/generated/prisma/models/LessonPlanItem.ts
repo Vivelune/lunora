@@ -226,6 +226,7 @@ export type LessonPlanItemWhereInput = {
   isRequired?: Prisma.BoolFilter<"LessonPlanItem"> | boolean
   version?: Prisma.XOR<Prisma.LessonPlanVersionScalarRelationFilter, Prisma.LessonPlanVersionWhereInput>
   lesson?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
+  progress?: Prisma.LessonPlanItemProgressListRelationFilter
 }
 
 export type LessonPlanItemOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type LessonPlanItemOrderByWithRelationInput = {
   isRequired?: Prisma.SortOrder
   version?: Prisma.LessonPlanVersionOrderByWithRelationInput
   lesson?: Prisma.LessonOrderByWithRelationInput
+  progress?: Prisma.LessonPlanItemProgressOrderByRelationAggregateInput
 }
 
 export type LessonPlanItemWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +255,7 @@ export type LessonPlanItemWhereUniqueInput = Prisma.AtLeast<{
   isRequired?: Prisma.BoolFilter<"LessonPlanItem"> | boolean
   version?: Prisma.XOR<Prisma.LessonPlanVersionScalarRelationFilter, Prisma.LessonPlanVersionWhereInput>
   lesson?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
+  progress?: Prisma.LessonPlanItemProgressListRelationFilter
 }, "id" | "versionId_position" | "versionId_lessonId">
 
 export type LessonPlanItemOrderByWithAggregationInput = {
@@ -288,6 +291,7 @@ export type LessonPlanItemCreateInput = {
   isRequired?: boolean
   version: Prisma.LessonPlanVersionCreateNestedOneWithoutItemsInput
   lesson?: Prisma.LessonCreateNestedOneWithoutPlanItemsInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemUncheckedCreateInput = {
@@ -297,6 +301,7 @@ export type LessonPlanItemUncheckedCreateInput = {
   type?: $Enums.PlanItemType
   lessonId?: string | null
   isRequired?: boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemUpdateInput = {
@@ -306,6 +311,7 @@ export type LessonPlanItemUpdateInput = {
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutItemsNestedInput
   lesson?: Prisma.LessonUpdateOneWithoutPlanItemsNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemUncheckedUpdateInput = {
@@ -315,6 +321,7 @@ export type LessonPlanItemUncheckedUpdateInput = {
   type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
   lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemCreateManyInput = {
@@ -395,6 +402,11 @@ export type LessonPlanItemMinOrderByAggregateInput = {
 
 export type LessonPlanItemSumOrderByAggregateInput = {
   position?: Prisma.SortOrder
+}
+
+export type LessonPlanItemScalarRelationFilter = {
+  is?: Prisma.LessonPlanItemWhereInput
+  isNot?: Prisma.LessonPlanItemWhereInput
 }
 
 export type LessonPlanItemCreateNestedManyWithoutLessonInput = {
@@ -485,12 +497,27 @@ export type EnumPlanItemTypeFieldUpdateOperationsInput = {
   set?: $Enums.PlanItemType
 }
 
+export type LessonPlanItemCreateNestedOneWithoutProgressInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanItemCreateWithoutProgressInput, Prisma.LessonPlanItemUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.LessonPlanItemCreateOrConnectWithoutProgressInput
+  connect?: Prisma.LessonPlanItemWhereUniqueInput
+}
+
+export type LessonPlanItemUpdateOneRequiredWithoutProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanItemCreateWithoutProgressInput, Prisma.LessonPlanItemUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.LessonPlanItemCreateOrConnectWithoutProgressInput
+  upsert?: Prisma.LessonPlanItemUpsertWithoutProgressInput
+  connect?: Prisma.LessonPlanItemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LessonPlanItemUpdateToOneWithWhereWithoutProgressInput, Prisma.LessonPlanItemUpdateWithoutProgressInput>, Prisma.LessonPlanItemUncheckedUpdateWithoutProgressInput>
+}
+
 export type LessonPlanItemCreateWithoutLessonInput = {
   id?: string
   position: number
   type?: $Enums.PlanItemType
   isRequired?: boolean
   version: Prisma.LessonPlanVersionCreateNestedOneWithoutItemsInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemUncheckedCreateWithoutLessonInput = {
@@ -499,6 +526,7 @@ export type LessonPlanItemUncheckedCreateWithoutLessonInput = {
   position: number
   type?: $Enums.PlanItemType
   isRequired?: boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemCreateOrConnectWithoutLessonInput = {
@@ -545,6 +573,7 @@ export type LessonPlanItemCreateWithoutVersionInput = {
   type?: $Enums.PlanItemType
   isRequired?: boolean
   lesson?: Prisma.LessonCreateNestedOneWithoutPlanItemsInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemUncheckedCreateWithoutVersionInput = {
@@ -553,6 +582,7 @@ export type LessonPlanItemUncheckedCreateWithoutVersionInput = {
   type?: $Enums.PlanItemType
   lessonId?: string | null
   isRequired?: boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type LessonPlanItemCreateOrConnectWithoutVersionInput = {
@@ -581,6 +611,58 @@ export type LessonPlanItemUpdateManyWithWhereWithoutVersionInput = {
   data: Prisma.XOR<Prisma.LessonPlanItemUpdateManyMutationInput, Prisma.LessonPlanItemUncheckedUpdateManyWithoutVersionInput>
 }
 
+export type LessonPlanItemCreateWithoutProgressInput = {
+  id?: string
+  position: number
+  type?: $Enums.PlanItemType
+  isRequired?: boolean
+  version: Prisma.LessonPlanVersionCreateNestedOneWithoutItemsInput
+  lesson?: Prisma.LessonCreateNestedOneWithoutPlanItemsInput
+}
+
+export type LessonPlanItemUncheckedCreateWithoutProgressInput = {
+  id?: string
+  versionId: string
+  position: number
+  type?: $Enums.PlanItemType
+  lessonId?: string | null
+  isRequired?: boolean
+}
+
+export type LessonPlanItemCreateOrConnectWithoutProgressInput = {
+  where: Prisma.LessonPlanItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.LessonPlanItemCreateWithoutProgressInput, Prisma.LessonPlanItemUncheckedCreateWithoutProgressInput>
+}
+
+export type LessonPlanItemUpsertWithoutProgressInput = {
+  update: Prisma.XOR<Prisma.LessonPlanItemUpdateWithoutProgressInput, Prisma.LessonPlanItemUncheckedUpdateWithoutProgressInput>
+  create: Prisma.XOR<Prisma.LessonPlanItemCreateWithoutProgressInput, Prisma.LessonPlanItemUncheckedCreateWithoutProgressInput>
+  where?: Prisma.LessonPlanItemWhereInput
+}
+
+export type LessonPlanItemUpdateToOneWithWhereWithoutProgressInput = {
+  where?: Prisma.LessonPlanItemWhereInput
+  data: Prisma.XOR<Prisma.LessonPlanItemUpdateWithoutProgressInput, Prisma.LessonPlanItemUncheckedUpdateWithoutProgressInput>
+}
+
+export type LessonPlanItemUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
+  isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutItemsNestedInput
+  lesson?: Prisma.LessonUpdateOneWithoutPlanItemsNestedInput
+}
+
+export type LessonPlanItemUncheckedUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  versionId?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
+  lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
 export type LessonPlanItemCreateManyLessonInput = {
   id?: string
   versionId: string
@@ -595,6 +677,7 @@ export type LessonPlanItemUpdateWithoutLessonInput = {
   type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutItemsNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemUncheckedUpdateWithoutLessonInput = {
@@ -603,6 +686,7 @@ export type LessonPlanItemUncheckedUpdateWithoutLessonInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemUncheckedUpdateManyWithoutLessonInput = {
@@ -627,6 +711,7 @@ export type LessonPlanItemUpdateWithoutVersionInput = {
   type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lesson?: Prisma.LessonUpdateOneWithoutPlanItemsNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemUncheckedUpdateWithoutVersionInput = {
@@ -635,6 +720,7 @@ export type LessonPlanItemUncheckedUpdateWithoutVersionInput = {
   type?: Prisma.EnumPlanItemTypeFieldUpdateOperationsInput | $Enums.PlanItemType
   lessonId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type LessonPlanItemUncheckedUpdateManyWithoutVersionInput = {
@@ -646,6 +732,35 @@ export type LessonPlanItemUncheckedUpdateManyWithoutVersionInput = {
 }
 
 
+/**
+ * Count Type LessonPlanItemCountOutputType
+ */
+
+export type LessonPlanItemCountOutputType = {
+  progress: number
+}
+
+export type LessonPlanItemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  progress?: boolean | LessonPlanItemCountOutputTypeCountProgressArgs
+}
+
+/**
+ * LessonPlanItemCountOutputType without action
+ */
+export type LessonPlanItemCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanItemCountOutputType
+   */
+  select?: Prisma.LessonPlanItemCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LessonPlanItemCountOutputType without action
+ */
+export type LessonPlanItemCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanItemProgressWhereInput
+}
+
 
 export type LessonPlanItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -656,6 +771,8 @@ export type LessonPlanItemSelect<ExtArgs extends runtime.Types.Extensions.Intern
   isRequired?: boolean
   version?: boolean | Prisma.LessonPlanVersionDefaultArgs<ExtArgs>
   lesson?: boolean | Prisma.LessonPlanItem$lessonArgs<ExtArgs>
+  progress?: boolean | Prisma.LessonPlanItem$progressArgs<ExtArgs>
+  _count?: boolean | Prisma.LessonPlanItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lessonPlanItem"]>
 
 export type LessonPlanItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -693,6 +810,8 @@ export type LessonPlanItemOmit<ExtArgs extends runtime.Types.Extensions.Internal
 export type LessonPlanItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   version?: boolean | Prisma.LessonPlanVersionDefaultArgs<ExtArgs>
   lesson?: boolean | Prisma.LessonPlanItem$lessonArgs<ExtArgs>
+  progress?: boolean | Prisma.LessonPlanItem$progressArgs<ExtArgs>
+  _count?: boolean | Prisma.LessonPlanItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LessonPlanItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   version?: boolean | Prisma.LessonPlanVersionDefaultArgs<ExtArgs>
@@ -708,6 +827,7 @@ export type $LessonPlanItemPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     version: Prisma.$LessonPlanVersionPayload<ExtArgs>
     lesson: Prisma.$LessonPayload<ExtArgs> | null
+    progress: Prisma.$LessonPlanItemProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1112,6 +1232,7 @@ export interface Prisma__LessonPlanItemClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   version<T extends Prisma.LessonPlanVersionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanVersionDefaultArgs<ExtArgs>>): Prisma.Prisma__LessonPlanVersionClient<runtime.Types.Result.GetResult<Prisma.$LessonPlanVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lesson<T extends Prisma.LessonPlanItem$lessonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanItem$lessonArgs<ExtArgs>>): Prisma.Prisma__LessonClient<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  progress<T extends Prisma.LessonPlanItem$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanItem$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanItemProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1564,6 +1685,30 @@ export type LessonPlanItem$lessonArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.LessonInclude<ExtArgs> | null
   where?: Prisma.LessonWhereInput
+}
+
+/**
+ * LessonPlanItem.progress
+ */
+export type LessonPlanItem$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanItemProgress
+   */
+  select?: Prisma.LessonPlanItemProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlanItemProgress
+   */
+  omit?: Prisma.LessonPlanItemProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanItemProgressInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanItemProgressWhereInput
+  orderBy?: Prisma.LessonPlanItemProgressOrderByWithRelationInput | Prisma.LessonPlanItemProgressOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanItemProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanItemProgressScalarFieldEnum | Prisma.LessonPlanItemProgressScalarFieldEnum[]
 }
 
 /**

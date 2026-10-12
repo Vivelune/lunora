@@ -191,6 +191,7 @@ model LessonPlanItem {
   type       PlanItemType      @default(LESSON)
   lessonId   String?
   lesson     Lesson?           @relation(fields: [lessonId], references: [id], onDelete: Restrict)
+  progress   LessonPlanItemProgress[]
   isRequired Boolean           @default(true)
 
   @@unique([versionId, position])
@@ -229,6 +230,7 @@ model LessonPlanAssignment {
   completedAt  DateTime?
   createdById  String
   createdBy    StudentProfile    @relation("AssignmentCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  progress     LessonPlanItemProgress[]
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
 
@@ -251,4 +253,16 @@ model AuditLog {
   @@index([actorId])
   @@index([entityType, entityId])
   @@index([createdAt])
+}
+
+model LessonPlanItemProgress {
+  id           String               @id @default(cuid())
+  assignmentId String
+  assignment   LessonPlanAssignment @relation(fields: [assignmentId], references: [id], onDelete: Restrict)
+  itemId       String
+  item         LessonPlanItem       @relation(fields: [itemId], references: [id], onDelete: Restrict)
+  completedAt  DateTime             @default(now())
+
+  @@unique([assignmentId, itemId])
+  @@index([itemId])
 }
