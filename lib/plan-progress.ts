@@ -105,7 +105,7 @@ export async function getStudentAssignments(studentId: string): Promise<Assignme
         completedAt: row.completedAt,
         requiredTotal: required.length,
         requiredDone: required.filter((i) => completedIds.has(i.id)).length,
-        doneItems: completedIds.size,
+        doneItems: items.filter((i) => completedIds.has(i.id)).length,
         nextLessonTitle: next?.lesson?.title ?? null,
         isOverdue: !row.completedAt && row.dueDate !== null && row.dueDate.getTime() < now,
         startsInFuture: row.startDate !== null && row.startDate.getTime() > now,

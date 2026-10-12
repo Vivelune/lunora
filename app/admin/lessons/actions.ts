@@ -163,6 +163,24 @@ export async function setLessonStatus(formData: FormData) {
   if (!TRANSITIONS[lesson.status]?.includes(to)) {
     redirect(`${base}?error=${encodeURIComponent("That status change is not allowed")}`);
   }
+    // Do not strand students: block taking a lesson offline while someone still
+  // needs it as a REQUIRED item in an unfinished, active assignment.
+  if (lesson.status === "PUBLISHED" && to !== "PUBLISHED") {
+    const stranded = await prisma.lessonPlanAssignment.count({
+      where: {
+        status: "ACTIVE",
+        completedAt: null,
+        version: { items: { some: { lessonId: id, isRequired: true } } },
+      },
+    });
+    if (stranded > 0) {
+      redirect(
+        `${base}?error=${encodeURIComponent(
+          `${stranded} student${stranded === 1 ? " is" : "s are"} still working on a plan that requires this lesson. Move them to a newer plan version or cancel their assignments first.`
+        )}`
+      );
+    }
+  }
 
   if (to === "PUBLISHED") {
     if (lesson.title.trim() === "" || lesson.content.trim() === "") {

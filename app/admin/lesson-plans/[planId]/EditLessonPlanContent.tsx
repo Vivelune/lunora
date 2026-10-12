@@ -1,8 +1,11 @@
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
+
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+
 import {
   addItem,
   moveItem,
@@ -13,6 +16,9 @@ import {
   toggleRequired,
   updatePlan,
 } from "../actions";
+import { OlderVersions } from "./older-versions";
+
+
 
 export default async function EditLessonPlanContent({
   params,
@@ -135,10 +141,7 @@ export default async function EditLessonPlanContent({
           </p>
         </div>
 
-        <Link
-          href="/admin/lesson-plans"
-          className="text-sm underline"
-        >
+        <Link href="/admin/lesson-plans" className="text-sm underline">
           Back to plans
         </Link>
       </header>
@@ -295,21 +298,9 @@ export default async function EditLessonPlanContent({
                 {editable && (
                   <div className="flex flex-wrap items-center gap-2">
                     <form action={moveItem}>
-                      <input
-                        type="hidden"
-                        name="planId"
-                        value={plan.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="itemId"
-                        value={item.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="direction"
-                        value="up"
-                      />
+                      <input type="hidden" name="planId" value={plan.id} />
+                      <input type="hidden" name="itemId" value={item.id} />
+                      <input type="hidden" name="direction" value="up" />
 
                       <button
                         type="submit"
@@ -321,21 +312,9 @@ export default async function EditLessonPlanContent({
                     </form>
 
                     <form action={moveItem}>
-                      <input
-                        type="hidden"
-                        name="planId"
-                        value={plan.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="itemId"
-                        value={item.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="direction"
-                        value="down"
-                      />
+                      <input type="hidden" name="planId" value={plan.id} />
+                      <input type="hidden" name="itemId" value={item.id} />
+                      <input type="hidden" name="direction" value="down" />
 
                       <button
                         type="submit"
@@ -347,16 +326,8 @@ export default async function EditLessonPlanContent({
                     </form>
 
                     <form action={toggleRequired}>
-                      <input
-                        type="hidden"
-                        name="planId"
-                        value={plan.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="itemId"
-                        value={item.id}
-                      />
+                      <input type="hidden" name="planId" value={plan.id} />
+                      <input type="hidden" name="itemId" value={item.id} />
 
                       <button type="submit" className={small}>
                         Make {item.isRequired ? "optional" : "required"}
@@ -364,16 +335,8 @@ export default async function EditLessonPlanContent({
                     </form>
 
                     <form action={removeItem}>
-                      <input
-                        type="hidden"
-                        name="planId"
-                        value={plan.id}
-                      />
-                      <input
-                        type="hidden"
-                        name="itemId"
-                        value={item.id}
-                      />
+                      <input type="hidden" name="planId" value={plan.id} />
+                      <input type="hidden" name="itemId" value={item.id} />
 
                       <button
                         type="submit"
@@ -438,11 +401,7 @@ export default async function EditLessonPlanContent({
         <div className="flex flex-wrap gap-2 border-t pt-4">
           {working && plan.status !== "ARCHIVED" && (
             <form action={publishPlan}>
-              <input
-                type="hidden"
-                name="planId"
-                value={plan.id}
-              />
+              <input type="hidden" name="planId" value={plan.id} />
 
               <button
                 type="submit"
@@ -455,11 +414,7 @@ export default async function EditLessonPlanContent({
 
           {!working && plan.status !== "ARCHIVED" && (
             <form action={startNewVersion}>
-              <input
-                type="hidden"
-                name="planId"
-                value={plan.id}
-              />
+              <input type="hidden" name="planId" value={plan.id} />
 
               <button
                 type="submit"
@@ -471,11 +426,7 @@ export default async function EditLessonPlanContent({
           )}
 
           <form action={setPlanArchived}>
-            <input
-              type="hidden"
-              name="planId"
-              value={plan.id}
-            />
+            <input type="hidden" name="planId" value={plan.id} />
             <input
               type="hidden"
               name="archive"
@@ -486,9 +437,7 @@ export default async function EditLessonPlanContent({
               type="submit"
               className="rounded border px-4 py-2 text-sm"
             >
-              {plan.status === "ARCHIVED"
-                ? "Restore plan"
-                : "Archive plan"}
+              {plan.status === "ARCHIVED" ? "Restore plan" : "Archive plan"}
             </button>
           </form>
         </div>
@@ -515,6 +464,18 @@ export default async function EditLessonPlanContent({
           ))}
         </ul>
       </section>
+
+      <Suspense
+        fallback={
+          <section className="rounded-lg border p-5">
+            <p className="text-sm text-gray-500">
+              Loading students on older versions...
+            </p>
+          </section>
+        }
+      >
+        <OlderVersions planId={plan.id} />
+      </Suspense>
     </main>
   );
 }
