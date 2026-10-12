@@ -52,7 +52,7 @@ export function formParams(get: (key: string) => string): URLSearchParams {
   return params;
 }
 
-function parseDay(
+export function parseDay(
   value: string,
   endOfDay: boolean
 ): { ok: true; date: Date | null } | { ok: false } {

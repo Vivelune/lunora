@@ -249,9 +249,10 @@ export default async function AdminAssignmentsContent({
             <tbody>
               {rows.map((assignment) => (
                 <tr key={assignment.id} className="border-b">
-                  <td className="py-2 pr-3">
-                    {assignment.student.lastName},{" "}
-                    {assignment.student.firstName}
+                                    <td className="py-2 pr-3">
+                    <Link href={`/admin/assignments/${assignment.id}`} className="underline">
+                      {assignment.student.lastName}, {assignment.student.firstName}
+                    </Link>
                   </td>
 
                   <td className="pr-3">
