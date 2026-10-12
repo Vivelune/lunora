@@ -45,8 +45,9 @@ export default async function AdminHomeContent() {
         >
           Manage student groups →
         </Link>
-        <Link href="/admin/lesson-plans" className="underline">Lesson plans</Link>
-        <Link href="/admin/assignments" className="underline">Assignments</Link>
+        <Link href="/admin/lesson-plans"className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Lesson plans</Link>
+        <Link href="/admin/assignments" className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Assignments</Link>
+        <Link href="/admin/exams" className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Examss</Link>
       </nav>
     </main>
   );

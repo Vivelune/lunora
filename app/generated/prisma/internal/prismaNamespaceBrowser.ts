@@ -63,7 +63,9 @@ export const ModelName = {
   LessonPlanItem: 'LessonPlanItem',
   LessonPlanAssignment: 'LessonPlanAssignment',
   AuditLog: 'AuditLog',
-  LessonPlanItemProgress: 'LessonPlanItemProgress'
+  LessonPlanItemProgress: 'LessonPlanItemProgress',
+  Exam: 'Exam',
+  ExamVersion: 'ExamVersion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -268,6 +270,45 @@ export const LessonPlanItemProgressScalarFieldEnum = {
 } as const
 
 export type LessonPlanItemProgressScalarFieldEnum = (typeof LessonPlanItemProgressScalarFieldEnum)[keyof typeof LessonPlanItemProgressScalarFieldEnum]
+
+
+export const ExamScalarFieldEnum = {
+  id: 'id',
+  subjectId: 'subjectId',
+  categoryId: 'categoryId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  availableFrom: 'availableFrom',
+  availableUntil: 'availableUntil',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
+
+
+export const ExamVersionScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  versionNumber: 'versionNumber',
+  publishedAt: 'publishedAt',
+  instructions: 'instructions',
+  durationMinutes: 'durationMinutes',
+  maxAttempts: 'maxAttempts',
+  passingPercent: 'passingPercent',
+  shuffleQuestions: 'shuffleQuestions',
+  shuffleOptions: 'shuffleOptions',
+  resultRelease: 'resultRelease',
+  explanationRelease: 'explanationRelease',
+  focusPolicy: 'focusPolicy',
+  maxFocusViolations: 'maxFocusViolations',
+  requireFullscreen: 'requireFullscreen',
+  createdAt: 'createdAt'
+} as const
+
+export type ExamVersionScalarFieldEnum = (typeof ExamVersionScalarFieldEnum)[keyof typeof ExamVersionScalarFieldEnum]
 
 
 export const SortOrder = {
