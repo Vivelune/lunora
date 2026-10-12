@@ -275,6 +275,7 @@ export type LessonPlanAssignmentWhereInput = {
   student?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
   group?: Prisma.XOR<Prisma.StudentGroupNullableScalarRelationFilter, Prisma.StudentGroupWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
+  progress?: Prisma.LessonPlanItemProgressListRelationFilter
 }
 
 export type LessonPlanAssignmentOrderByWithRelationInput = {
@@ -299,6 +300,7 @@ export type LessonPlanAssignmentOrderByWithRelationInput = {
   student?: Prisma.StudentProfileOrderByWithRelationInput
   group?: Prisma.StudentGroupOrderByWithRelationInput
   createdBy?: Prisma.StudentProfileOrderByWithRelationInput
+  progress?: Prisma.LessonPlanItemProgressOrderByRelationAggregateInput
 }
 
 export type LessonPlanAssignmentWhereUniqueInput = Prisma.AtLeast<{
@@ -327,6 +329,7 @@ export type LessonPlanAssignmentWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
   group?: Prisma.XOR<Prisma.StudentGroupNullableScalarRelationFilter, Prisma.StudentGroupWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
+  progress?: Prisma.LessonPlanItemProgressListRelationFilter
 }, "id" | "studentId_planId">
 
 export type LessonPlanAssignmentOrderByWithAggregationInput = {
@@ -390,6 +393,7 @@ export type LessonPlanAssignmentCreateInput = {
   student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
   group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateInput = {
@@ -409,6 +413,7 @@ export type LessonPlanAssignmentUncheckedCreateInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUpdateInput = {
@@ -428,6 +433,7 @@ export type LessonPlanAssignmentUpdateInput = {
   student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
   group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateInput = {
@@ -447,6 +453,7 @@ export type LessonPlanAssignmentUncheckedUpdateInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentCreateManyInput = {
@@ -571,6 +578,11 @@ export type LessonPlanAssignmentMinOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LessonPlanAssignmentScalarRelationFilter = {
+  is?: Prisma.LessonPlanAssignmentWhereInput
+  isNot?: Prisma.LessonPlanAssignmentWhereInput
 }
 
 export type LessonPlanAssignmentCreateNestedManyWithoutStudentInput = {
@@ -791,6 +803,20 @@ export type EnumAssignmentStatusFieldUpdateOperationsInput = {
   set?: $Enums.AssignmentStatus
 }
 
+export type LessonPlanAssignmentCreateNestedOneWithoutProgressInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanAssignmentCreateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.LessonPlanAssignmentCreateOrConnectWithoutProgressInput
+  connect?: Prisma.LessonPlanAssignmentWhereUniqueInput
+}
+
+export type LessonPlanAssignmentUpdateOneRequiredWithoutProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanAssignmentCreateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.LessonPlanAssignmentCreateOrConnectWithoutProgressInput
+  upsert?: Prisma.LessonPlanAssignmentUpsertWithoutProgressInput
+  connect?: Prisma.LessonPlanAssignmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LessonPlanAssignmentUpdateToOneWithWhereWithoutProgressInput, Prisma.LessonPlanAssignmentUpdateWithoutProgressInput>, Prisma.LessonPlanAssignmentUncheckedUpdateWithoutProgressInput>
+}
+
 export type LessonPlanAssignmentCreateWithoutStudentInput = {
   id?: string
   assignedAt?: Date | string
@@ -807,6 +833,7 @@ export type LessonPlanAssignmentCreateWithoutStudentInput = {
   version: Prisma.LessonPlanVersionCreateNestedOneWithoutAssignmentsInput
   group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateWithoutStudentInput = {
@@ -825,6 +852,7 @@ export type LessonPlanAssignmentUncheckedCreateWithoutStudentInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentCreateOrConnectWithoutStudentInput = {
@@ -853,6 +881,7 @@ export type LessonPlanAssignmentCreateWithoutCreatedByInput = {
   version: Prisma.LessonPlanVersionCreateNestedOneWithoutAssignmentsInput
   student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
   group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateWithoutCreatedByInput = {
@@ -871,6 +900,7 @@ export type LessonPlanAssignmentUncheckedCreateWithoutCreatedByInput = {
   completedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentCreateOrConnectWithoutCreatedByInput = {
@@ -953,6 +983,7 @@ export type LessonPlanAssignmentCreateWithoutGroupInput = {
   version: Prisma.LessonPlanVersionCreateNestedOneWithoutAssignmentsInput
   student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateWithoutGroupInput = {
@@ -971,6 +1002,7 @@ export type LessonPlanAssignmentUncheckedCreateWithoutGroupInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentCreateOrConnectWithoutGroupInput = {
@@ -1015,6 +1047,7 @@ export type LessonPlanAssignmentCreateWithoutPlanInput = {
   student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
   group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateWithoutPlanInput = {
@@ -1033,6 +1066,7 @@ export type LessonPlanAssignmentUncheckedCreateWithoutPlanInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentCreateOrConnectWithoutPlanInput = {
@@ -1077,6 +1111,7 @@ export type LessonPlanAssignmentCreateWithoutVersionInput = {
   student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
   group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+  progress?: Prisma.LessonPlanItemProgressCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentUncheckedCreateWithoutVersionInput = {
@@ -1095,6 +1130,7 @@ export type LessonPlanAssignmentUncheckedCreateWithoutVersionInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedCreateNestedManyWithoutAssignmentInput
 }
 
 export type LessonPlanAssignmentCreateOrConnectWithoutVersionInput = {
@@ -1121,6 +1157,98 @@ export type LessonPlanAssignmentUpdateWithWhereUniqueWithoutVersionInput = {
 export type LessonPlanAssignmentUpdateManyWithWhereWithoutVersionInput = {
   where: Prisma.LessonPlanAssignmentScalarWhereInput
   data: Prisma.XOR<Prisma.LessonPlanAssignmentUpdateManyMutationInput, Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutVersionInput>
+}
+
+export type LessonPlanAssignmentCreateWithoutProgressInput = {
+  id?: string
+  assignedAt?: Date | string
+  startDate?: Date | string | null
+  dueDate?: Date | string | null
+  priority?: $Enums.Priority
+  instructions?: string | null
+  status?: $Enums.AssignmentStatus
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  plan: Prisma.LessonPlanCreateNestedOneWithoutAssignmentsInput
+  version: Prisma.LessonPlanVersionCreateNestedOneWithoutAssignmentsInput
+  student: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput
+  group?: Prisma.StudentGroupCreateNestedOneWithoutAssignmentsInput
+  createdBy: Prisma.StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput
+}
+
+export type LessonPlanAssignmentUncheckedCreateWithoutProgressInput = {
+  id?: string
+  planId: string
+  versionId: string
+  studentId: string
+  groupId?: string | null
+  assignedAt?: Date | string
+  startDate?: Date | string | null
+  dueDate?: Date | string | null
+  priority?: $Enums.Priority
+  instructions?: string | null
+  status?: $Enums.AssignmentStatus
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  createdById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LessonPlanAssignmentCreateOrConnectWithoutProgressInput = {
+  where: Prisma.LessonPlanAssignmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.LessonPlanAssignmentCreateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedCreateWithoutProgressInput>
+}
+
+export type LessonPlanAssignmentUpsertWithoutProgressInput = {
+  update: Prisma.XOR<Prisma.LessonPlanAssignmentUpdateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedUpdateWithoutProgressInput>
+  create: Prisma.XOR<Prisma.LessonPlanAssignmentCreateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedCreateWithoutProgressInput>
+  where?: Prisma.LessonPlanAssignmentWhereInput
+}
+
+export type LessonPlanAssignmentUpdateToOneWithWhereWithoutProgressInput = {
+  where?: Prisma.LessonPlanAssignmentWhereInput
+  data: Prisma.XOR<Prisma.LessonPlanAssignmentUpdateWithoutProgressInput, Prisma.LessonPlanAssignmentUncheckedUpdateWithoutProgressInput>
+}
+
+export type LessonPlanAssignmentUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  assignedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAssignmentStatusFieldUpdateOperationsInput | $Enums.AssignmentStatus
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.LessonPlanUpdateOneRequiredWithoutAssignmentsNestedInput
+  version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutAssignmentsNestedInput
+  student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
+  group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
+  createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+}
+
+export type LessonPlanAssignmentUncheckedUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  versionId?: Prisma.StringFieldUpdateOperationsInput | string
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  instructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAssignmentStatusFieldUpdateOperationsInput | $Enums.AssignmentStatus
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonPlanAssignmentCreateManyStudentInput = {
@@ -1175,6 +1303,7 @@ export type LessonPlanAssignmentUpdateWithoutStudentInput = {
   version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutAssignmentsNestedInput
   group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateWithoutStudentInput = {
@@ -1193,6 +1322,7 @@ export type LessonPlanAssignmentUncheckedUpdateWithoutStudentInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateManyWithoutStudentInput = {
@@ -1229,6 +1359,7 @@ export type LessonPlanAssignmentUpdateWithoutCreatedByInput = {
   version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutAssignmentsNestedInput
   student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
   group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateWithoutCreatedByInput = {
@@ -1247,6 +1378,7 @@ export type LessonPlanAssignmentUncheckedUpdateWithoutCreatedByInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1301,6 +1433,7 @@ export type LessonPlanAssignmentUpdateWithoutGroupInput = {
   version?: Prisma.LessonPlanVersionUpdateOneRequiredWithoutAssignmentsNestedInput
   student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateWithoutGroupInput = {
@@ -1319,6 +1452,7 @@ export type LessonPlanAssignmentUncheckedUpdateWithoutGroupInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateManyWithoutGroupInput = {
@@ -1373,6 +1507,7 @@ export type LessonPlanAssignmentUpdateWithoutPlanInput = {
   student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
   group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateWithoutPlanInput = {
@@ -1391,6 +1526,7 @@ export type LessonPlanAssignmentUncheckedUpdateWithoutPlanInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateManyWithoutPlanInput = {
@@ -1445,6 +1581,7 @@ export type LessonPlanAssignmentUpdateWithoutVersionInput = {
   student?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput
   group?: Prisma.StudentGroupUpdateOneWithoutAssignmentsNestedInput
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput
+  progress?: Prisma.LessonPlanItemProgressUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateWithoutVersionInput = {
@@ -1463,6 +1600,7 @@ export type LessonPlanAssignmentUncheckedUpdateWithoutVersionInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.LessonPlanItemProgressUncheckedUpdateManyWithoutAssignmentNestedInput
 }
 
 export type LessonPlanAssignmentUncheckedUpdateManyWithoutVersionInput = {
@@ -1483,6 +1621,35 @@ export type LessonPlanAssignmentUncheckedUpdateManyWithoutVersionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type LessonPlanAssignmentCountOutputType
+ */
+
+export type LessonPlanAssignmentCountOutputType = {
+  progress: number
+}
+
+export type LessonPlanAssignmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  progress?: boolean | LessonPlanAssignmentCountOutputTypeCountProgressArgs
+}
+
+/**
+ * LessonPlanAssignmentCountOutputType without action
+ */
+export type LessonPlanAssignmentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanAssignmentCountOutputType
+   */
+  select?: Prisma.LessonPlanAssignmentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * LessonPlanAssignmentCountOutputType without action
+ */
+export type LessonPlanAssignmentCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanItemProgressWhereInput
+}
 
 
 export type LessonPlanAssignmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1507,6 +1674,8 @@ export type LessonPlanAssignmentSelect<ExtArgs extends runtime.Types.Extensions.
   student?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   group?: boolean | Prisma.LessonPlanAssignment$groupArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
+  progress?: boolean | Prisma.LessonPlanAssignment$progressArgs<ExtArgs>
+  _count?: boolean | Prisma.LessonPlanAssignmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lessonPlanAssignment"]>
 
 export type LessonPlanAssignmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1583,6 +1752,8 @@ export type LessonPlanAssignmentInclude<ExtArgs extends runtime.Types.Extensions
   student?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   group?: boolean | Prisma.LessonPlanAssignment$groupArgs<ExtArgs>
   createdBy?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
+  progress?: boolean | Prisma.LessonPlanAssignment$progressArgs<ExtArgs>
+  _count?: boolean | Prisma.LessonPlanAssignmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LessonPlanAssignmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.LessonPlanDefaultArgs<ExtArgs>
@@ -1607,6 +1778,7 @@ export type $LessonPlanAssignmentPayload<ExtArgs extends runtime.Types.Extension
     student: Prisma.$StudentProfilePayload<ExtArgs>
     group: Prisma.$StudentGroupPayload<ExtArgs> | null
     createdBy: Prisma.$StudentProfilePayload<ExtArgs>
+    progress: Prisma.$LessonPlanItemProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2024,6 +2196,7 @@ export interface Prisma__LessonPlanAssignmentClient<T, Null = never, ExtArgs ext
   student<T extends Prisma.StudentProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentProfileClient<runtime.Types.Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   group<T extends Prisma.LessonPlanAssignment$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanAssignment$groupArgs<ExtArgs>>): Prisma.Prisma__StudentGroupClient<runtime.Types.Result.GetResult<Prisma.$StudentGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.StudentProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentProfileClient<runtime.Types.Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  progress<T extends Prisma.LessonPlanAssignment$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanAssignment$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanItemProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2486,6 +2659,30 @@ export type LessonPlanAssignment$groupArgs<ExtArgs extends runtime.Types.Extensi
    */
   include?: Prisma.StudentGroupInclude<ExtArgs> | null
   where?: Prisma.StudentGroupWhereInput
+}
+
+/**
+ * LessonPlanAssignment.progress
+ */
+export type LessonPlanAssignment$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanItemProgress
+   */
+  select?: Prisma.LessonPlanItemProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlanItemProgress
+   */
+  omit?: Prisma.LessonPlanItemProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanItemProgressInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanItemProgressWhereInput
+  orderBy?: Prisma.LessonPlanItemProgressOrderByWithRelationInput | Prisma.LessonPlanItemProgressOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanItemProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanItemProgressScalarFieldEnum | Prisma.LessonPlanItemProgressScalarFieldEnum[]
 }
 
 /**

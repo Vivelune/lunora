@@ -101,3 +101,8 @@ export type LessonPlanAssignment = Prisma.LessonPlanAssignmentModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model LessonPlanItemProgress
+ * 
+ */
+export type LessonPlanItemProgress = Prisma.LessonPlanItemProgressModel

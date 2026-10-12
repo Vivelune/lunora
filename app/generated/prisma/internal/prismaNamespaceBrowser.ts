@@ -62,7 +62,8 @@ export const ModelName = {
   LessonPlanVersion: 'LessonPlanVersion',
   LessonPlanItem: 'LessonPlanItem',
   LessonPlanAssignment: 'LessonPlanAssignment',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  LessonPlanItemProgress: 'LessonPlanItemProgress'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -257,6 +258,16 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const LessonPlanItemProgressScalarFieldEnum = {
+  id: 'id',
+  assignmentId: 'assignmentId',
+  itemId: 'itemId',
+  completedAt: 'completedAt'
+} as const
+
+export type LessonPlanItemProgressScalarFieldEnum = (typeof LessonPlanItemProgressScalarFieldEnum)[keyof typeof LessonPlanItemProgressScalarFieldEnum]
 
 
 export const SortOrder = {
