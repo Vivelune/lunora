@@ -338,6 +338,40 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumReleasePolicyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReleasePolicy | Prisma.EnumReleasePolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel> | $Enums.ReleasePolicy
+}
+
+export type EnumFocusPolicyFilter<$PrismaModel = never> = {
+  equals?: $Enums.FocusPolicy | Prisma.EnumFocusPolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel> | $Enums.FocusPolicy
+}
+
+export type EnumReleasePolicyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReleasePolicy | Prisma.EnumReleasePolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReleasePolicyWithAggregatesFilter<$PrismaModel> | $Enums.ReleasePolicy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel>
+}
+
+export type EnumFocusPolicyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FocusPolicy | Prisma.EnumFocusPolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFocusPolicyWithAggregatesFilter<$PrismaModel> | $Enums.FocusPolicy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -646,6 +680,40 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumReleasePolicyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReleasePolicy | Prisma.EnumReleasePolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel> | $Enums.ReleasePolicy
+}
+
+export type NestedEnumFocusPolicyFilter<$PrismaModel = never> = {
+  equals?: $Enums.FocusPolicy | Prisma.EnumFocusPolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel> | $Enums.FocusPolicy
+}
+
+export type NestedEnumReleasePolicyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReleasePolicy | Prisma.EnumReleasePolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReleasePolicyWithAggregatesFilter<$PrismaModel> | $Enums.ReleasePolicy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReleasePolicyFilter<$PrismaModel>
+}
+
+export type NestedEnumFocusPolicyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FocusPolicy | Prisma.EnumFocusPolicyFieldRefInput<$PrismaModel>
+  in?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FocusPolicy[] | Prisma.ListEnumFocusPolicyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFocusPolicyWithAggregatesFilter<$PrismaModel> | $Enums.FocusPolicy
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFocusPolicyFilter<$PrismaModel>
 }
 
 

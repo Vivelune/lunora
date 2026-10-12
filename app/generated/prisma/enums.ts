@@ -48,3 +48,22 @@ export const Priority = {
 } as const
 
 export type Priority = (typeof Priority)[keyof typeof Priority]
+
+
+export const ReleasePolicy = {
+  IMMEDIATE: 'IMMEDIATE',
+  AFTER_DEADLINE: 'AFTER_DEADLINE',
+  MANUAL: 'MANUAL'
+} as const
+
+export type ReleasePolicy = (typeof ReleasePolicy)[keyof typeof ReleasePolicy]
+
+
+export const FocusPolicy = {
+  OFF: 'OFF',
+  LOG_ONLY: 'LOG_ONLY',
+  WARN_THEN_FLAG: 'WARN_THEN_FLAG',
+  AUTO_SUBMIT: 'AUTO_SUBMIT'
+} as const
+
+export type FocusPolicy = (typeof FocusPolicy)[keyof typeof FocusPolicy]

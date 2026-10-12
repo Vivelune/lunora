@@ -82,3 +82,13 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type LessonPlanItemProgress = Prisma.LessonPlanItemProgressModel
+/**
+ * Model Exam
+ * 
+ */
+export type Exam = Prisma.ExamModel
+/**
+ * Model ExamVersion
+ * 
+ */
+export type ExamVersion = Prisma.ExamVersionModel
