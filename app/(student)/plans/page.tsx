@@ -4,8 +4,6 @@ import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentAssignments } from "@/lib/plan-progress";
 import { PlanCard } from "./plan-card";
 
-// Use this when Cache Components is NOT enabled in next.config.ts.
-export const dynamic = "force-dynamic";
 
 export default async function PlansPage({
   searchParams,
