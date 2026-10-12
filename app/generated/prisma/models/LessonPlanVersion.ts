@@ -218,6 +218,7 @@ export type LessonPlanVersionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"LessonPlanVersion"> | Date | string
   plan?: Prisma.XOR<Prisma.LessonPlanScalarRelationFilter, Prisma.LessonPlanWhereInput>
   items?: Prisma.LessonPlanItemListRelationFilter
+  assignments?: Prisma.LessonPlanAssignmentListRelationFilter
 }
 
 export type LessonPlanVersionOrderByWithRelationInput = {
@@ -228,6 +229,7 @@ export type LessonPlanVersionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   plan?: Prisma.LessonPlanOrderByWithRelationInput
   items?: Prisma.LessonPlanItemOrderByRelationAggregateInput
+  assignments?: Prisma.LessonPlanAssignmentOrderByRelationAggregateInput
 }
 
 export type LessonPlanVersionWhereUniqueInput = Prisma.AtLeast<{
@@ -242,6 +244,7 @@ export type LessonPlanVersionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"LessonPlanVersion"> | Date | string
   plan?: Prisma.XOR<Prisma.LessonPlanScalarRelationFilter, Prisma.LessonPlanWhereInput>
   items?: Prisma.LessonPlanItemListRelationFilter
+  assignments?: Prisma.LessonPlanAssignmentListRelationFilter
 }, "id" | "planId_versionNumber">
 
 export type LessonPlanVersionOrderByWithAggregationInput = {
@@ -275,6 +278,7 @@ export type LessonPlanVersionCreateInput = {
   createdAt?: Date | string
   plan: Prisma.LessonPlanCreateNestedOneWithoutVersionsInput
   items?: Prisma.LessonPlanItemCreateNestedManyWithoutVersionInput
+  assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionUncheckedCreateInput = {
@@ -284,6 +288,7 @@ export type LessonPlanVersionUncheckedCreateInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   items?: Prisma.LessonPlanItemUncheckedCreateNestedManyWithoutVersionInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionUpdateInput = {
@@ -293,6 +298,7 @@ export type LessonPlanVersionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.LessonPlanUpdateOneRequiredWithoutVersionsNestedInput
   items?: Prisma.LessonPlanItemUpdateManyWithoutVersionNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionUncheckedUpdateInput = {
@@ -302,6 +308,7 @@ export type LessonPlanVersionUncheckedUpdateInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LessonPlanItemUncheckedUpdateManyWithoutVersionNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionCreateManyInput = {
@@ -435,12 +442,27 @@ export type LessonPlanVersionUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LessonPlanVersionUpdateToOneWithWhereWithoutItemsInput, Prisma.LessonPlanVersionUpdateWithoutItemsInput>, Prisma.LessonPlanVersionUncheckedUpdateWithoutItemsInput>
 }
 
+export type LessonPlanVersionCreateNestedOneWithoutAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanVersionCreateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.LessonPlanVersionCreateOrConnectWithoutAssignmentsInput
+  connect?: Prisma.LessonPlanVersionWhereUniqueInput
+}
+
+export type LessonPlanVersionUpdateOneRequiredWithoutAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonPlanVersionCreateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedCreateWithoutAssignmentsInput>
+  connectOrCreate?: Prisma.LessonPlanVersionCreateOrConnectWithoutAssignmentsInput
+  upsert?: Prisma.LessonPlanVersionUpsertWithoutAssignmentsInput
+  connect?: Prisma.LessonPlanVersionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LessonPlanVersionUpdateToOneWithWhereWithoutAssignmentsInput, Prisma.LessonPlanVersionUpdateWithoutAssignmentsInput>, Prisma.LessonPlanVersionUncheckedUpdateWithoutAssignmentsInput>
+}
+
 export type LessonPlanVersionCreateWithoutPlanInput = {
   id?: string
   versionNumber: number
   publishedAt?: Date | string | null
   createdAt?: Date | string
   items?: Prisma.LessonPlanItemCreateNestedManyWithoutVersionInput
+  assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionUncheckedCreateWithoutPlanInput = {
@@ -449,6 +471,7 @@ export type LessonPlanVersionUncheckedCreateWithoutPlanInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   items?: Prisma.LessonPlanItemUncheckedCreateNestedManyWithoutVersionInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionCreateOrConnectWithoutPlanInput = {
@@ -494,6 +517,7 @@ export type LessonPlanVersionCreateWithoutItemsInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   plan: Prisma.LessonPlanCreateNestedOneWithoutVersionsInput
+  assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionUncheckedCreateWithoutItemsInput = {
@@ -502,6 +526,7 @@ export type LessonPlanVersionUncheckedCreateWithoutItemsInput = {
   versionNumber: number
   publishedAt?: Date | string | null
   createdAt?: Date | string
+  assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutVersionInput
 }
 
 export type LessonPlanVersionCreateOrConnectWithoutItemsInput = {
@@ -526,6 +551,7 @@ export type LessonPlanVersionUpdateWithoutItemsInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.LessonPlanUpdateOneRequiredWithoutVersionsNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionUncheckedUpdateWithoutItemsInput = {
@@ -534,6 +560,59 @@ export type LessonPlanVersionUncheckedUpdateWithoutItemsInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutVersionNestedInput
+}
+
+export type LessonPlanVersionCreateWithoutAssignmentsInput = {
+  id?: string
+  versionNumber: number
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  plan: Prisma.LessonPlanCreateNestedOneWithoutVersionsInput
+  items?: Prisma.LessonPlanItemCreateNestedManyWithoutVersionInput
+}
+
+export type LessonPlanVersionUncheckedCreateWithoutAssignmentsInput = {
+  id?: string
+  planId: string
+  versionNumber: number
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  items?: Prisma.LessonPlanItemUncheckedCreateNestedManyWithoutVersionInput
+}
+
+export type LessonPlanVersionCreateOrConnectWithoutAssignmentsInput = {
+  where: Prisma.LessonPlanVersionWhereUniqueInput
+  create: Prisma.XOR<Prisma.LessonPlanVersionCreateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedCreateWithoutAssignmentsInput>
+}
+
+export type LessonPlanVersionUpsertWithoutAssignmentsInput = {
+  update: Prisma.XOR<Prisma.LessonPlanVersionUpdateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedUpdateWithoutAssignmentsInput>
+  create: Prisma.XOR<Prisma.LessonPlanVersionCreateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedCreateWithoutAssignmentsInput>
+  where?: Prisma.LessonPlanVersionWhereInput
+}
+
+export type LessonPlanVersionUpdateToOneWithWhereWithoutAssignmentsInput = {
+  where?: Prisma.LessonPlanVersionWhereInput
+  data: Prisma.XOR<Prisma.LessonPlanVersionUpdateWithoutAssignmentsInput, Prisma.LessonPlanVersionUncheckedUpdateWithoutAssignmentsInput>
+}
+
+export type LessonPlanVersionUpdateWithoutAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.LessonPlanUpdateOneRequiredWithoutVersionsNestedInput
+  items?: Prisma.LessonPlanItemUpdateManyWithoutVersionNestedInput
+}
+
+export type LessonPlanVersionUncheckedUpdateWithoutAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.LessonPlanItemUncheckedUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionCreateManyPlanInput = {
@@ -549,6 +628,7 @@ export type LessonPlanVersionUpdateWithoutPlanInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LessonPlanItemUpdateManyWithoutVersionNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionUncheckedUpdateWithoutPlanInput = {
@@ -557,6 +637,7 @@ export type LessonPlanVersionUncheckedUpdateWithoutPlanInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.LessonPlanItemUncheckedUpdateManyWithoutVersionNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutVersionNestedInput
 }
 
 export type LessonPlanVersionUncheckedUpdateManyWithoutPlanInput = {
@@ -573,10 +654,12 @@ export type LessonPlanVersionUncheckedUpdateManyWithoutPlanInput = {
 
 export type LessonPlanVersionCountOutputType = {
   items: number
+  assignments: number
 }
 
 export type LessonPlanVersionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | LessonPlanVersionCountOutputTypeCountItemsArgs
+  assignments?: boolean | LessonPlanVersionCountOutputTypeCountAssignmentsArgs
 }
 
 /**
@@ -596,6 +679,13 @@ export type LessonPlanVersionCountOutputTypeCountItemsArgs<ExtArgs extends runti
   where?: Prisma.LessonPlanItemWhereInput
 }
 
+/**
+ * LessonPlanVersionCountOutputType without action
+ */
+export type LessonPlanVersionCountOutputTypeCountAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanAssignmentWhereInput
+}
+
 
 export type LessonPlanVersionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -605,6 +695,7 @@ export type LessonPlanVersionSelect<ExtArgs extends runtime.Types.Extensions.Int
   createdAt?: boolean
   plan?: boolean | Prisma.LessonPlanDefaultArgs<ExtArgs>
   items?: boolean | Prisma.LessonPlanVersion$itemsArgs<ExtArgs>
+  assignments?: boolean | Prisma.LessonPlanVersion$assignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonPlanVersionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lessonPlanVersion"]>
 
@@ -638,6 +729,7 @@ export type LessonPlanVersionOmit<ExtArgs extends runtime.Types.Extensions.Inter
 export type LessonPlanVersionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.LessonPlanDefaultArgs<ExtArgs>
   items?: boolean | Prisma.LessonPlanVersion$itemsArgs<ExtArgs>
+  assignments?: boolean | Prisma.LessonPlanVersion$assignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonPlanVersionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LessonPlanVersionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -652,6 +744,7 @@ export type $LessonPlanVersionPayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     plan: Prisma.$LessonPlanPayload<ExtArgs>
     items: Prisma.$LessonPlanItemPayload<ExtArgs>[]
+    assignments: Prisma.$LessonPlanAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1055,6 +1148,7 @@ export interface Prisma__LessonPlanVersionClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   plan<T extends Prisma.LessonPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__LessonPlanClient<runtime.Types.Result.GetResult<Prisma.$LessonPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.LessonPlanVersion$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanVersion$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignments<T extends Prisma.LessonPlanVersion$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPlanVersion$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1511,6 +1605,30 @@ export type LessonPlanVersion$itemsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.LessonPlanItemScalarFieldEnum | Prisma.LessonPlanItemScalarFieldEnum[]
+}
+
+/**
+ * LessonPlanVersion.assignments
+ */
+export type LessonPlanVersion$assignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanAssignment
+   */
+  select?: Prisma.LessonPlanAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlanAssignment
+   */
+  omit?: Prisma.LessonPlanAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanAssignmentWhereInput
+  orderBy?: Prisma.LessonPlanAssignmentOrderByWithRelationInput | Prisma.LessonPlanAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanAssignmentScalarFieldEnum | Prisma.LessonPlanAssignmentScalarFieldEnum[]
 }
 
 /**

@@ -31,3 +31,20 @@ export const PlanItemType = {
 } as const
 
 export type PlanItemType = (typeof PlanItemType)[keyof typeof PlanItemType]
+
+
+export const AssignmentStatus = {
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type AssignmentStatus = (typeof AssignmentStatus)[keyof typeof AssignmentStatus]
+
+
+export const Priority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH'
+} as const
+
+export type Priority = (typeof Priority)[keyof typeof Priority]

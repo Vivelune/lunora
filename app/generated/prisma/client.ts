@@ -91,3 +91,13 @@ export type LessonPlanVersion = Prisma.LessonPlanVersionModel
  * 
  */
 export type LessonPlanItem = Prisma.LessonPlanItemModel
+/**
+ * Model LessonPlanAssignment
+ * 
+ */
+export type LessonPlanAssignment = Prisma.LessonPlanAssignmentModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
