@@ -47,7 +47,7 @@ export default async function AdminHomeContent() {
         </Link>
         <Link href="/admin/lesson-plans"className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Lesson plans</Link>
         <Link href="/admin/assignments" className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Assignments</Link>
-        <Link href="/admin/exams" className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Exams</Link>
+        <Link href="/admin/exams" className="rounded-lg border p-4 font-medium transition hover:bg-gray-50">Examss</Link>
       </nav>
     </main>
   );
