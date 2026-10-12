@@ -30,6 +30,9 @@ model StudentProfile {
   groupsCreated         StudentGroup[]
   plansCreated          LessonPlan[]
   groupMemberships      StudentGroupMembership[]
+  assignmentsReceived   LessonPlanAssignment[] @relation("AssignmentStudent")
+  assignmentsCreated    LessonPlanAssignment[] @relation("AssignmentCreator")
+  auditLogs             AuditLog[]
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
@@ -126,6 +129,7 @@ model StudentGroup {
   createdById String
   createdBy   StudentProfile           @relation(fields: [createdById], references: [id], onDelete: Restrict)
   memberships StudentGroupMembership[]
+  assignments LessonPlanAssignment[]
   createdAt   DateTime                 @default(now())
   updatedAt   DateTime                 @updatedAt
 }
@@ -159,6 +163,7 @@ model LessonPlan {
   createdById String
   createdBy   StudentProfile      @relation(fields: [createdById], references: [id], onDelete: Restrict)
   versions    LessonPlanVersion[]
+  assignments LessonPlanAssignment[]
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
 
@@ -172,6 +177,7 @@ model LessonPlanVersion {
   versionNumber Int
   publishedAt   DateTime?
   items         LessonPlanItem[]
+  assignments   LessonPlanAssignment[]
   createdAt     DateTime         @default(now())
 
   @@unique([planId, versionNumber])
@@ -190,4 +196,59 @@ model LessonPlanItem {
   @@unique([versionId, position])
   @@unique([versionId, lessonId])
   @@index([lessonId])
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+}
+
+model LessonPlanAssignment {
+  id           String            @id @default(cuid())
+  planId       String
+  plan         LessonPlan        @relation(fields: [planId], references: [id], onDelete: Restrict)
+  versionId    String
+  version      LessonPlanVersion @relation(fields: [versionId], references: [id], onDelete: Restrict)
+  studentId    String
+  student      StudentProfile    @relation("AssignmentStudent", fields: [studentId], references: [id], onDelete: Restrict)
+  groupId      String?
+  group        StudentGroup?     @relation(fields: [groupId], references: [id], onDelete: Restrict)
+  assignedAt   DateTime          @default(now())
+  startDate    DateTime?
+  dueDate      DateTime?
+  priority     Priority          @default(NORMAL)
+  instructions String?
+  status       AssignmentStatus  @default(ACTIVE)
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdById  String
+  createdBy    StudentProfile    @relation("AssignmentCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([studentId, planId])
+  @@index([planId])
+  @@index([studentId, status])
+  @@index([groupId])
+}
+
+model AuditLog {
+  id         String         @id @default(cuid())
+  actorId    String
+  actor      StudentProfile @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  action     String
+  entityType String
+  entityId   String?
+  details    Json?
+  createdAt  DateTime       @default(now())
+
+  @@index([actorId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
 }

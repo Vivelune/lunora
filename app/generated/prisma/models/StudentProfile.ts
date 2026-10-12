@@ -227,6 +227,9 @@ export type StudentProfileWhereInput = {
   groupsCreated?: Prisma.StudentGroupListRelationFilter
   plansCreated?: Prisma.LessonPlanListRelationFilter
   groupMemberships?: Prisma.StudentGroupMembershipListRelationFilter
+  assignmentsReceived?: Prisma.LessonPlanAssignmentListRelationFilter
+  assignmentsCreated?: Prisma.LessonPlanAssignmentListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
 export type StudentProfileOrderByWithRelationInput = {
@@ -245,6 +248,9 @@ export type StudentProfileOrderByWithRelationInput = {
   groupsCreated?: Prisma.StudentGroupOrderByRelationAggregateInput
   plansCreated?: Prisma.LessonPlanOrderByRelationAggregateInput
   groupMemberships?: Prisma.StudentGroupMembershipOrderByRelationAggregateInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentOrderByRelationAggregateInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
 export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +272,9 @@ export type StudentProfileWhereUniqueInput = Prisma.AtLeast<{
   groupsCreated?: Prisma.StudentGroupListRelationFilter
   plansCreated?: Prisma.LessonPlanListRelationFilter
   groupMemberships?: Prisma.StudentGroupMembershipListRelationFilter
+  assignmentsReceived?: Prisma.LessonPlanAssignmentListRelationFilter
+  assignmentsCreated?: Prisma.LessonPlanAssignmentListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "clerkUserId">
 
 export type StudentProfileOrderByWithAggregationInput = {
@@ -316,6 +325,9 @@ export type StudentProfileCreateInput = {
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateInput = {
@@ -334,6 +346,9 @@ export type StudentProfileUncheckedCreateInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUpdateInput = {
@@ -352,6 +367,9 @@ export type StudentProfileUpdateInput = {
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateInput = {
@@ -370,6 +388,9 @@ export type StudentProfileUncheckedUpdateInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileCreateManyInput = {
@@ -545,6 +566,48 @@ export type StudentProfileUpdateOneRequiredWithoutPlansCreatedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutPlansCreatedInput, Prisma.StudentProfileUpdateWithoutPlansCreatedInput>, Prisma.StudentProfileUncheckedUpdateWithoutPlansCreatedInput>
 }
 
+export type StudentProfileCreateNestedOneWithoutAssignmentsReceivedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsReceivedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAssignmentsReceivedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+}
+
+export type StudentProfileCreateNestedOneWithoutAssignmentsCreatedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsCreatedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAssignmentsCreatedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+}
+
+export type StudentProfileUpdateOneRequiredWithoutAssignmentsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsReceivedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAssignmentsReceivedInput
+  upsert?: Prisma.StudentProfileUpsertWithoutAssignmentsReceivedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutAssignmentsReceivedInput, Prisma.StudentProfileUpdateWithoutAssignmentsReceivedInput>, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsReceivedInput>
+}
+
+export type StudentProfileUpdateOneRequiredWithoutAssignmentsCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsCreatedInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAssignmentsCreatedInput
+  upsert?: Prisma.StudentProfileUpsertWithoutAssignmentsCreatedInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutAssignmentsCreatedInput, Prisma.StudentProfileUpdateWithoutAssignmentsCreatedInput>, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsCreatedInput>
+}
+
+export type StudentProfileCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+}
+
+export type StudentProfileUpdateOneRequiredWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentProfileCreateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.StudentProfileCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.StudentProfileUpsertWithoutAuditLogsInput
+  connect?: Prisma.StudentProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentProfileUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.StudentProfileUpdateWithoutAuditLogsInput>, Prisma.StudentProfileUncheckedUpdateWithoutAuditLogsInput>
+}
+
 export type StudentProfileCreateWithoutLessonsCreatedInput = {
   id?: string
   clerkUserId: string
@@ -560,6 +623,9 @@ export type StudentProfileCreateWithoutLessonsCreatedInput = {
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateWithoutLessonsCreatedInput = {
@@ -577,6 +643,9 @@ export type StudentProfileUncheckedCreateWithoutLessonsCreatedInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileCreateOrConnectWithoutLessonsCreatedInput = {
@@ -610,6 +679,9 @@ export type StudentProfileUpdateWithoutLessonsCreatedInput = {
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
@@ -627,6 +699,9 @@ export type StudentProfileUncheckedUpdateWithoutLessonsCreatedInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileCreateWithoutResourcesUploadedInput = {
@@ -644,6 +719,9 @@ export type StudentProfileCreateWithoutResourcesUploadedInput = {
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateWithoutResourcesUploadedInput = {
@@ -661,6 +739,9 @@ export type StudentProfileUncheckedCreateWithoutResourcesUploadedInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileCreateOrConnectWithoutResourcesUploadedInput = {
@@ -694,6 +775,9 @@ export type StudentProfileUpdateWithoutResourcesUploadedInput = {
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutResourcesUploadedInput = {
@@ -711,6 +795,9 @@ export type StudentProfileUncheckedUpdateWithoutResourcesUploadedInput = {
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileCreateWithoutGroupsCreatedInput = {
@@ -728,6 +815,9 @@ export type StudentProfileCreateWithoutGroupsCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateWithoutGroupsCreatedInput = {
@@ -745,6 +835,9 @@ export type StudentProfileUncheckedCreateWithoutGroupsCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileCreateOrConnectWithoutGroupsCreatedInput = {
@@ -778,6 +871,9 @@ export type StudentProfileUpdateWithoutGroupsCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutGroupsCreatedInput = {
@@ -795,6 +891,9 @@ export type StudentProfileUncheckedUpdateWithoutGroupsCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileCreateWithoutGroupMembershipsInput = {
@@ -812,6 +911,9 @@ export type StudentProfileCreateWithoutGroupMembershipsInput = {
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateWithoutGroupMembershipsInput = {
@@ -829,6 +931,9 @@ export type StudentProfileUncheckedCreateWithoutGroupMembershipsInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
   plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileCreateOrConnectWithoutGroupMembershipsInput = {
@@ -862,6 +967,9 @@ export type StudentProfileUpdateWithoutGroupMembershipsInput = {
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutGroupMembershipsInput = {
@@ -879,6 +987,9 @@ export type StudentProfileUncheckedUpdateWithoutGroupMembershipsInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
   plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileCreateWithoutPlansCreatedInput = {
@@ -896,6 +1007,9 @@ export type StudentProfileCreateWithoutPlansCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileUncheckedCreateWithoutPlansCreatedInput = {
@@ -913,6 +1027,9 @@ export type StudentProfileUncheckedCreateWithoutPlansCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
   groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type StudentProfileCreateOrConnectWithoutPlansCreatedInput = {
@@ -946,6 +1063,9 @@ export type StudentProfileUpdateWithoutPlansCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type StudentProfileUncheckedUpdateWithoutPlansCreatedInput = {
@@ -963,6 +1083,297 @@ export type StudentProfileUncheckedUpdateWithoutPlansCreatedInput = {
   resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
   groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
   groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type StudentProfileCreateWithoutAssignmentsReceivedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type StudentProfileUncheckedCreateWithoutAssignmentsReceivedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type StudentProfileCreateOrConnectWithoutAssignmentsReceivedInput = {
+  where: Prisma.StudentProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsReceivedInput>
+}
+
+export type StudentProfileCreateWithoutAssignmentsCreatedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type StudentProfileUncheckedCreateWithoutAssignmentsCreatedInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type StudentProfileCreateOrConnectWithoutAssignmentsCreatedInput = {
+  where: Prisma.StudentProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsCreatedInput>
+}
+
+export type StudentProfileUpsertWithoutAssignmentsReceivedInput = {
+  update: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsReceivedInput>
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsReceivedInput>
+  where?: Prisma.StudentProfileWhereInput
+}
+
+export type StudentProfileUpdateToOneWithWhereWithoutAssignmentsReceivedInput = {
+  where?: Prisma.StudentProfileWhereInput
+  data: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAssignmentsReceivedInput, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsReceivedInput>
+}
+
+export type StudentProfileUpdateWithoutAssignmentsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type StudentProfileUncheckedUpdateWithoutAssignmentsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type StudentProfileUpsertWithoutAssignmentsCreatedInput = {
+  update: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsCreatedInput>
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedCreateWithoutAssignmentsCreatedInput>
+  where?: Prisma.StudentProfileWhereInput
+}
+
+export type StudentProfileUpdateToOneWithWhereWithoutAssignmentsCreatedInput = {
+  where?: Prisma.StudentProfileWhereInput
+  data: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAssignmentsCreatedInput, Prisma.StudentProfileUncheckedUpdateWithoutAssignmentsCreatedInput>
+}
+
+export type StudentProfileUpdateWithoutAssignmentsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type StudentProfileUncheckedUpdateWithoutAssignmentsCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type StudentProfileCreateWithoutAuditLogsInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutCreatedByInput
+}
+
+export type StudentProfileUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  clerkUserId: string
+  role?: $Enums.Role
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  gradeLevel?: string | null
+  onboardingCompletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonsCreated?: Prisma.LessonUncheckedCreateNestedManyWithoutCreatedByInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedCreateNestedManyWithoutUploadedByInput
+  groupsCreated?: Prisma.StudentGroupUncheckedCreateNestedManyWithoutCreatedByInput
+  plansCreated?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCreatedByInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutStudentInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type StudentProfileCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.StudentProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type StudentProfileUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.StudentProfileCreateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.StudentProfileWhereInput
+}
+
+export type StudentProfileUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.StudentProfileWhereInput
+  data: Prisma.XOR<Prisma.StudentProfileUpdateWithoutAuditLogsInput, Prisma.StudentProfileUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type StudentProfileUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUpdateManyWithoutCreatedByNestedInput
+}
+
+export type StudentProfileUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradeLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardingCompletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonsCreated?: Prisma.LessonUncheckedUpdateManyWithoutCreatedByNestedInput
+  resourcesUploaded?: Prisma.LearningResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+  groupsCreated?: Prisma.StudentGroupUncheckedUpdateManyWithoutCreatedByNestedInput
+  plansCreated?: Prisma.LessonPlanUncheckedUpdateManyWithoutCreatedByNestedInput
+  groupMemberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsReceived?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  assignmentsCreated?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -976,6 +1387,9 @@ export type StudentProfileCountOutputType = {
   groupsCreated: number
   plansCreated: number
   groupMemberships: number
+  assignmentsReceived: number
+  assignmentsCreated: number
+  auditLogs: number
 }
 
 export type StudentProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -984,6 +1398,9 @@ export type StudentProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Ex
   groupsCreated?: boolean | StudentProfileCountOutputTypeCountGroupsCreatedArgs
   plansCreated?: boolean | StudentProfileCountOutputTypeCountPlansCreatedArgs
   groupMemberships?: boolean | StudentProfileCountOutputTypeCountGroupMembershipsArgs
+  assignmentsReceived?: boolean | StudentProfileCountOutputTypeCountAssignmentsReceivedArgs
+  assignmentsCreated?: boolean | StudentProfileCountOutputTypeCountAssignmentsCreatedArgs
+  auditLogs?: boolean | StudentProfileCountOutputTypeCountAuditLogsArgs
 }
 
 /**
@@ -1031,6 +1448,27 @@ export type StudentProfileCountOutputTypeCountGroupMembershipsArgs<ExtArgs exten
   where?: Prisma.StudentGroupMembershipWhereInput
 }
 
+/**
+ * StudentProfileCountOutputType without action
+ */
+export type StudentProfileCountOutputTypeCountAssignmentsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanAssignmentWhereInput
+}
+
+/**
+ * StudentProfileCountOutputType without action
+ */
+export type StudentProfileCountOutputTypeCountAssignmentsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonPlanAssignmentWhereInput
+}
+
+/**
+ * StudentProfileCountOutputType without action
+ */
+export type StudentProfileCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
+
 
 export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1048,6 +1486,9 @@ export type StudentProfileSelect<ExtArgs extends runtime.Types.Extensions.Intern
   groupsCreated?: boolean | Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>
   plansCreated?: boolean | Prisma.StudentProfile$plansCreatedArgs<ExtArgs>
   groupMemberships?: boolean | Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>
+  assignmentsReceived?: boolean | Prisma.StudentProfile$assignmentsReceivedArgs<ExtArgs>
+  assignmentsCreated?: boolean | Prisma.StudentProfile$assignmentsCreatedArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.StudentProfile$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentProfile"]>
 
@@ -1097,6 +1538,9 @@ export type StudentProfileInclude<ExtArgs extends runtime.Types.Extensions.Inter
   groupsCreated?: boolean | Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>
   plansCreated?: boolean | Prisma.StudentProfile$plansCreatedArgs<ExtArgs>
   groupMemberships?: boolean | Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>
+  assignmentsReceived?: boolean | Prisma.StudentProfile$assignmentsReceivedArgs<ExtArgs>
+  assignmentsCreated?: boolean | Prisma.StudentProfile$assignmentsCreatedArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.StudentProfile$auditLogsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1110,6 +1554,9 @@ export type $StudentProfilePayload<ExtArgs extends runtime.Types.Extensions.Inte
     groupsCreated: Prisma.$StudentGroupPayload<ExtArgs>[]
     plansCreated: Prisma.$LessonPlanPayload<ExtArgs>[]
     groupMemberships: Prisma.$StudentGroupMembershipPayload<ExtArgs>[]
+    assignmentsReceived: Prisma.$LessonPlanAssignmentPayload<ExtArgs>[]
+    assignmentsCreated: Prisma.$LessonPlanAssignmentPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1521,6 +1968,9 @@ export interface Prisma__StudentProfileClient<T, Null = never, ExtArgs extends r
   groupsCreated<T extends Prisma.StudentProfile$groupsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$groupsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   plansCreated<T extends Prisma.StudentProfile$plansCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$plansCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groupMemberships<T extends Prisma.StudentProfile$groupMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentGroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignmentsReceived<T extends Prisma.StudentProfile$assignmentsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$assignmentsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignmentsCreated<T extends Prisma.StudentProfile$assignmentsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$assignmentsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.StudentProfile$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfile$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2070,6 +2520,78 @@ export type StudentProfile$groupMembershipsArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.StudentGroupMembershipScalarFieldEnum | Prisma.StudentGroupMembershipScalarFieldEnum[]
+}
+
+/**
+ * StudentProfile.assignmentsReceived
+ */
+export type StudentProfile$assignmentsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanAssignment
+   */
+  select?: Prisma.LessonPlanAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlanAssignment
+   */
+  omit?: Prisma.LessonPlanAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanAssignmentWhereInput
+  orderBy?: Prisma.LessonPlanAssignmentOrderByWithRelationInput | Prisma.LessonPlanAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanAssignmentScalarFieldEnum | Prisma.LessonPlanAssignmentScalarFieldEnum[]
+}
+
+/**
+ * StudentProfile.assignmentsCreated
+ */
+export type StudentProfile$assignmentsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LessonPlanAssignment
+   */
+  select?: Prisma.LessonPlanAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LessonPlanAssignment
+   */
+  omit?: Prisma.LessonPlanAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonPlanAssignmentInclude<ExtArgs> | null
+  where?: Prisma.LessonPlanAssignmentWhereInput
+  orderBy?: Prisma.LessonPlanAssignmentOrderByWithRelationInput | Prisma.LessonPlanAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.LessonPlanAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonPlanAssignmentScalarFieldEnum | Prisma.LessonPlanAssignmentScalarFieldEnum[]
+}
+
+/**
+ * StudentProfile.auditLogs
+ */
+export type StudentProfile$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
 }
 
 /**
