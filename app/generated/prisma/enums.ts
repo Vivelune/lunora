@@ -67,3 +67,13 @@ export const FocusPolicy = {
 } as const
 
 export type FocusPolicy = (typeof FocusPolicy)[keyof typeof FocusPolicy]
+
+
+export const QuestionType = {
+  SINGLE_CHOICE: 'SINGLE_CHOICE',
+  MULTIPLE_SELECT: 'MULTIPLE_SELECT',
+  TRUE_FALSE: 'TRUE_FALSE',
+  SHORT_ANSWER: 'SHORT_ANSWER'
+} as const
+
+export type QuestionType = (typeof QuestionType)[keyof typeof QuestionType]

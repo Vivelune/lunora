@@ -116,3 +116,13 @@ export type Exam = Prisma.ExamModel
  * 
  */
 export type ExamVersion = Prisma.ExamVersionModel
+/**
+ * Model Question
+ * 
+ */
+export type Question = Prisma.QuestionModel
+/**
+ * Model AnswerOption
+ * 
+ */
+export type AnswerOption = Prisma.AnswerOptionModel
