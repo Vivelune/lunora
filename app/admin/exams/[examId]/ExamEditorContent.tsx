@@ -13,6 +13,7 @@ import prisma from "@/lib/prisma";
 
 import { setExamArchived, updateExamDetails } from "../actions";
 import { ExamSettingsForm } from "./exam-settings-form";
+import { QuestionsSection } from "./questions-section";
 
 const day = (date: Date | null) =>
   date ? date.toISOString().slice(0, 10) : "";
@@ -258,10 +259,7 @@ export default async function ExamEditorContent({
         )}
       </section>
 
-      <section className="rounded-lg border border-dashed p-5 text-sm text-gray-500">
-        Questions are added in the next step (9.2), and publishing comes in
-        9.4.
-      </section>
+      <QuestionsSection examId={exam.id} />
 
       <form action={setExamArchived}>
         <input type="hidden" name="examId" value={exam.id} />

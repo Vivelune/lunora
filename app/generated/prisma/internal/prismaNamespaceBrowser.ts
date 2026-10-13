@@ -65,7 +65,9 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   LessonPlanItemProgress: 'LessonPlanItemProgress',
   Exam: 'Exam',
-  ExamVersion: 'ExamVersion'
+  ExamVersion: 'ExamVersion',
+  Question: 'Question',
+  AnswerOption: 'AnswerOption'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -309,6 +311,34 @@ export const ExamVersionScalarFieldEnum = {
 } as const
 
 export type ExamVersionScalarFieldEnum = (typeof ExamVersionScalarFieldEnum)[keyof typeof ExamVersionScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  versionId: 'versionId',
+  position: 'position',
+  type: 'type',
+  prompt: 'prompt',
+  points: 'points',
+  explanation: 'explanation',
+  categoryId: 'categoryId',
+  acceptedAnswers: 'acceptedAnswers',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+export const AnswerOptionScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  position: 'position',
+  text: 'text',
+  isCorrect: 'isCorrect'
+} as const
+
+export type AnswerOptionScalarFieldEnum = (typeof AnswerOptionScalarFieldEnum)[keyof typeof AnswerOptionScalarFieldEnum]
 
 
 export const SortOrder = {

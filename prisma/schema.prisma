@@ -65,6 +65,7 @@ model Category {
   lessons     Lesson[]
   lessonPlans LessonPlan[]
   exams       Exam[]
+  questions   Question[]
   slug        String
   name        String
   description String?
@@ -320,7 +321,46 @@ model ExamVersion {
   focusPolicy        FocusPolicy   @default(OFF)
   maxFocusViolations Int           @default(3)
   requireFullscreen  Boolean       @default(false)
+  questions          Question[]
   createdAt          DateTime      @default(now())
 
   @@unique([examId, versionNumber])
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTIPLE_SELECT
+  TRUE_FALSE
+  SHORT_ANSWER
+}
+
+model Question {
+  id              String         @id @default(cuid())
+  versionId       String
+  version         ExamVersion    @relation(fields: [versionId], references: [id], onDelete: Restrict)
+  position        Int
+  type            QuestionType
+  prompt          String
+  points          Decimal        @db.Decimal(6, 2)
+  explanation     String?
+  categoryId      String?
+  category        Category?      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  acceptedAnswers String[]
+  options         AnswerOption[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([versionId, position])
+  @@index([categoryId])
+}
+
+model AnswerOption {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  position   Int
+  text       String
+  isCorrect  Boolean
+
+  @@unique([questionId, position])
 }

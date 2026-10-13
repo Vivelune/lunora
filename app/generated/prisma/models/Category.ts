@@ -252,6 +252,7 @@ export type CategoryWhereInput = {
   lessons?: Prisma.LessonListRelationFilter
   lessonPlans?: Prisma.LessonPlanListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  questions?: Prisma.QuestionListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -268,6 +269,7 @@ export type CategoryOrderByWithRelationInput = {
   lessons?: Prisma.LessonOrderByRelationAggregateInput
   lessonPlans?: Prisma.LessonPlanOrderByRelationAggregateInput
   exams?: Prisma.ExamOrderByRelationAggregateInput
+  questions?: Prisma.QuestionOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -288,6 +290,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   lessons?: Prisma.LessonListRelationFilter
   lessonPlans?: Prisma.LessonPlanListRelationFilter
   exams?: Prisma.ExamListRelationFilter
+  questions?: Prisma.QuestionListRelationFilter
 }, "id" | "subjectId_slug">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -335,6 +338,7 @@ export type CategoryCreateInput = {
   lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -350,6 +354,7 @@ export type CategoryUncheckedCreateInput = {
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -365,6 +370,7 @@ export type CategoryUpdateInput = {
   lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -380,6 +386,7 @@ export type CategoryUncheckedUpdateInput = {
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUncheckedUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -571,6 +578,22 @@ export type CategoryUpdateOneWithoutExamsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutExamsInput, Prisma.CategoryUpdateWithoutExamsInput>, Prisma.CategoryUncheckedUpdateWithoutExamsInput>
 }
 
+export type CategoryCreateNestedOneWithoutQuestionsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutQuestionsInput, Prisma.CategoryUncheckedCreateWithoutQuestionsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutQuestionsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutQuestionsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutQuestionsInput, Prisma.CategoryUncheckedCreateWithoutQuestionsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutQuestionsInput
+  upsert?: Prisma.CategoryUpsertWithoutQuestionsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutQuestionsInput, Prisma.CategoryUpdateWithoutQuestionsInput>, Prisma.CategoryUncheckedUpdateWithoutQuestionsInput>
+}
+
 export type CategoryCreateWithoutSubjectInput = {
   id?: string
   slug: string
@@ -583,6 +606,7 @@ export type CategoryCreateWithoutSubjectInput = {
   lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutSubjectInput = {
@@ -597,6 +621,7 @@ export type CategoryUncheckedCreateWithoutSubjectInput = {
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutSubjectInput = {
@@ -652,6 +677,7 @@ export type CategoryCreateWithoutLessonsInput = {
   subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
   lessonPlans?: Prisma.LessonPlanCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutLessonsInput = {
@@ -666,6 +692,7 @@ export type CategoryUncheckedCreateWithoutLessonsInput = {
   updatedAt?: Date | string
   lessonPlans?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutLessonsInput = {
@@ -696,6 +723,7 @@ export type CategoryUpdateWithoutLessonsInput = {
   subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
   lessonPlans?: Prisma.LessonPlanUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutLessonsInput = {
@@ -710,6 +738,7 @@ export type CategoryUncheckedUpdateWithoutLessonsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonPlans?: Prisma.LessonPlanUncheckedUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutLessonPlansInput = {
@@ -724,6 +753,7 @@ export type CategoryCreateWithoutLessonPlansInput = {
   subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutLessonPlansInput = {
@@ -738,6 +768,7 @@ export type CategoryUncheckedCreateWithoutLessonPlansInput = {
   updatedAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutLessonPlansInput = {
@@ -768,6 +799,7 @@ export type CategoryUpdateWithoutLessonPlansInput = {
   subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutLessonPlansInput = {
@@ -782,6 +814,7 @@ export type CategoryUncheckedUpdateWithoutLessonPlansInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutExamsInput = {
@@ -796,6 +829,7 @@ export type CategoryCreateWithoutExamsInput = {
   subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
   lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutExamsInput = {
@@ -810,6 +844,7 @@ export type CategoryUncheckedCreateWithoutExamsInput = {
   updatedAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
   lessonPlans?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCategoryInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutExamsInput = {
@@ -840,6 +875,7 @@ export type CategoryUpdateWithoutExamsInput = {
   subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutExamsInput = {
@@ -854,6 +890,83 @@ export type CategoryUncheckedUpdateWithoutExamsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUncheckedUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutQuestionsInput = {
+  id?: string
+  slug: string
+  name: string
+  description?: string | null
+  sortOrder?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subject: Prisma.SubjectCreateNestedOneWithoutCategoriesInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutCategoryInput
+  lessonPlans?: Prisma.LessonPlanCreateNestedManyWithoutCategoryInput
+  exams?: Prisma.ExamCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutQuestionsInput = {
+  id?: string
+  subjectId: string
+  slug: string
+  name: string
+  description?: string | null
+  sortOrder?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCategoryInput
+  lessonPlans?: Prisma.LessonPlanUncheckedCreateNestedManyWithoutCategoryInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutQuestionsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutQuestionsInput, Prisma.CategoryUncheckedCreateWithoutQuestionsInput>
+}
+
+export type CategoryUpsertWithoutQuestionsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutQuestionsInput, Prisma.CategoryUncheckedUpdateWithoutQuestionsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutQuestionsInput, Prisma.CategoryUncheckedCreateWithoutQuestionsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutQuestionsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutQuestionsInput, Prisma.CategoryUncheckedUpdateWithoutQuestionsInput>
+}
+
+export type CategoryUpdateWithoutQuestionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subject?: Prisma.SubjectUpdateOneRequiredWithoutCategoriesNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
+  lessonPlans?: Prisma.LessonPlanUpdateManyWithoutCategoryNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutQuestionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subjectId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
+  lessonPlans?: Prisma.LessonPlanUncheckedUpdateManyWithoutCategoryNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManySubjectInput = {
@@ -879,6 +992,7 @@ export type CategoryUpdateWithoutSubjectInput = {
   lessons?: Prisma.LessonUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutSubjectInput = {
@@ -893,6 +1007,7 @@ export type CategoryUncheckedUpdateWithoutSubjectInput = {
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutCategoryNestedInput
   lessonPlans?: Prisma.LessonPlanUncheckedUpdateManyWithoutCategoryNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutCategoryNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutSubjectInput = {
@@ -915,12 +1030,14 @@ export type CategoryCountOutputType = {
   lessons: number
   lessonPlans: number
   exams: number
+  questions: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessons?: boolean | CategoryCountOutputTypeCountLessonsArgs
   lessonPlans?: boolean | CategoryCountOutputTypeCountLessonPlansArgs
   exams?: boolean | CategoryCountOutputTypeCountExamsArgs
+  questions?: boolean | CategoryCountOutputTypeCountQuestionsArgs
 }
 
 /**
@@ -954,6 +1071,13 @@ export type CategoryCountOutputTypeCountExamsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.ExamWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountQuestionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuestionWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -969,6 +1093,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   lessons?: boolean | Prisma.Category$lessonsArgs<ExtArgs>
   lessonPlans?: boolean | Prisma.Category$lessonPlansArgs<ExtArgs>
   exams?: boolean | Prisma.Category$examsArgs<ExtArgs>
+  questions?: boolean | Prisma.Category$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -1016,6 +1141,7 @@ export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   lessons?: boolean | Prisma.Category$lessonsArgs<ExtArgs>
   lessonPlans?: boolean | Prisma.Category$lessonPlansArgs<ExtArgs>
   exams?: boolean | Prisma.Category$examsArgs<ExtArgs>
+  questions?: boolean | Prisma.Category$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1032,6 +1158,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     lessons: Prisma.$LessonPayload<ExtArgs>[]
     lessonPlans: Prisma.$LessonPlanPayload<ExtArgs>[]
     exams: Prisma.$ExamPayload<ExtArgs>[]
+    questions: Prisma.$QuestionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1441,6 +1568,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   lessons<T extends Prisma.Category$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lessonPlans<T extends Prisma.Category$lessonPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$lessonPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exams<T extends Prisma.Category$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  questions<T extends Prisma.Category$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1949,6 +2077,30 @@ export type Category$examsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ExamScalarFieldEnum | Prisma.ExamScalarFieldEnum[]
+}
+
+/**
+ * Category.questions
+ */
+export type Category$questionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Question
+   */
+  select?: Prisma.QuestionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Question
+   */
+  omit?: Prisma.QuestionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuestionInclude<ExtArgs> | null
+  where?: Prisma.QuestionWhereInput
+  orderBy?: Prisma.QuestionOrderByWithRelationInput | Prisma.QuestionOrderByWithRelationInput[]
+  cursor?: Prisma.QuestionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuestionScalarFieldEnum | Prisma.QuestionScalarFieldEnum[]
 }
 
 /**
