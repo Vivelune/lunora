@@ -68,7 +68,8 @@ export const ModelName = {
   ExamVersion: 'ExamVersion',
   Question: 'Question',
   AnswerOption: 'AnswerOption',
-  MediaAsset: 'MediaAsset'
+  MediaAsset: 'MediaAsset',
+  ExamAssignment: 'ExamAssignment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -285,6 +286,7 @@ export const ExamScalarFieldEnum = {
   availableFrom: 'availableFrom',
   availableUntil: 'availableUntil',
   createdById: 'createdById',
+  visibility: 'visibility',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -355,6 +357,26 @@ export const MediaAssetScalarFieldEnum = {
 } as const
 
 export type MediaAssetScalarFieldEnum = (typeof MediaAssetScalarFieldEnum)[keyof typeof MediaAssetScalarFieldEnum]
+
+
+export const ExamAssignmentScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  versionId: 'versionId',
+  studentId: 'studentId',
+  groupId: 'groupId',
+  assignedAt: 'assignedAt',
+  availableFrom: 'availableFrom',
+  dueDate: 'dueDate',
+  maxAttemptsOverride: 'maxAttemptsOverride',
+  instructions: 'instructions',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamAssignmentScalarFieldEnum = (typeof ExamAssignmentScalarFieldEnum)[keyof typeof ExamAssignmentScalarFieldEnum]
 
 
 export const SortOrder = {

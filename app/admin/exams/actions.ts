@@ -87,6 +87,7 @@ export async function updateExamDetails(formData: FormData) {
       categoryId: z.string(),
       availableFrom: z.string(),
       availableUntil: z.string(),
+      visibility: z.enum(["ASSIGNED_ONLY", "OPEN_PRACTICE"], { message: "Choose who can find this exam" }),
     })
     .safeParse({
       id: str(formData, "id"),
@@ -95,6 +96,7 @@ export async function updateExamDetails(formData: FormData) {
       categoryId: str(formData, "categoryId"),
       availableFrom: str(formData, "availableFrom"),
       availableUntil: str(formData, "availableUntil"),
+      visibility: str(formData, "visibility"),
     });
   if (!parsed.success) {
     go("/admin/exams", "error", parsed.error.issues[0].message);
@@ -140,6 +142,7 @@ export async function updateExamDetails(formData: FormData) {
         categoryId,
         availableFrom: from.date,
         availableUntil: until.date,
+        visibility: data.visibility,
       },
     });
   } catch (error) {

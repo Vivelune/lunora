@@ -414,7 +414,8 @@ export const ModelName = {
   ExamVersion: 'ExamVersion',
   Question: 'Question',
   AnswerOption: 'AnswerOption',
-  MediaAsset: 'MediaAsset'
+  MediaAsset: 'MediaAsset',
+  ExamAssignment: 'ExamAssignment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +431,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource" | "studentGroup" | "studentGroupMembership" | "lessonPlan" | "lessonPlanVersion" | "lessonPlanItem" | "lessonPlanAssignment" | "auditLog" | "lessonPlanItemProgress" | "exam" | "examVersion" | "question" | "answerOption" | "mediaAsset"
+    modelProps: "studentProfile" | "subject" | "category" | "lesson" | "learningResource" | "studentGroup" | "studentGroupMembership" | "lessonPlan" | "lessonPlanVersion" | "lessonPlanItem" | "lessonPlanAssignment" | "auditLog" | "lessonPlanItemProgress" | "exam" | "examVersion" | "question" | "answerOption" | "mediaAsset" | "examAssignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1766,6 +1767,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExamAssignment: {
+      payload: Prisma.$ExamAssignmentPayload<ExtArgs>
+      fields: Prisma.ExamAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExamAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExamAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.ExamAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExamAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.ExamAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.ExamAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.ExamAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExamAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.ExamAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        update: {
+          args: Prisma.ExamAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExamAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExamAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExamAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExamAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.ExamAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExamAssignment>
+        }
+        groupBy: {
+          args: Prisma.ExamAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExamAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2003,6 +2078,7 @@ export const ExamScalarFieldEnum = {
   availableFrom: 'availableFrom',
   availableUntil: 'availableUntil',
   createdById: 'createdById',
+  visibility: 'visibility',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2073,6 +2149,26 @@ export const MediaAssetScalarFieldEnum = {
 } as const
 
 export type MediaAssetScalarFieldEnum = (typeof MediaAssetScalarFieldEnum)[keyof typeof MediaAssetScalarFieldEnum]
+
+
+export const ExamAssignmentScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  versionId: 'versionId',
+  studentId: 'studentId',
+  groupId: 'groupId',
+  assignedAt: 'assignedAt',
+  availableFrom: 'availableFrom',
+  dueDate: 'dueDate',
+  maxAttemptsOverride: 'maxAttemptsOverride',
+  instructions: 'instructions',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamAssignmentScalarFieldEnum = (typeof ExamAssignmentScalarFieldEnum)[keyof typeof ExamAssignmentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2252,6 +2348,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'ExamVisibility'
+ */
+export type EnumExamVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExamVisibility'>
+    
+
+
+/**
+ * Reference to a field of type 'ExamVisibility[]'
+ */
+export type ListEnumExamVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExamVisibility[]'>
     
 
 
@@ -2493,6 +2603,7 @@ export type GlobalOmitConfig = {
   question?: Prisma.QuestionOmit
   answerOption?: Prisma.AnswerOptionOmit
   mediaAsset?: Prisma.MediaAssetOmit
+  examAssignment?: Prisma.ExamAssignmentOmit
 }
 
 /* Types for Logging */

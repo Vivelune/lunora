@@ -44,6 +44,12 @@ const ADMIN_LINKS = [
     description: "Assessments and practice tests.",
     icon: ExamIcon,
   },
+  {
+    href: "/admin/exam-assignments",
+    label: "Exam assignments",
+    description: "Exams assigned to students.",
+    icon: ExamAssignIcon,
+  },
 ];
 
 export default async function AdminHomeContent() {
@@ -262,6 +268,34 @@ function ExamIcon() {
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function ExamAssignIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+      {/* Document base — same shape as ExamIcon for visual continuity */}
+      <path
+        d="M4 2.5h6.5L13 5v8.5H4z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 2.5V5h2.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      {/* Checkmark overlay — signals "assigned" */}
+      <path
+        d="M6 9.5 7.5 11 10.5 8"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

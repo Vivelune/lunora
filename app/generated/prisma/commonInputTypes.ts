@@ -338,6 +338,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumExamVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.ExamVisibility | Prisma.EnumExamVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel> | $Enums.ExamVisibility
+}
+
+export type EnumExamVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ExamVisibility | Prisma.EnumExamVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumExamVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.ExamVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel>
+}
+
 export type EnumReleasePolicyFilter<$PrismaModel = never> = {
   equals?: $Enums.ReleasePolicy | Prisma.EnumReleasePolicyFieldRefInput<$PrismaModel>
   in?: $Enums.ReleasePolicy[] | Prisma.ListEnumReleasePolicyFieldRefInput<$PrismaModel>
@@ -724,6 +741,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumExamVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.ExamVisibility | Prisma.EnumExamVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel> | $Enums.ExamVisibility
+}
+
+export type NestedEnumExamVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ExamVisibility | Prisma.EnumExamVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ExamVisibility[] | Prisma.ListEnumExamVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumExamVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.ExamVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumExamVisibilityFilter<$PrismaModel>
 }
 
 export type NestedEnumReleasePolicyFilter<$PrismaModel = never> = {
