@@ -1,8 +1,12 @@
-
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { createPlan } from "../actions";
+
+const inputBase =
+  "w-full rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm text-neutral-100 placeholder:text-neutral-500 transition-colors focus:border-violet-400/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20";
+const labelBase =
+  "mb-1.5 block text-xs font-medium uppercase tracking-[0.14em] text-neutral-400";
 
 export default async function NewLessonPlanContent({
   searchParams,
@@ -28,110 +32,199 @@ export default async function NewLessonPlanContent({
     },
   });
 
-  const field = "w-full rounded border px-3 py-2";
-
   return (
-    <main className="mx-auto flex max-w-xl flex-col gap-6 p-8">
-      <header className="flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">New lesson plan</h1>
-
-        <Link
-          href="/admin/lesson-plans"
-          className="text-sm underline"
-        >
-          Back to plans
-        </Link>
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-10 px-6 py-10 sm:px-10 sm:py-14">
+      {/* ============ HEADER ============ */}
+      <header>
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">
+          Admin · Lesson plans
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          New lesson plan
+        </h1>
+        <p className="mt-3 text-sm text-neutral-400">
+          Give your plan a title and subject. You&apos;ll add lessons and
+          publish it in the next step.
+        </p>
       </header>
 
+      {/* ============ ERROR ============ */}
       {error && (
         <p
           role="alert"
-          className="rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700"
+          className="flex items-start gap-2.5 rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-200"
         >
-          {error}
+          <svg
+            aria-hidden
+            viewBox="0 0 16 16"
+            fill="none"
+            className="mt-0.5 h-4 w-4 flex-shrink-0"
+          >
+            <circle
+              cx="8"
+              cy="8"
+              r="6.25"
+              stroke="currentColor"
+              strokeWidth="1.4"
+            />
+            <path
+              d="M8 5v3.5M8 11h.01"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>{error}</span>
         </p>
       )}
 
+      {/* ============ EMPTY STATE ============ */}
       {subjects.length === 0 ? (
-        <div className="rounded border border-dashed p-4 text-sm text-gray-600">
-          No active subjects are available. Create or activate a subject
-          before creating a lesson plan.
-          <div className="mt-3">
-            <Link href="/admin/subjects" className="underline">
-              Manage subjects
-            </Link>
-          </div>
+        <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+          <p className="text-sm text-neutral-300">
+            No active subjects are available.
+          </p>
+          <p className="mt-1 text-xs text-neutral-500">
+            Create or activate a subject before creating a lesson plan.
+          </p>
+          <Link
+            href="/admin/subjects"
+            className="mt-5 inline-flex h-10 items-center justify-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-neutral-200 transition-colors hover:bg-white/[0.08] hover:text-white"
+          >
+            Manage subjects
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-3.5 w-3.5"
+            >
+              <path
+                d="M3 8h10m0 0-4-4m4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
         </div>
       ) : (
-        <form action={createPlan} className="flex flex-col gap-4">
-          <div>
-            <label
-              htmlFor="title"
-              className="mb-1 block text-sm font-medium"
-            >
-              Title
-            </label>
-            <input
-              id="title"
-              name="title"
-              required
-              maxLength={150}
-              className={field}
-            />
-          </div>
+        /* ============ FORM CARD ============ */
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur sm:p-7">
+          <form action={createPlan} className="flex flex-col gap-6">
+            {/* Title */}
+            <div>
+              <label htmlFor="title" className={labelBase}>
+                Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                required
+                maxLength={150}
+                className={inputBase}
+                placeholder="e.g. Chemistry foundations"
+              />
+            </div>
 
-          <div>
-            <label
-              htmlFor="subjectId"
-              className="mb-1 block text-sm font-medium"
-            >
-              Subject (cannot be changed later)
-            </label>
-            <select
-              id="subjectId"
-              name="subjectId"
-              required
-              defaultValue=""
-              className={field}
-            >
-              <option value="" disabled>
-                Select...
-              </option>
-
-              {subjects.map((subject) => (
-                <option key={subject.id} value={subject.id}>
-                  {subject.parent
-                    ? `${subject.parent.name} ${subject.name}`
-                    : subject.name}
+            {/* Subject */}
+            <div>
+              <label htmlFor="subjectId" className={labelBase}>
+                Subject
+                <span className="ml-2 text-[10px] tracking-normal text-neutral-500">
+                  cannot be changed later
+                </span>
+              </label>
+              <select
+                id="subjectId"
+                name="subjectId"
+                required
+                defaultValue=""
+                className={inputBase}
+              >
+                <option value="" disabled>
+                  Select…
                 </option>
-              ))}
-            </select>
-          </div>
+                {subjects.map((subject) => (
+                  <option key={subject.id} value={subject.id}>
+                    {subject.parent
+                      ? `${subject.parent.name} ${subject.name}`
+                      : subject.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div>
-            <label
-              htmlFor="description"
-              className="mb-1 block text-sm font-medium"
-            >
-              Description (optional)
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              rows={3}
-              maxLength={500}
-              className={field}
-            />
-          </div>
+            {/* Description */}
+            <div>
+              <label htmlFor="description" className={labelBase}>
+                Description
+                <span className="ml-2 text-[10px] tracking-normal text-neutral-500">
+                  optional
+                </span>
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                rows={3}
+                maxLength={500}
+                className={inputBase}
+                placeholder="A short summary of what this plan covers."
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="self-start rounded bg-black px-5 py-2 text-white"
-          >
-            Create plan
-          </button>
-        </form>
+            {/* Submit */}
+            <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
+              <button
+                type="submit"
+                className="group inline-flex h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-6 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-opacity hover:opacity-90"
+              >
+                Create plan
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M3 8h10m0 0-4-4m4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+
+              <p className="text-xs text-neutral-500">
+                You can edit the title and description after creating.
+              </p>
+            </div>
+          </form>
+        </div>
       )}
-    </main>
+
+      {/* ============ BACK LINK ============ */}
+      <Link
+        href="/admin/lesson-plans"
+        className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+      >
+        <svg
+          aria-hidden
+          viewBox="0 0 16 16"
+          fill="none"
+          className="h-3.5 w-3.5"
+        >
+          <path
+            d="M13 8H3m0 0 4-4M3 8l4 4"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        Back to plans
+      </Link>
+    </div>
   );
 }
