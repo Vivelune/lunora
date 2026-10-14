@@ -1,8 +1,12 @@
+
 import Link from "next/link";
+
 import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentAssignments } from "@/lib/plan-progress";
+import { getStudentExams } from "@/lib/student-exams";
 import prisma from "@/lib/prisma";
 import { GRADE_LABELS } from "@/lib/validation/profile";
+
 import { PlanCard } from "../plans/plan-card";
 
 export default async function DashboardContent() {
@@ -13,7 +17,7 @@ export default async function DashboardContent() {
       profile.gradeLevel as keyof typeof GRADE_LABELS
     ] ?? profile.gradeLevel;
 
-  const [subjects, assignments] = await Promise.all([
+  const [subjects, assignments, exams] = await Promise.all([
     prisma.subject.findMany({
       where: {
         isActive: true,
@@ -48,7 +52,16 @@ export default async function DashboardContent() {
     }),
 
     getStudentAssignments(profile.id),
+    getStudentExams(profile.id),
   ]);
+
+  const examsOpen = exams.assigned.filter(
+    (e) => e.state === "AVAILABLE",
+  ).length;
+
+  const nextExam = exams.assigned.find(
+    (e) => e.state === "AVAILABLE",
+  );
 
   // Separate unfinished plans from completed plans.
   const active = assignments.filter((a) => !a.completedAt);
@@ -72,7 +85,10 @@ export default async function DashboardContent() {
   return (
     <main className="relative min-h-screen bg-neutral-950 text-neutral-100 antialiased">
       {/* Ambient background */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+      >
         <div className="absolute left-1/2 top-[-15%] h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[140px]" />
         <div className="absolute bottom-[-20%] right-[-10%] h-[420px] w-[420px] rounded-full bg-fuchsia-500/[0.07] blur-[140px]" />
       </div>
@@ -84,12 +100,14 @@ export default async function DashboardContent() {
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">
               Dashboard
             </p>
+
             <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
               Welcome back,{" "}
               <span className="bg-gradient-to-r from-indigo-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">
                 {profile.firstName ?? "student"}
               </span>
             </h1>
+
             <p className="mt-2 text-sm text-neutral-400">{grade}</p>
           </div>
 
@@ -98,10 +116,14 @@ export default async function DashboardContent() {
               href={`/plans/${resumable.id}`}
               className="group inline-flex h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-5 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-opacity hover:opacity-90"
             >
-              <span>{resumable.doneItems > 0 ? "Continue" : "Start"}</span>
+              <span>
+                {resumable.doneItems > 0 ? "Continue" : "Start"}
+              </span>
+
               <span className="hidden max-w-[180px] truncate opacity-90 sm:inline">
                 {resumable.planTitle}
               </span>
+
               <svg
                 aria-hidden
                 viewBox="0 0 20 20"
@@ -127,12 +149,14 @@ export default async function DashboardContent() {
             value={active.length}
             accent="indigo"
           />
+
           <StatCard
             label="Overdue"
             value={overdueCount}
             accent={overdueCount > 0 ? "rose" : "neutral"}
             hint={overdueCount > 0 ? "Needs attention" : "All caught up"}
           />
+
           <StatCard
             label="Completed"
             value={completed.length}
@@ -147,6 +171,7 @@ export default async function DashboardContent() {
               <h2 className="text-lg font-semibold tracking-tight">
                 Assigned work
               </h2>
+
               <p className="mt-1 text-sm text-neutral-500">
                 {active.length === 0
                   ? "You're all clear for now."
@@ -183,6 +208,7 @@ export default async function DashboardContent() {
               <p className="text-sm text-neutral-400">
                 Nothing is assigned to you right now.
               </p>
+
               <p className="mt-1 text-xs text-neutral-500">
                 New work will appear here when your teacher adds it.
               </p>
@@ -203,12 +229,190 @@ export default async function DashboardContent() {
           )}
         </section>
 
+        {/* ============ EXAMS ============ */}
+                {/* ============ EXAMS ============ */}
+                <section>
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold tracking-tight">
+                Exams
+              </h2>
+
+              <p className="mt-1 text-sm text-neutral-500">
+                {examsOpen === 0
+                  ? "Nothing open right now."
+                  : `${examsOpen} exam${examsOpen === 1 ? "" : "s"} open for you`}
+              </p>
+            </div>
+
+            <Link
+              href="/exams"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+            >
+              View all exams
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="h-3.5 w-3.5"
+              >
+                <path
+                  d="M3 8h10m0 0-4-4m4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          {examsOpen === 0 ? (
+            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+              <p className="text-sm text-neutral-400">
+                No exams are open for you right now.
+              </p>
+
+              <p className="mt-1 text-xs text-neutral-500">
+                When your tutor assigns an exam that&apos;s open, it will
+                appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {/* Highlight card — the "next exam" */}
+              {nextExam && (
+                <article className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-emerald-400/20 bg-emerald-500/[0.04] p-5 backdrop-blur transition-colors hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]">
+                  {/* Ambient accent */}
+                  <span
+                    aria-hidden
+                    className="absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 opacity-20 blur-2xl"
+                  />
+
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium uppercase tracking-[0.16em] text-emerald-300">
+                        Next up
+                      </p>
+                      <h3 className="mt-1.5 text-base font-semibold tracking-tight text-white">
+                        {nextExam.title}
+                      </h3>
+                      <p className="mt-1 text-xs text-neutral-400">
+                        {nextExam.subject}
+                      </p>
+                    </div>
+
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      Available
+                    </span>
+                  </div>
+
+                  {nextExam.closesAt && (
+                    <p className="flex items-start gap-2 text-xs leading-relaxed text-neutral-300">
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-neutral-500"
+                      >
+                        <circle
+                          cx="8"
+                          cy="8"
+                          r="6"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                        />
+                        <path
+                          d="M8 4.5V8l2 1.5"
+                          stroke="currentColor"
+                          strokeWidth="1.4"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <span>
+                        Start by{" "}
+                        <span className="tabular-nums text-neutral-200">
+                          {nextExam.closesAt.toISOString().slice(0, 10)}
+                        </span>{" "}
+                        UTC.
+                      </span>
+                    </p>
+                  )}
+
+                  <Link
+                    href="/exams"
+                    className="group/btn mt-auto inline-flex h-10 w-fit items-center justify-center gap-2 rounded-full bg-white/[0.06] px-4 text-sm font-medium text-white transition-colors hover:bg-white/[0.12]"
+                  >
+                    View exams
+                    <svg
+                      aria-hidden
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-0.5"
+                    >
+                      <path
+                        d="M3 8h10m0 0-4-4m4 4-4 4"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Link>
+                </article>
+              )}
+
+              {/* Summary card — count of other open exams */}
+              <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-500">
+                    Open exams
+                  </p>
+
+                  <p className="mt-3 text-3xl font-semibold tracking-tight text-white tabular-nums">
+                    {examsOpen}
+                  </p>
+
+                  <p className="mt-1 text-xs text-neutral-500">
+                    {examsOpen === 1
+                      ? "One exam is ready to start."
+                      : `${examsOpen} exams are ready to start.`}
+                  </p>
+                </div>
+
+                <Link
+                  href="/exams"
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+                >
+                  View all
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="h-3.5 w-3.5"
+                  >
+                    <path
+                      d="M3 8h10m0 0-4-4m4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          )}
+        </section>
+
         {/* ============ SUBJECTS ============ */}
         <section>
           <div className="mb-4">
             <h2 className="text-lg font-semibold tracking-tight">
               Your subjects
             </h2>
+
             <p className="mt-1 text-sm text-neutral-500">
               {subjects.length === 0
                 ? "No subjects available yet."
@@ -223,6 +427,7 @@ export default async function DashboardContent() {
               <p className="text-sm text-neutral-400">
                 No subjects are available yet.
               </p>
+
               <p className="mt-1 text-xs text-neutral-500">
                 They&apos;ll show up here once they&apos;re published.
               </p>
@@ -252,7 +457,7 @@ export default async function DashboardContent() {
                       </p>
                     )}
 
-                    <div className="mt-4 flex flex-wrap items-center gap-2 pt-3 border-t border-white/5">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/5 pt-3">
                       <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-[11px] text-neutral-400">
                         {subject._count.categories} topics
                       </span>
@@ -283,6 +488,7 @@ export default async function DashboardContent() {
 /* ============================================================
    StatCard — small internal component, no logic dependencies
    ============================================================ */
+
 function StatCard({
   label,
   value,
@@ -311,9 +517,11 @@ function StatCard({
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-500">
         {label}
       </p>
+
       <p className="mt-3 text-3xl font-semibold tracking-tight text-white tabular-nums">
         {value}
       </p>
+
       {hint && (
         <p className="mt-1 text-xs text-neutral-500">{hint}</p>
       )}
