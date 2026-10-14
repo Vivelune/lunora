@@ -69,7 +69,10 @@ export const ModelName = {
   Question: 'Question',
   AnswerOption: 'AnswerOption',
   MediaAsset: 'MediaAsset',
-  ExamAssignment: 'ExamAssignment'
+  ExamAssignment: 'ExamAssignment',
+  ExamAttempt: 'ExamAttempt',
+  AttemptAnswer: 'AttemptAnswer',
+  AttemptEvent: 'AttemptEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -370,6 +373,7 @@ export const ExamAssignmentScalarFieldEnum = {
   dueDate: 'dueDate',
   maxAttemptsOverride: 'maxAttemptsOverride',
   instructions: 'instructions',
+  focusExempt: 'focusExempt',
   status: 'status',
   createdById: 'createdById',
   createdAt: 'createdAt',
@@ -377,6 +381,55 @@ export const ExamAssignmentScalarFieldEnum = {
 } as const
 
 export type ExamAssignmentScalarFieldEnum = (typeof ExamAssignmentScalarFieldEnum)[keyof typeof ExamAssignmentScalarFieldEnum]
+
+
+export const ExamAttemptScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  examId: 'examId',
+  versionId: 'versionId',
+  assignmentId: 'assignmentId',
+  attemptNumber: 'attemptNumber',
+  status: 'status',
+  startedAt: 'startedAt',
+  deadlineAt: 'deadlineAt',
+  lastActivityAt: 'lastActivityAt',
+  submittedAt: 'submittedAt',
+  endReason: 'endReason',
+  shuffleSeed: 'shuffleSeed',
+  focusViolations: 'focusViolations',
+  flaggedForReview: 'flaggedForReview',
+  inProgressKey: 'inProgressKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamAttemptScalarFieldEnum = (typeof ExamAttemptScalarFieldEnum)[keyof typeof ExamAttemptScalarFieldEnum]
+
+
+export const AttemptAnswerScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  questionId: 'questionId',
+  selectedOptionIds: 'selectedOptionIds',
+  textAnswer: 'textAnswer',
+  flagged: 'flagged',
+  revision: 'revision',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttemptAnswerScalarFieldEnum = (typeof AttemptAnswerScalarFieldEnum)[keyof typeof AttemptAnswerScalarFieldEnum]
+
+
+export const AttemptEventScalarFieldEnum = {
+  id: 'id',
+  attemptId: 'attemptId',
+  type: 'type',
+  occurredAt: 'occurredAt',
+  details: 'details'
+} as const
+
+export type AttemptEventScalarFieldEnum = (typeof AttemptEventScalarFieldEnum)[keyof typeof AttemptEventScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -85,3 +85,37 @@ export const ExamVisibility = {
 } as const
 
 export type ExamVisibility = (typeof ExamVisibility)[keyof typeof ExamVisibility]
+
+
+export const AttemptStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUBMITTED: 'SUBMITTED',
+  EXPIRED: 'EXPIRED',
+  GRADED: 'GRADED'
+} as const
+
+export type AttemptStatus = (typeof AttemptStatus)[keyof typeof AttemptStatus]
+
+
+export const EndReason = {
+  STUDENT: 'STUDENT',
+  TIMEOUT: 'TIMEOUT',
+  FOCUS_VIOLATION: 'FOCUS_VIOLATION',
+  ADMIN: 'ADMIN'
+} as const
+
+export type EndReason = (typeof EndReason)[keyof typeof EndReason]
+
+
+export const AttemptEventType = {
+  STARTED: 'STARTED',
+  RESUMED: 'RESUMED',
+  FOCUS_LOST: 'FOCUS_LOST',
+  FOCUS_RETURNED: 'FOCUS_RETURNED',
+  FULLSCREEN_EXITED: 'FULLSCREEN_EXITED',
+  WARNING_SHOWN: 'WARNING_SHOWN',
+  SUBMITTED: 'SUBMITTED',
+  AUTO_SUBMITTED: 'AUTO_SUBMITTED'
+} as const
+
+export type AttemptEventType = (typeof AttemptEventType)[keyof typeof AttemptEventType]

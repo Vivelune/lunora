@@ -196,6 +196,7 @@ export async function updateExamAssignmentDetails(formData: FormData) {
         dueDate: due.date,
         maxAttemptsOverride: attempts.value,
         instructions: data.instructions === "" ? null : data.instructions,
+        focusExempt: formData.get("focusExempt") === "on",
       },
     });
   } catch (error) {

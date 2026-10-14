@@ -6,15 +6,32 @@ import { ExamCard } from "./exam-card";
 const emptyState =
   "rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center";
 
-export default async function ExamsContent() {
+export default async function ExamsContent({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const { profile } = await requireCompletedProfile();
+  const { error } = await searchParams;
   const { assigned, practice } = await getStudentExams(profile.id);
 
-  const available = assigned.filter((e) => e.state === "AVAILABLE");
-  const upcoming = assigned.filter((e) => e.state === "UPCOMING");
-  const closed = assigned.filter(
-    (e) => e.state === "CLOSED" || e.state === "UNAVAILABLE"
+  const inProgress = [...assigned, ...practice].filter(
+    (e) => e.inProgressAttemptId !== null
   );
+  const rest = (e: { inProgressAttemptId: string | null }) =>
+    e.inProgressAttemptId === null;
+
+  const available = assigned.filter(
+    (e) => rest(e) && e.state === "AVAILABLE"
+  );
+  const upcoming = assigned.filter(
+    (e) => rest(e) && e.state === "UPCOMING"
+  );
+  const closed = assigned.filter(
+    (e) =>
+      rest(e) && (e.state === "CLOSED" || e.state === "UNAVAILABLE")
+  );
+  const practiceList = practice.filter(rest);
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-10 sm:px-10 sm:py-14">
@@ -27,22 +44,29 @@ export default async function ExamsContent() {
           My exams
         </h1>
         <p className="mt-3 text-sm text-neutral-400">
-          {available.length > 0
-            ? `${available.length} exam${
-                available.length === 1 ? "" : "s"
-              } open for you right now.`
-            : "Nothing open right now."}
+          {inProgress.length > 0
+            ? `You have ${inProgress.length} exam${
+                inProgress.length === 1 ? "" : "s"
+              } in progress.`
+            : available.length > 0
+              ? `${available.length} exam${
+                  available.length === 1 ? "" : "s"
+                } open for you right now.`
+              : "Nothing open right now."}
         </p>
       </header>
 
-      {/* ============ STATUS NOTICE ============ */}
-      <div className="flex items-start gap-3 rounded-2xl border border-indigo-400/20 bg-indigo-500/[0.06] px-4 py-3.5">
-        <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full bg-indigo-500/15 text-indigo-300">
+      {/* ============ ERROR ============ */}
+      {error && (
+        <p
+          role="alert"
+          className="flex items-start gap-2.5 rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-200"
+        >
           <svg
             aria-hidden
             viewBox="0 0 16 16"
             fill="none"
-            className="h-4 w-4"
+            className="mt-0.5 h-4 w-4 flex-shrink-0"
           >
             <circle
               cx="8"
@@ -52,24 +76,38 @@ export default async function ExamsContent() {
               strokeWidth="1.4"
             />
             <path
-              d="M8 5v3M8 10.5h.01"
+              d="M8 5v3.5M8 11h.01"
               stroke="currentColor"
               strokeWidth="1.6"
               strokeLinecap="round"
             />
           </svg>
-        </span>
-        <div>
-          <p className="text-sm font-medium text-indigo-200">
-            Exams are coming soon
-          </p>
-          <p className="mt-0.5 text-xs text-indigo-300/70">
-            For now, you can see what&apos;s assigned to you and when it opens.
-          </p>
-        </div>
-      </div>
+          <span>{error}</span>
+        </p>
+      )}
 
-      {/* ============ ASSIGNED TO YOU ============ */}
+      {/* ============ IN PROGRESS ============ */}
+      {inProgress.length > 0 && (
+        <section>
+          <div className="mb-4 flex items-center gap-2">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
+            </span>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-amber-200">
+              Resume your exam
+            </h2>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {inProgress.map((e) => (
+              <ExamCard key={e.key} exam={e} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ============ ASSIGNED ============ */}
       <section>
         <div className="mb-4 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400" />
@@ -97,7 +135,7 @@ export default async function ExamsContent() {
         )}
       </section>
 
-      {/* ============ COMING UP ============ */}
+      {/* ============ UPCOMING ============ */}
       {upcoming.length > 0 && (
         <section>
           <div className="mb-4 flex items-center gap-2">
@@ -115,7 +153,7 @@ export default async function ExamsContent() {
         </section>
       )}
 
-      {/* ============ PRACTICE EXAMS ============ */}
+      {/* ============ PRACTICE ============ */}
       <section>
         <div className="mb-4 flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-violet-400 to-fuchsia-400" />
@@ -124,7 +162,7 @@ export default async function ExamsContent() {
           </h2>
         </div>
 
-        {practice.length === 0 ? (
+        {practiceList.length === 0 ? (
           <div className={emptyState}>
             <p className="text-sm text-neutral-400">
               No practice exams available.
@@ -135,14 +173,14 @@ export default async function ExamsContent() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
-            {practice.map((e) => (
+            {practiceList.map((e) => (
               <ExamCard key={e.key} exam={e} />
             ))}
           </div>
         )}
       </section>
 
-      {/* ============ CLOSED OR UNAVAILABLE ============ */}
+      {/* ============ CLOSED ============ */}
       {closed.length > 0 && (
         <section>
           <div className="mb-4 flex items-center gap-2">

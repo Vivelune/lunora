@@ -17,6 +17,10 @@ export type StudentExamCard = {
   opensAt: Date | null;
   closesAt: Date | null;
   state: "UPCOMING" | "AVAILABLE" | "CLOSED" | "UNAVAILABLE";
+  examId: string;
+  assignmentId: string | null;
+  attemptsUsed: number;
+  inProgressAttemptId: string | null;
 };
 
 type SubjectShape = { name: string; parent: { name: string } | null };
@@ -101,7 +105,20 @@ export async function getStudentExams(studentId: string): Promise<{
     ...practiceExams.flatMap((e) => e.versions.map((v) => v.id)),
   ];
   const totals = await versionTotals(versionIds);
-
+  const examIds = [...assignedExamIds, ...practiceExams.map((e) => e.id)];
+  const attempts =
+    examIds.length === 0
+      ? []
+      : await prisma.examAttempt.findMany({
+          where: { studentId, examId: { in: examIds } },
+          select: { id: true, examId: true, status: true },
+        });
+  const usedByExam = new Map<string, number>();
+  const inProgressByExam = new Map<string, string>();
+  for (const a of attempts) {
+    usedByExam.set(a.examId, (usedByExam.get(a.examId) ?? 0) + 1);
+    if (a.status === "IN_PROGRESS") inProgressByExam.set(a.examId, a.id);
+  }
   const assigned: StudentExamCard[] = assignments
     .map((a) => {
       const window = examWindow({
@@ -114,6 +131,10 @@ export async function getStudentExams(studentId: string): Promise<{
       const t = totals.get(a.version.id);
       return {
         key: a.id,
+        examId: a.exam.id,
+        assignmentId: a.id,
+        attemptsUsed: usedByExam.get(a.exam.id) ?? 0,
+        inProgressAttemptId: inProgressByExam.get(a.exam.id) ?? null,
         kind: "ASSIGNED" as const,
         title: a.exam.title,
         subject: subjectLabel(a.exam.subject),
@@ -127,6 +148,7 @@ export async function getStudentExams(studentId: string): Promise<{
         opensAt: window.opensAt,
         closesAt: window.closesAt,
         state: a.exam.status === "PUBLISHED" ? window.state : ("UNAVAILABLE" as const),
+        
       };
     })
     .sort((x, y) => {
@@ -143,6 +165,10 @@ export async function getStudentExams(studentId: string): Promise<{
     return [
       {
         key: e.id,
+        examId: e.id,
+        assignmentId: null,
+        attemptsUsed: usedByExam.get(e.id) ?? 0,
+        inProgressAttemptId: inProgressByExam.get(e.id) ?? null,
         kind: "PRACTICE" as const,
         title: e.title,
         subject: subjectLabel(e.subject),

@@ -112,3 +112,18 @@ export type MediaAsset = Prisma.MediaAssetModel
  * 
  */
 export type ExamAssignment = Prisma.ExamAssignmentModel
+/**
+ * Model ExamAttempt
+ * 
+ */
+export type ExamAttempt = Prisma.ExamAttemptModel
+/**
+ * Model AttemptAnswer
+ * 
+ */
+export type AttemptAnswer = Prisma.AttemptAnswerModel
+/**
+ * Model AttemptEvent
+ * 
+ */
+export type AttemptEvent = Prisma.AttemptEventModel
