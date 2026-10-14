@@ -14,6 +14,7 @@ import prisma from "@/lib/prisma";
 import { setExamArchived, updateExamDetails } from "../actions";
 import { ExamSettingsForm } from "./exam-settings-form";
 import { QuestionsSection } from "./questions-section";
+import { PublishPanel } from "./publish-panel";
 
 const day = (date: Date | null) =>
   date ? date.toISOString().slice(0, 10) : "";
@@ -258,7 +259,7 @@ export default async function ExamEditorContent({
           <p className="text-sm text-gray-500">No version exists.</p>
         )}
       </section>
-
+      <PublishPanel examId={exam.id} />
       <QuestionsSection examId={exam.id} />
 
       <form action={setExamArchived}>
