@@ -34,6 +34,7 @@ export default async function ExamAssignmentDetailContent({
       examId: true,
       versionId: true,
       status: true,
+      focusExempt: true,
       assignedAt: true,
       availableFrom: true,
       dueDate: true,
@@ -393,6 +394,25 @@ export default async function ExamAssignmentDetailContent({
                 placeholder="Any specific guidance for this student."
               />
             </div>
+
+                     {/* Accommodation toggle */}
+                     <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3.5 text-sm transition-colors hover:border-white/20 hover:bg-white/[0.04]">
+              <input
+                type="checkbox"
+                name="focusExempt"
+                defaultChecked={assignment.focusExempt}
+                className="mt-0.5 h-4 w-4 cursor-pointer rounded border-white/20 bg-white/[0.04] accent-violet-500"
+              />
+              <span className="min-w-0">
+                <span className="block font-medium text-neutral-200">
+                  Exempt from focus monitoring
+                </span>
+                <span className="mt-0.5 block text-xs text-neutral-500">
+                  Use for approved accommodations. This student&apos;s tab
+                  switches and window changes won&apos;t be recorded.
+                </span>
+              </span>
+            </label>
 
             <div className="border-t border-white/10 pt-5">
               <button

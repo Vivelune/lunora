@@ -62,7 +62,7 @@ export default async function DashboardContent() {
   const nextExam = exams.assigned.find(
     (e) => e.state === "AVAILABLE",
   );
-
+  const resumeExam = [...exams.assigned, ...exams.practice].find((e) => e.inProgressAttemptId !== null);
   // Separate unfinished plans from completed plans.
   const active = assignments.filter((a) => !a.completedAt);
   const completed = assignments.filter((a) => a.completedAt);
@@ -267,6 +267,82 @@ export default async function DashboardContent() {
             </Link>
           </div>
 
+          {resumeExam?.inProgressAttemptId && (
+            <div className="relative mb-5 overflow-hidden rounded-2xl border border-amber-400/30 bg-amber-500/[0.06] p-5 backdrop-blur">
+              {/* Ambient accent */}
+              <span
+                aria-hidden
+                className="absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br from-amber-400 to-orange-400 opacity-20 blur-2xl"
+              />
+
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-amber-300">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
+                    </span>
+                    Exam in progress
+                  </p>
+
+                  <h3 className="mt-2 text-base font-semibold tracking-tight text-white">
+                    {resumeExam.title}
+                  </h3>
+
+                  {resumeExam.subject && (
+                    <p className="mt-1 text-xs text-neutral-400">
+                      {resumeExam.subject}
+                    </p>
+                  )}
+                </div>
+
+                <Link
+                  href={`/attempts/${resumeExam.inProgressAttemptId}`}
+                  className="group inline-flex h-10 items-center justify-center gap-2 rounded-full border border-amber-400/30 bg-amber-500/10 px-5 text-sm font-medium text-amber-200 transition-colors hover:bg-amber-500/[0.18]"
+                >
+                  Resume exam
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                  >
+                    <path
+                      d="M3 8h10m0 0-4-4m4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </div>
+
+              <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-amber-200/80">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                  />
+                  <path
+                    d="M8 4.5V8l2 1.5"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                Your timer is running. Resume as soon as you can.
+              </p>
+            </div>
+          )}
           {examsOpen === 0 ? (
             <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
               <p className="text-sm text-neutral-400">

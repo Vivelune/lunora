@@ -37,6 +37,7 @@ model StudentProfile {
   mediaUploaded MediaAsset[]
     examAssignmentsReceived ExamAssignment[] @relation("ExamAssignmentStudent")
   examAssignmentsCreated  ExamAssignment[] @relation("ExamAssignmentCreator")
+  examAttempts            ExamAttempt[]
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
@@ -304,6 +305,7 @@ model Exam {
   versions       ExamVersion[]
   visibility     ExamVisibility @default(ASSIGNED_ONLY)
   assignments    ExamAssignment[]
+  attempts       ExamAttempt[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
@@ -329,6 +331,7 @@ model ExamVersion {
   requireFullscreen  Boolean       @default(false)
   questions          Question[]
   assignments        ExamAssignment[]
+  attempts       ExamAttempt[]
   createdAt          DateTime      @default(now())
 
   @@unique([examId, versionNumber])
@@ -357,6 +360,7 @@ model Question {
   imageAlt        String?
   acceptedAnswers String[]
   options         AnswerOption[]
+  answers         AttemptAnswer[]
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 
@@ -408,6 +412,8 @@ model ExamAssignment {
   dueDate             DateTime?
   maxAttemptsOverride Int?
   instructions        String?
+    focusExempt         Boolean          @default(false)
+  attempts            ExamAttempt[]
   status              AssignmentStatus @default(ACTIVE)
   createdById         String
   createdBy           StudentProfile   @relation("ExamAssignmentCreator", fields: [createdById], references: [id], onDelete: Restrict)
@@ -418,4 +424,88 @@ model ExamAssignment {
   @@index([examId])
   @@index([studentId, status])
   @@index([groupId])
+}
+
+enum AttemptStatus {
+  IN_PROGRESS
+  SUBMITTED
+  EXPIRED
+  GRADED
+}
+
+enum EndReason {
+  STUDENT
+  TIMEOUT
+  FOCUS_VIOLATION
+  ADMIN
+}
+
+enum AttemptEventType {
+  STARTED
+  RESUMED
+  FOCUS_LOST
+  FOCUS_RETURNED
+  FULLSCREEN_EXITED
+  WARNING_SHOWN
+  SUBMITTED
+  AUTO_SUBMITTED
+}
+
+model ExamAttempt {
+  id               String          @id @default(cuid())
+  studentId        String
+  student          StudentProfile  @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  examId           String
+  exam             Exam            @relation(fields: [examId], references: [id], onDelete: Restrict)
+  versionId        String
+  version          ExamVersion     @relation(fields: [versionId], references: [id], onDelete: Restrict)
+  assignmentId     String?
+  assignment       ExamAssignment? @relation(fields: [assignmentId], references: [id], onDelete: Restrict)
+  attemptNumber    Int
+  status           AttemptStatus   @default(IN_PROGRESS)
+  startedAt        DateTime        @default(now())
+  deadlineAt       DateTime
+  lastActivityAt   DateTime        @default(now())
+  submittedAt      DateTime?
+  endReason        EndReason?
+  shuffleSeed      Int
+  focusViolations  Int             @default(0)
+  flaggedForReview Boolean         @default(false)
+  inProgressKey    String?         @unique
+  answers          AttemptAnswer[]
+  events           AttemptEvent[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@unique([studentId, examId, attemptNumber])
+  @@index([examId, status])
+  @@index([studentId, status])
+  @@index([versionId])
+}
+
+model AttemptAnswer {
+  id                String      @id @default(cuid())
+  attemptId         String
+  attempt           ExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+  questionId        String
+  question          Question    @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  selectedOptionIds String[]
+  textAnswer        String?
+  flagged           Boolean     @default(false)
+  revision          Int         @default(1)
+  updatedAt         DateTime    @updatedAt
+
+  @@unique([attemptId, questionId])
+  @@index([questionId])
+}
+
+model AttemptEvent {
+  id         String           @id @default(cuid())
+  attemptId  String
+  attempt    ExamAttempt      @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+  type       AttemptEventType
+  occurredAt DateTime         @default(now())
+  details    Json?
+
+  @@index([attemptId, occurredAt])
 }
