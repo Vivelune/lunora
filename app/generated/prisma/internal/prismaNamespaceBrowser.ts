@@ -67,7 +67,8 @@ export const ModelName = {
   Exam: 'Exam',
   ExamVersion: 'ExamVersion',
   Question: 'Question',
-  AnswerOption: 'AnswerOption'
+  AnswerOption: 'AnswerOption',
+  MediaAsset: 'MediaAsset'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -322,6 +323,8 @@ export const QuestionScalarFieldEnum = {
   points: 'points',
   explanation: 'explanation',
   categoryId: 'categoryId',
+  imageId: 'imageId',
+  imageAlt: 'imageAlt',
   acceptedAnswers: 'acceptedAnswers',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -339,6 +342,19 @@ export const AnswerOptionScalarFieldEnum = {
 } as const
 
 export type AnswerOptionScalarFieldEnum = (typeof AnswerOptionScalarFieldEnum)[keyof typeof AnswerOptionScalarFieldEnum]
+
+
+export const MediaAssetScalarFieldEnum = {
+  id: 'id',
+  pathname: 'pathname',
+  storageUrl: 'storageUrl',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  uploadedById: 'uploadedById',
+  createdAt: 'createdAt'
+} as const
+
+export type MediaAssetScalarFieldEnum = (typeof MediaAssetScalarFieldEnum)[keyof typeof MediaAssetScalarFieldEnum]
 
 
 export const SortOrder = {

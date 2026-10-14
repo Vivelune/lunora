@@ -30,6 +30,8 @@ export default async function EditQuestionContent({
       points: true,
       explanation: true,
       categoryId: true,
+      imageId: true,
+      imageAlt: true,
       acceptedAnswers: true,
       options: {
         orderBy: { position: "asc" },
@@ -122,6 +124,8 @@ export default async function EditQuestionContent({
                 : "false"
               : "",
           acceptedAnswers: question.acceptedAnswers.join("\n"),
+          imageId: question.imageId ?? "",
+          imageAlt: question.imageAlt ?? "",
         }}
       />
 

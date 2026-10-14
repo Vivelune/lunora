@@ -8,6 +8,7 @@ import {
   TYPE_LABELS,
   type QuestionTypeValue,
 } from "@/lib/question-input";
+import { MAX_UPLOAD_BYTES } from "@/lib/uploads";
 import { saveQuestion, type QuestionFormState } from "../../question-actions";
 import { Markdown } from "@/app/components/markdown";
 
@@ -20,6 +21,8 @@ export type QuestionInitial = {
   options: { text: string; correct: boolean }[];
   trueFalseCorrect: string;
   acceptedAnswers: string;
+  imageId: string;
+  imageAlt: string;
 };
 
 const initialState: QuestionFormState = { ok: false, message: null };
@@ -59,6 +62,11 @@ export function QuestionForm({
   const [trueFalse, setTrueFalse] = useState(initial?.trueFalseCorrect ?? "");
   const [accepted, setAccepted] = useState(initial?.acceptedAnswers ?? "");
 
+  const [imageId, setImageId] = useState(initial?.imageId ?? "");
+  const [imageAlt, setImageAlt] = useState(initial?.imageAlt ?? "");
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
   const isChoice = type === "SINGLE_CHOICE" || type === "MULTIPLE_SELECT";
 
   function setCorrect(index: number, checked: boolean) {
@@ -73,10 +81,46 @@ export function QuestionForm({
     );
   }
 
+  async function onPickFile(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    if (file.size > MAX_UPLOAD_BYTES) {
+      setUploadError("The image must be 4 MB or smaller");
+      input.value = "";
+      return;
+    }
+
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const response = await fetch("/api/admin/exam-images", {
+        method: "POST",
+        body,
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || typeof result.id !== "string") {
+        setUploadError(result.error ?? "Upload failed");
+        return;
+      }
+      setImageId(result.id);
+    } catch {
+      setUploadError("Could not reach the server. Try again.");
+    } finally {
+      setUploading(false);
+      input.value = "";
+    }
+  }
+
   return (
     <form action={formAction} className="flex flex-col gap-6">
       <input type="hidden" name="examId" value={examId} />
       <input type="hidden" name="type" value={type} />
+      <input type="hidden" name="imageId" value={imageId} />
+      <input type="hidden" name="imageAlt" value={imageId ? imageAlt : ""} />
       {initial && <input type="hidden" name="questionId" value={initial.questionId} />}
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -101,6 +145,167 @@ export function QuestionForm({
               placeholder="Write the question students will see…"
             />
           </div>
+
+          {/* Image upload */}
+          <fieldset className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <legend className="flex items-center gap-2 px-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-sky-400 to-indigo-400" />
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-300">
+                Image
+              </span>
+              <span className="ml-1 text-[10px] font-normal tracking-normal text-neutral-500">
+                optional
+              </span>
+            </legend>
+
+            {imageId ? (
+              <>
+                {/* Preview */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/api/exam-images/${imageId}`}
+                  alt={imageAlt || "Question image"}
+                  className="max-h-48 self-start rounded-xl border border-white/10"
+                />
+
+                {/* Alt text */}
+                <div>
+                  <label htmlFor="imageAltInput" className={labelBase}>
+                    Image description
+                    <span className="ml-2 text-[10px] tracking-normal text-neutral-500">
+                      required · for screen readers
+                    </span>
+                  </label>
+                  <input
+                    id="imageAltInput"
+                    className={inputBase}
+                    maxLength={200}
+                    value={imageAlt}
+                    onChange={(e) => setImageAlt(e.target.value)}
+                    placeholder="Describe what the image shows."
+                  />
+                </div>
+
+                {/* Remove */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImageId("");
+                    setImageAlt("");
+                  }}
+                  className="inline-flex h-9 w-fit items-center justify-center gap-2 rounded-full border border-transparent px-3.5 text-xs font-medium text-rose-300 transition-colors hover:border-rose-400/20 hover:bg-rose-500/[0.08]"
+                >
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="h-3.5 w-3.5"
+                  >
+                    <path
+                      d="M5 5l6 6M11 5l-6 6"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  Remove image
+                </button>
+              </>
+            ) : (
+              <div>
+                <input
+                  id="imageFile"
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp"
+                  onChange={onPickFile}
+                  disabled={uploading}
+                  className="sr-only"
+                />
+
+                <label
+                  htmlFor="imageFile"
+                  className={`flex h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.02] transition-colors ${
+                    uploading
+                      ? "cursor-wait opacity-60"
+                      : "hover:border-violet-400/40 hover:bg-white/[0.04]"
+                  }`}
+                >
+                  {uploading ? (
+                    <>
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-violet-400" />
+                      <span className="text-xs text-neutral-400">
+                        Uploading…
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-neutral-400">
+                        <svg
+                          aria-hidden
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="h-4 w-4"
+                        >
+                          <rect
+                            x="2.5"
+                            y="3.5"
+                            width="11"
+                            height="9"
+                            rx="1.5"
+                            stroke="currentColor"
+                            strokeWidth="1.4"
+                          />
+                          <circle cx="6" cy="7" r="1" fill="currentColor" />
+                          <path
+                            d="M3.5 11.5 6.5 9l2 2 2-2.5 2 3"
+                            stroke="currentColor"
+                            strokeWidth="1.4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      <span className="text-xs text-neutral-400">
+                        Click to upload
+                      </span>
+                      <span className="text-[10px] text-neutral-500">
+                        PNG, JPEG or WebP · up to 4 MB
+                      </span>
+                    </>
+                  )}
+                </label>
+              </div>
+            )}
+
+            {uploadError && (
+              <p
+                role="alert"
+                className="flex items-start gap-2 rounded-xl border border-rose-400/20 bg-rose-500/[0.06] px-3 py-2 text-xs text-rose-200"
+              >
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6.25"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  />
+                  <path
+                    d="M8 5v3.5M8 11h.01"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <span>{uploadError}</span>
+              </p>
+            )}
+          </fieldset>
 
           {/* Points + category */}
           <div className="grid gap-5 sm:grid-cols-2">
@@ -163,7 +368,6 @@ export function QuestionForm({
               <div className="flex flex-col gap-2.5">
                 {options.map((option, index) => (
                   <div key={index} className="flex items-center gap-2.5">
-                    {/* Correct marker */}
                     <label className="grid h-6 w-6 flex-shrink-0 cursor-pointer place-items-center">
                       <input
                         type={type === "SINGLE_CHOICE" ? "radio" : "checkbox"}
@@ -171,15 +375,10 @@ export function QuestionForm({
                         checked={option.correct}
                         onChange={(e) => setCorrect(index, e.target.checked)}
                         aria-label={`Option ${index + 1} is correct`}
-                        className={`h-4 w-4 cursor-pointer rounded-full border-white/20 bg-white/[0.04] ${
-                          type === "SINGLE_CHOICE"
-                            ? "accent-violet-500"
-                            : "accent-violet-500"
-                        }`}
+                        className="h-4 w-4 cursor-pointer rounded-full border-white/20 bg-white/[0.04] accent-violet-500"
                       />
                     </label>
 
-                    {/* Option text */}
                     <input
                       className={`${inputBase} min-w-0 flex-1`}
                       aria-label={`Option ${index + 1} text`}
@@ -195,13 +394,11 @@ export function QuestionForm({
                       placeholder={`Option ${index + 1}`}
                     />
 
-                    {/* Hidden fields for form submission */}
                     <input type="hidden" name="optionText" value={option.text} />
                     {option.correct && (
                       <input type="hidden" name="correctIndex" value={index} />
                     )}
 
-                    {/* Remove */}
                     <button
                       type="button"
                       disabled={options.length <= MIN_OPTIONS}
@@ -393,6 +590,15 @@ export function QuestionForm({
                 </p>
               )}
 
+              {imageId && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={`/api/exam-images/${imageId}`}
+                  alt={imageAlt || "Question image"}
+                  className="max-w-full self-start rounded-xl border border-white/10"
+                />
+              )}
+
               {isChoice && (
                 <ul className="flex flex-col gap-2">
                   {options
@@ -404,9 +610,7 @@ export function QuestionForm({
                       >
                         <span
                           className={`grid h-4 w-4 flex-shrink-0 place-items-center border border-white/20 bg-white/[0.04] ${
-                            type === "SINGLE_CHOICE"
-                              ? "rounded-full"
-                              : "rounded"
+                            type === "SINGLE_CHOICE" ? "rounded-full" : "rounded"
                           }`}
                         />
                         <span>{o.text}</span>
@@ -518,7 +722,7 @@ export function QuestionForm({
       <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
         <button
           type="submit"
-          disabled={pending}
+          disabled={pending || uploading}
           className="group inline-flex h-11 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-6 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {pending ? (
@@ -547,11 +751,20 @@ export function QuestionForm({
           )}
         </button>
 
-        <p className="text-xs text-neutral-500">
-          {initial
-            ? "Changes take effect immediately in the working version."
-            : "New questions are added to the end of the working version."}
-        </p>
+        {uploading && (
+          <p className="inline-flex items-center gap-2 text-xs text-neutral-500">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sky-400" />
+            Waiting for image upload to finish…
+          </p>
+        )}
+
+        {!uploading && (
+          <p className="text-xs text-neutral-500">
+            {initial
+              ? "Changes take effect immediately in the working version."
+              : "New questions are added to the end of the working version."}
+          </p>
+        )}
       </div>
     </form>
   );

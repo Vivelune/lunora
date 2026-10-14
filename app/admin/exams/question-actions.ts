@@ -72,6 +72,8 @@ export async function saveQuestion(
     correctIndexes: strings(formData, "correctIndex"),
     trueFalseCorrect: str(formData, "trueFalseCorrect"),
     acceptedAnswers: str(formData, "acceptedAnswers"),
+    imageId: str(formData, "imageId"),
+    imageAlt: str(formData, "imageAlt"),
   });
   if (!result.ok) return fail(result.message);
   const data = result.data;
@@ -86,7 +88,16 @@ export async function saveQuestion(
     if (!category) return fail("That topic does not belong to this exam's subject");
     categoryId = category.id;
   }
-
+  let imageId: string | null = null;
+  const requestedImage = str(formData, "imageId");
+  if (requestedImage !== "") {
+    const asset = await prisma.mediaAsset.findFirst({
+      where: { id: requestedImage, contentType: { startsWith: "image/" } },
+      select: { id: true },
+    });
+    if (!asset) return fail("That image no longer exists. Upload it again.");
+    imageId = asset.id;
+  }
   try {
     if (existingId === null) {
       const count = await prisma.question.count({ where: { versionId: version.id } });
@@ -107,6 +118,8 @@ export async function saveQuestion(
           explanation: data.explanation,
           categoryId,
           acceptedAnswers: data.acceptedAnswers,
+          imageId,
+          imageAlt: data.imageAlt,
           options: {
             create: data.options.map((o, index) => ({
               position: index + 1,
@@ -127,6 +140,8 @@ export async function saveQuestion(
             explanation: data.explanation,
             categoryId,
             acceptedAnswers: data.acceptedAnswers,
+            imageId,
+            imageAlt: data.imageAlt,
           },
         });
         await tx.answerOption.deleteMany({ where: { questionId: id } });
