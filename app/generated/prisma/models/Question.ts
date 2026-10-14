@@ -45,6 +45,8 @@ export type QuestionMinAggregateOutputType = {
   points: runtime.Decimal | null
   explanation: string | null
   categoryId: string | null
+  imageId: string | null
+  imageAlt: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +60,8 @@ export type QuestionMaxAggregateOutputType = {
   points: runtime.Decimal | null
   explanation: string | null
   categoryId: string | null
+  imageId: string | null
+  imageAlt: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,6 +75,8 @@ export type QuestionCountAggregateOutputType = {
   points: number
   explanation: number
   categoryId: number
+  imageId: number
+  imageAlt: number
   acceptedAnswers: number
   createdAt: number
   updatedAt: number
@@ -97,6 +103,8 @@ export type QuestionMinAggregateInputType = {
   points?: true
   explanation?: true
   categoryId?: true
+  imageId?: true
+  imageAlt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +118,8 @@ export type QuestionMaxAggregateInputType = {
   points?: true
   explanation?: true
   categoryId?: true
+  imageId?: true
+  imageAlt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -123,6 +133,8 @@ export type QuestionCountAggregateInputType = {
   points?: true
   explanation?: true
   categoryId?: true
+  imageId?: true
+  imageAlt?: true
   acceptedAnswers?: true
   createdAt?: true
   updatedAt?: true
@@ -224,6 +236,8 @@ export type QuestionGroupByOutputType = {
   points: runtime.Decimal
   explanation: string | null
   categoryId: string | null
+  imageId: string | null
+  imageAlt: string | null
   acceptedAnswers: string[]
   createdAt: Date
   updatedAt: Date
@@ -261,11 +275,14 @@ export type QuestionWhereInput = {
   points?: Prisma.DecimalFilter<"Question"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageAlt?: Prisma.StringNullableFilter<"Question"> | string | null
   acceptedAnswers?: Prisma.StringNullableListFilter<"Question">
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   version?: Prisma.XOR<Prisma.ExamVersionScalarRelationFilter, Prisma.ExamVersionWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  image?: Prisma.XOR<Prisma.MediaAssetNullableScalarRelationFilter, Prisma.MediaAssetWhereInput> | null
   options?: Prisma.AnswerOptionListRelationFilter
 }
 
@@ -278,11 +295,14 @@ export type QuestionOrderByWithRelationInput = {
   points?: Prisma.SortOrder
   explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageAlt?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAnswers?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   version?: Prisma.ExamVersionOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
+  image?: Prisma.MediaAssetOrderByWithRelationInput
   options?: Prisma.AnswerOptionOrderByRelationAggregateInput
 }
 
@@ -299,11 +319,14 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   points?: Prisma.DecimalFilter<"Question"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageAlt?: Prisma.StringNullableFilter<"Question"> | string | null
   acceptedAnswers?: Prisma.StringNullableListFilter<"Question">
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   version?: Prisma.XOR<Prisma.ExamVersionScalarRelationFilter, Prisma.ExamVersionWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  image?: Prisma.XOR<Prisma.MediaAssetNullableScalarRelationFilter, Prisma.MediaAssetWhereInput> | null
   options?: Prisma.AnswerOptionListRelationFilter
 }, "id" | "versionId_position">
 
@@ -316,6 +339,8 @@ export type QuestionOrderByWithAggregationInput = {
   points?: Prisma.SortOrder
   explanation?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageAlt?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAnswers?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -338,6 +363,8 @@ export type QuestionScalarWhereWithAggregatesInput = {
   points?: Prisma.DecimalWithAggregatesFilter<"Question"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
+  imageId?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
+  imageAlt?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
   acceptedAnswers?: Prisma.StringNullableListFilter<"Question">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Question"> | Date | string
@@ -350,11 +377,13 @@ export type QuestionCreateInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   version: Prisma.ExamVersionCreateNestedOneWithoutQuestionsInput
   category?: Prisma.CategoryCreateNestedOneWithoutQuestionsInput
+  image?: Prisma.MediaAssetCreateNestedOneWithoutQuestionsInput
   options?: Prisma.AnswerOptionCreateNestedManyWithoutQuestionInput
 }
 
@@ -367,6 +396,8 @@ export type QuestionUncheckedCreateInput = {
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
   categoryId?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -380,11 +411,13 @@ export type QuestionUpdateInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   version?: Prisma.ExamVersionUpdateOneRequiredWithoutQuestionsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutQuestionsNestedInput
+  image?: Prisma.MediaAssetUpdateOneWithoutQuestionsNestedInput
   options?: Prisma.AnswerOptionUpdateManyWithoutQuestionNestedInput
 }
 
@@ -397,6 +430,8 @@ export type QuestionUncheckedUpdateInput = {
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -412,6 +447,8 @@ export type QuestionCreateManyInput = {
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
   categoryId?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -424,6 +461,7 @@ export type QuestionUpdateManyMutationInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,6 +476,8 @@ export type QuestionUncheckedUpdateManyInput = {
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,6 +507,8 @@ export type QuestionCountOrderByAggregateInput = {
   points?: Prisma.SortOrder
   explanation?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  imageId?: Prisma.SortOrder
+  imageAlt?: Prisma.SortOrder
   acceptedAnswers?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -486,6 +528,8 @@ export type QuestionMaxOrderByAggregateInput = {
   points?: Prisma.SortOrder
   explanation?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  imageId?: Prisma.SortOrder
+  imageAlt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -499,6 +543,8 @@ export type QuestionMinOrderByAggregateInput = {
   points?: Prisma.SortOrder
   explanation?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  imageId?: Prisma.SortOrder
+  imageAlt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -632,6 +678,48 @@ export type QuestionUpdateOneRequiredWithoutOptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutOptionsInput, Prisma.QuestionUpdateWithoutOptionsInput>, Prisma.QuestionUncheckedUpdateWithoutOptionsInput>
 }
 
+export type QuestionCreateNestedManyWithoutImageInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput> | Prisma.QuestionCreateWithoutImageInput[] | Prisma.QuestionUncheckedCreateWithoutImageInput[]
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutImageInput | Prisma.QuestionCreateOrConnectWithoutImageInput[]
+  createMany?: Prisma.QuestionCreateManyImageInputEnvelope
+  connect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+}
+
+export type QuestionUncheckedCreateNestedManyWithoutImageInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput> | Prisma.QuestionCreateWithoutImageInput[] | Prisma.QuestionUncheckedCreateWithoutImageInput[]
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutImageInput | Prisma.QuestionCreateOrConnectWithoutImageInput[]
+  createMany?: Prisma.QuestionCreateManyImageInputEnvelope
+  connect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+}
+
+export type QuestionUpdateManyWithoutImageNestedInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput> | Prisma.QuestionCreateWithoutImageInput[] | Prisma.QuestionUncheckedCreateWithoutImageInput[]
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutImageInput | Prisma.QuestionCreateOrConnectWithoutImageInput[]
+  upsert?: Prisma.QuestionUpsertWithWhereUniqueWithoutImageInput | Prisma.QuestionUpsertWithWhereUniqueWithoutImageInput[]
+  createMany?: Prisma.QuestionCreateManyImageInputEnvelope
+  set?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  disconnect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  delete?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  connect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  update?: Prisma.QuestionUpdateWithWhereUniqueWithoutImageInput | Prisma.QuestionUpdateWithWhereUniqueWithoutImageInput[]
+  updateMany?: Prisma.QuestionUpdateManyWithWhereWithoutImageInput | Prisma.QuestionUpdateManyWithWhereWithoutImageInput[]
+  deleteMany?: Prisma.QuestionScalarWhereInput | Prisma.QuestionScalarWhereInput[]
+}
+
+export type QuestionUncheckedUpdateManyWithoutImageNestedInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput> | Prisma.QuestionCreateWithoutImageInput[] | Prisma.QuestionUncheckedCreateWithoutImageInput[]
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutImageInput | Prisma.QuestionCreateOrConnectWithoutImageInput[]
+  upsert?: Prisma.QuestionUpsertWithWhereUniqueWithoutImageInput | Prisma.QuestionUpsertWithWhereUniqueWithoutImageInput[]
+  createMany?: Prisma.QuestionCreateManyImageInputEnvelope
+  set?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  disconnect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  delete?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  connect?: Prisma.QuestionWhereUniqueInput | Prisma.QuestionWhereUniqueInput[]
+  update?: Prisma.QuestionUpdateWithWhereUniqueWithoutImageInput | Prisma.QuestionUpdateWithWhereUniqueWithoutImageInput[]
+  updateMany?: Prisma.QuestionUpdateManyWithWhereWithoutImageInput | Prisma.QuestionUpdateManyWithWhereWithoutImageInput[]
+  deleteMany?: Prisma.QuestionScalarWhereInput | Prisma.QuestionScalarWhereInput[]
+}
+
 export type QuestionCreateWithoutCategoryInput = {
   id?: string
   position: number
@@ -639,10 +727,12 @@ export type QuestionCreateWithoutCategoryInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   version: Prisma.ExamVersionCreateNestedOneWithoutQuestionsInput
+  image?: Prisma.MediaAssetCreateNestedOneWithoutQuestionsInput
   options?: Prisma.AnswerOptionCreateNestedManyWithoutQuestionInput
 }
 
@@ -654,6 +744,8 @@ export type QuestionUncheckedCreateWithoutCategoryInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -698,6 +790,8 @@ export type QuestionScalarWhereInput = {
   points?: Prisma.DecimalFilter<"Question"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.StringNullableFilter<"Question"> | string | null
   categoryId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageId?: Prisma.StringNullableFilter<"Question"> | string | null
+  imageAlt?: Prisma.StringNullableFilter<"Question"> | string | null
   acceptedAnswers?: Prisma.StringNullableListFilter<"Question">
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
@@ -710,10 +804,12 @@ export type QuestionCreateWithoutVersionInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   category?: Prisma.CategoryCreateNestedOneWithoutQuestionsInput
+  image?: Prisma.MediaAssetCreateNestedOneWithoutQuestionsInput
   options?: Prisma.AnswerOptionCreateNestedManyWithoutQuestionInput
 }
 
@@ -725,6 +821,8 @@ export type QuestionUncheckedCreateWithoutVersionInput = {
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
   categoryId?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -764,11 +862,13 @@ export type QuestionCreateWithoutOptionsInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   version: Prisma.ExamVersionCreateNestedOneWithoutQuestionsInput
   category?: Prisma.CategoryCreateNestedOneWithoutQuestionsInput
+  image?: Prisma.MediaAssetCreateNestedOneWithoutQuestionsInput
 }
 
 export type QuestionUncheckedCreateWithoutOptionsInput = {
@@ -780,6 +880,8 @@ export type QuestionUncheckedCreateWithoutOptionsInput = {
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
   categoryId?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -808,11 +910,13 @@ export type QuestionUpdateWithoutOptionsInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   version?: Prisma.ExamVersionUpdateOneRequiredWithoutQuestionsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutQuestionsNestedInput
+  image?: Prisma.MediaAssetUpdateOneWithoutQuestionsNestedInput
 }
 
 export type QuestionUncheckedUpdateWithoutOptionsInput = {
@@ -824,9 +928,69 @@ export type QuestionUncheckedUpdateWithoutOptionsInput = {
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuestionCreateWithoutImageInput = {
+  id?: string
+  position: number
+  type: $Enums.QuestionType
+  prompt: string
+  points: runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: string | null
+  imageAlt?: string | null
+  acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  version: Prisma.ExamVersionCreateNestedOneWithoutQuestionsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutQuestionsInput
+  options?: Prisma.AnswerOptionCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionUncheckedCreateWithoutImageInput = {
+  id?: string
+  versionId: string
+  position: number
+  type: $Enums.QuestionType
+  prompt: string
+  points: runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: string | null
+  categoryId?: string | null
+  imageAlt?: string | null
+  acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  options?: Prisma.AnswerOptionUncheckedCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionCreateOrConnectWithoutImageInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput>
+}
+
+export type QuestionCreateManyImageInputEnvelope = {
+  data: Prisma.QuestionCreateManyImageInput | Prisma.QuestionCreateManyImageInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuestionUpsertWithWhereUniqueWithoutImageInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuestionUpdateWithoutImageInput, Prisma.QuestionUncheckedUpdateWithoutImageInput>
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutImageInput, Prisma.QuestionUncheckedCreateWithoutImageInput>
+}
+
+export type QuestionUpdateWithWhereUniqueWithoutImageInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuestionUpdateWithoutImageInput, Prisma.QuestionUncheckedUpdateWithoutImageInput>
+}
+
+export type QuestionUpdateManyWithWhereWithoutImageInput = {
+  where: Prisma.QuestionScalarWhereInput
+  data: Prisma.XOR<Prisma.QuestionUpdateManyMutationInput, Prisma.QuestionUncheckedUpdateManyWithoutImageInput>
 }
 
 export type QuestionCreateManyCategoryInput = {
@@ -837,6 +1001,8 @@ export type QuestionCreateManyCategoryInput = {
   prompt: string
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -849,10 +1015,12 @@ export type QuestionUpdateWithoutCategoryInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   version?: Prisma.ExamVersionUpdateOneRequiredWithoutQuestionsNestedInput
+  image?: Prisma.MediaAssetUpdateOneWithoutQuestionsNestedInput
   options?: Prisma.AnswerOptionUpdateManyWithoutQuestionNestedInput
 }
 
@@ -864,6 +1032,8 @@ export type QuestionUncheckedUpdateWithoutCategoryInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -878,6 +1048,8 @@ export type QuestionUncheckedUpdateManyWithoutCategoryInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -891,6 +1063,8 @@ export type QuestionCreateManyVersionInput = {
   points: runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: string | null
   categoryId?: string | null
+  imageId?: string | null
+  imageAlt?: string | null
   acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -903,10 +1077,12 @@ export type QuestionUpdateWithoutVersionInput = {
   prompt?: Prisma.StringFieldUpdateOperationsInput | string
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneWithoutQuestionsNestedInput
+  image?: Prisma.MediaAssetUpdateOneWithoutQuestionsNestedInput
   options?: Prisma.AnswerOptionUpdateManyWithoutQuestionNestedInput
 }
 
@@ -918,6 +1094,8 @@ export type QuestionUncheckedUpdateWithoutVersionInput = {
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -932,6 +1110,70 @@ export type QuestionUncheckedUpdateManyWithoutVersionInput = {
   points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuestionCreateManyImageInput = {
+  id?: string
+  versionId: string
+  position: number
+  type: $Enums.QuestionType
+  prompt: string
+  points: runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: string | null
+  categoryId?: string | null
+  imageAlt?: string | null
+  acceptedAnswers?: Prisma.QuestionCreateacceptedAnswersInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuestionUpdateWithoutImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumQuestionTypeFieldUpdateOperationsInput | $Enums.QuestionType
+  prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  version?: Prisma.ExamVersionUpdateOneRequiredWithoutQuestionsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutQuestionsNestedInput
+  options?: Prisma.AnswerOptionUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionUncheckedUpdateWithoutImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  versionId?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumQuestionTypeFieldUpdateOperationsInput | $Enums.QuestionType
+  prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  options?: Prisma.AnswerOptionUncheckedUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionUncheckedUpdateManyWithoutImageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  versionId?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.EnumQuestionTypeFieldUpdateOperationsInput | $Enums.QuestionType
+  prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  points?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageAlt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAnswers?: Prisma.QuestionUpdateacceptedAnswersInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -977,11 +1219,14 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   points?: boolean
   explanation?: boolean
   categoryId?: boolean
+  imageId?: boolean
+  imageAlt?: boolean
   acceptedAnswers?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
   options?: boolean | Prisma.Question$optionsArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
@@ -995,11 +1240,14 @@ export type QuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   points?: boolean
   explanation?: boolean
   categoryId?: boolean
+  imageId?: boolean
+  imageAlt?: boolean
   acceptedAnswers?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
 export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1011,11 +1259,14 @@ export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   points?: boolean
   explanation?: boolean
   categoryId?: boolean
+  imageId?: boolean
+  imageAlt?: boolean
   acceptedAnswers?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
 export type QuestionSelectScalar = {
@@ -1027,25 +1278,30 @@ export type QuestionSelectScalar = {
   points?: boolean
   explanation?: boolean
   categoryId?: boolean
+  imageId?: boolean
+  imageAlt?: boolean
   acceptedAnswers?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "versionId" | "position" | "type" | "prompt" | "points" | "explanation" | "categoryId" | "acceptedAnswers" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
+export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "versionId" | "position" | "type" | "prompt" | "points" | "explanation" | "categoryId" | "imageId" | "imageAlt" | "acceptedAnswers" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
   options?: boolean | Prisma.Question$optionsArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuestionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
 }
 export type QuestionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   version?: boolean | Prisma.ExamVersionDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Question$categoryArgs<ExtArgs>
+  image?: boolean | Prisma.Question$imageArgs<ExtArgs>
 }
 
 export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1053,6 +1309,7 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     version: Prisma.$ExamVersionPayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs> | null
+    image: Prisma.$MediaAssetPayload<ExtArgs> | null
     options: Prisma.$AnswerOptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1064,6 +1321,8 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     points: runtime.Decimal
     explanation: string | null
     categoryId: string | null
+    imageId: string | null
+    imageAlt: string | null
     acceptedAnswers: string[]
     createdAt: Date
     updatedAt: Date
@@ -1463,6 +1722,7 @@ export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   version<T extends Prisma.ExamVersionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExamVersionDefaultArgs<ExtArgs>>): Prisma.Prisma__ExamVersionClient<runtime.Types.Result.GetResult<Prisma.$ExamVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.Question$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  image<T extends Prisma.Question$imageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$imageArgs<ExtArgs>>): Prisma.Prisma__MediaAssetClient<runtime.Types.Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   options<T extends Prisma.Question$optionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$optionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AnswerOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1501,6 +1761,8 @@ export interface QuestionFieldRefs {
   readonly points: Prisma.FieldRef<"Question", 'Decimal'>
   readonly explanation: Prisma.FieldRef<"Question", 'String'>
   readonly categoryId: Prisma.FieldRef<"Question", 'String'>
+  readonly imageId: Prisma.FieldRef<"Question", 'String'>
+  readonly imageAlt: Prisma.FieldRef<"Question", 'String'>
   readonly acceptedAnswers: Prisma.FieldRef<"Question", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Question", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Question", 'DateTime'>
@@ -1921,6 +2183,25 @@ export type Question$categoryArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.CategoryInclude<ExtArgs> | null
   where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * Question.image
+ */
+export type Question$imageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MediaAsset
+   */
+  select?: Prisma.MediaAssetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MediaAsset
+   */
+  omit?: Prisma.MediaAssetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MediaAssetInclude<ExtArgs> | null
+  where?: Prisma.MediaAssetWhereInput
 }
 
 /**

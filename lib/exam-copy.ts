@@ -15,6 +15,8 @@ export async function copyVersionContent(db: Db, fromVersionId: string, toVersio
       points: true,
       explanation: true,
       categoryId: true,
+      imageId: true,
+      imageAlt: true,
       acceptedAnswers: true,
       options: {
         orderBy: { position: "asc" },
@@ -36,6 +38,8 @@ export async function copyVersionContent(db: Db, fromVersionId: string, toVersio
       points: q.points,
       explanation: q.explanation,
       categoryId: q.categoryId,
+      imageId: q.imageId,
+      imageAlt: q.imageAlt,
       acceptedAnswers: q.acceptedAnswers,
     })),
     select: { id: true, position: true },

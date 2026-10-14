@@ -24,6 +24,7 @@ export default async function QuestionsSectionContent({
           type: true,
           prompt: true,
           points: true,
+          imageId: true,
           acceptedAnswers: true,
           category: {
             select: {
@@ -204,6 +205,17 @@ export default async function QuestionsSectionContent({
                     </div>
                   )}
                 </div>
+
+                {question.imageId && (
+                  <div className="mt-3 inline-flex max-w-full rounded-xl border border-white/10 bg-white/[0.02] p-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/api/exam-images/${question.imageId}`}
+                      alt=""
+                      className="max-h-24 max-w-full rounded-lg object-contain"
+                    />
+                  </div>
+                )}
 
                 {/* ============ ANSWERS ============ */}
                 {question.type === "SHORT_ANSWER" ? (

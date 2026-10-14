@@ -102,3 +102,8 @@ export type Question = Prisma.QuestionModel
  * 
  */
 export type AnswerOption = Prisma.AnswerOptionModel
+/**
+ * Model MediaAsset
+ * 
+ */
+export type MediaAsset = Prisma.MediaAssetModel

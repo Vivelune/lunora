@@ -28,6 +28,8 @@ export type RawQuestion = {
   correctIndexes: string[];
   trueFalseCorrect: string;
   acceptedAnswers: string;
+  imageId: string;
+  imageAlt: string;
 };
 
 export type CleanQuestion = {
@@ -36,6 +38,7 @@ export type CleanQuestion = {
   explanation: string | null;
   options: { text: string; isCorrect: boolean }[];
   acceptedAnswers: string[];
+  imageAlt: string | null;
 };
 
 export function validateQuestion(
@@ -53,7 +56,20 @@ export function validateQuestion(
   const explanation = raw.explanation.trim();
   if (explanation.length > 3000) return { ok: false, message: "The explanation is too long (3000 characters maximum)" };
 
-  const base = { prompt, points, explanation: explanation === "" ? null : explanation };
+  const imageAlt = raw.imageAlt.trim();
+  if (imageAlt.length > 200) {
+    return { ok: false, message: "The image description must be 200 characters or fewer" };
+  }
+  if (raw.imageId !== "" && imageAlt === "") {
+    return { ok: false, message: "Describe the image for students who cannot see it (the description is required)" };
+  }
+
+  const base = {
+    prompt,
+    points,
+    explanation: explanation === "" ? null : explanation,
+    imageAlt: raw.imageId !== "" ? imageAlt : null,
+  };
 
   if (raw.type === "TRUE_FALSE") {
     if (raw.trueFalseCorrect !== "true" && raw.trueFalseCorrect !== "false") {
