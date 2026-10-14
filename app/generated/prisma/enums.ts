@@ -77,3 +77,11 @@ export const QuestionType = {
 } as const
 
 export type QuestionType = (typeof QuestionType)[keyof typeof QuestionType]
+
+
+export const ExamVisibility = {
+  ASSIGNED_ONLY: 'ASSIGNED_ONLY',
+  OPEN_PRACTICE: 'OPEN_PRACTICE'
+} as const
+
+export type ExamVisibility = (typeof ExamVisibility)[keyof typeof ExamVisibility]

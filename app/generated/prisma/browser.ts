@@ -107,3 +107,8 @@ export type AnswerOption = Prisma.AnswerOptionModel
  * 
  */
 export type MediaAsset = Prisma.MediaAssetModel
+/**
+ * Model ExamAssignment
+ * 
+ */
+export type ExamAssignment = Prisma.ExamAssignmentModel

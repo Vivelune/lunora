@@ -35,6 +35,8 @@ model StudentProfile {
   auditLogs             AuditLog[]
   examsCreated          Exam[]
   mediaUploaded MediaAsset[]
+    examAssignmentsReceived ExamAssignment[] @relation("ExamAssignmentStudent")
+  examAssignmentsCreated  ExamAssignment[] @relation("ExamAssignmentCreator")
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 }
@@ -135,6 +137,7 @@ model StudentGroup {
   createdBy   StudentProfile           @relation(fields: [createdById], references: [id], onDelete: Restrict)
   memberships StudentGroupMembership[]
   assignments LessonPlanAssignment[]
+  examAssignments ExamAssignment[]
   createdAt   DateTime                 @default(now())
   updatedAt   DateTime                 @updatedAt
 }
@@ -299,6 +302,8 @@ model Exam {
   createdById    String
   createdBy      StudentProfile @relation(fields: [createdById], references: [id], onDelete: Restrict)
   versions       ExamVersion[]
+  visibility     ExamVisibility @default(ASSIGNED_ONLY)
+  assignments    ExamAssignment[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
@@ -323,6 +328,7 @@ model ExamVersion {
   maxFocusViolations Int           @default(3)
   requireFullscreen  Boolean       @default(false)
   questions          Question[]
+  assignments        ExamAssignment[]
   createdAt          DateTime      @default(now())
 
   @@unique([examId, versionNumber])
@@ -380,4 +386,36 @@ model MediaAsset {
   uploadedBy   StudentProfile @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
   questions    Question[]
   createdAt    DateTime       @default(now())
+}
+
+enum ExamVisibility {
+  ASSIGNED_ONLY
+  OPEN_PRACTICE
+}
+
+model ExamAssignment {
+  id                  String           @id @default(cuid())
+  examId              String
+  exam                Exam             @relation(fields: [examId], references: [id], onDelete: Restrict)
+  versionId           String
+  version             ExamVersion      @relation(fields: [versionId], references: [id], onDelete: Restrict)
+  studentId           String
+  student             StudentProfile   @relation("ExamAssignmentStudent", fields: [studentId], references: [id], onDelete: Restrict)
+  groupId             String?
+  group               StudentGroup?    @relation(fields: [groupId], references: [id], onDelete: Restrict)
+  assignedAt          DateTime         @default(now())
+  availableFrom       DateTime?
+  dueDate             DateTime?
+  maxAttemptsOverride Int?
+  instructions        String?
+  status              AssignmentStatus @default(ACTIVE)
+  createdById         String
+  createdBy           StudentProfile   @relation("ExamAssignmentCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  @@unique([studentId, examId])
+  @@index([examId])
+  @@index([studentId, status])
+  @@index([groupId])
 }

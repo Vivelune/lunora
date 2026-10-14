@@ -201,6 +201,7 @@ export type StudentGroupWhereInput = {
   createdBy?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
   memberships?: Prisma.StudentGroupMembershipListRelationFilter
   assignments?: Prisma.LessonPlanAssignmentListRelationFilter
+  examAssignments?: Prisma.ExamAssignmentListRelationFilter
 }
 
 export type StudentGroupOrderByWithRelationInput = {
@@ -214,6 +215,7 @@ export type StudentGroupOrderByWithRelationInput = {
   createdBy?: Prisma.StudentProfileOrderByWithRelationInput
   memberships?: Prisma.StudentGroupMembershipOrderByRelationAggregateInput
   assignments?: Prisma.LessonPlanAssignmentOrderByRelationAggregateInput
+  examAssignments?: Prisma.ExamAssignmentOrderByRelationAggregateInput
 }
 
 export type StudentGroupWhereUniqueInput = Prisma.AtLeast<{
@@ -230,6 +232,7 @@ export type StudentGroupWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
   memberships?: Prisma.StudentGroupMembershipListRelationFilter
   assignments?: Prisma.LessonPlanAssignmentListRelationFilter
+  examAssignments?: Prisma.ExamAssignmentListRelationFilter
 }, "id" | "name">
 
 export type StudentGroupOrderByWithAggregationInput = {
@@ -268,6 +271,7 @@ export type StudentGroupCreateInput = {
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutGroupsCreatedInput
   memberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutGroupInput
   assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupUncheckedCreateInput = {
@@ -280,6 +284,7 @@ export type StudentGroupUncheckedCreateInput = {
   updatedAt?: Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutGroupInput
   assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupUpdateInput = {
@@ -292,6 +297,7 @@ export type StudentGroupUpdateInput = {
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutGroupsCreatedNestedInput
   memberships?: Prisma.StudentGroupMembershipUpdateManyWithoutGroupNestedInput
   assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupUncheckedUpdateInput = {
@@ -304,6 +310,7 @@ export type StudentGroupUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
   assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupCreateManyInput = {
@@ -457,6 +464,22 @@ export type StudentGroupUpdateOneWithoutAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentGroupUpdateToOneWithWhereWithoutAssignmentsInput, Prisma.StudentGroupUpdateWithoutAssignmentsInput>, Prisma.StudentGroupUncheckedUpdateWithoutAssignmentsInput>
 }
 
+export type StudentGroupCreateNestedOneWithoutExamAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.StudentGroupCreateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedCreateWithoutExamAssignmentsInput>
+  connectOrCreate?: Prisma.StudentGroupCreateOrConnectWithoutExamAssignmentsInput
+  connect?: Prisma.StudentGroupWhereUniqueInput
+}
+
+export type StudentGroupUpdateOneWithoutExamAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentGroupCreateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedCreateWithoutExamAssignmentsInput>
+  connectOrCreate?: Prisma.StudentGroupCreateOrConnectWithoutExamAssignmentsInput
+  upsert?: Prisma.StudentGroupUpsertWithoutExamAssignmentsInput
+  disconnect?: Prisma.StudentGroupWhereInput | boolean
+  delete?: Prisma.StudentGroupWhereInput | boolean
+  connect?: Prisma.StudentGroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentGroupUpdateToOneWithWhereWithoutExamAssignmentsInput, Prisma.StudentGroupUpdateWithoutExamAssignmentsInput>, Prisma.StudentGroupUncheckedUpdateWithoutExamAssignmentsInput>
+}
+
 export type StudentGroupCreateWithoutCreatedByInput = {
   id?: string
   name: string
@@ -466,6 +489,7 @@ export type StudentGroupCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   memberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutGroupInput
   assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupUncheckedCreateWithoutCreatedByInput = {
@@ -477,6 +501,7 @@ export type StudentGroupUncheckedCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutGroupInput
   assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupCreateOrConnectWithoutCreatedByInput = {
@@ -527,6 +552,7 @@ export type StudentGroupCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutGroupsCreatedInput
   assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupUncheckedCreateWithoutMembershipsInput = {
@@ -538,6 +564,7 @@ export type StudentGroupUncheckedCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupCreateOrConnectWithoutMembershipsInput = {
@@ -565,6 +592,7 @@ export type StudentGroupUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutGroupsCreatedNestedInput
   assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupUncheckedUpdateWithoutMembershipsInput = {
@@ -576,6 +604,7 @@ export type StudentGroupUncheckedUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupCreateWithoutAssignmentsInput = {
@@ -587,6 +616,7 @@ export type StudentGroupCreateWithoutAssignmentsInput = {
   updatedAt?: Date | string
   createdBy: Prisma.StudentProfileCreateNestedOneWithoutGroupsCreatedInput
   memberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupUncheckedCreateWithoutAssignmentsInput = {
@@ -598,6 +628,7 @@ export type StudentGroupUncheckedCreateWithoutAssignmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type StudentGroupCreateOrConnectWithoutAssignmentsInput = {
@@ -625,6 +656,7 @@ export type StudentGroupUpdateWithoutAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutGroupsCreatedNestedInput
   memberships?: Prisma.StudentGroupMembershipUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupUncheckedUpdateWithoutAssignmentsInput = {
@@ -636,6 +668,71 @@ export type StudentGroupUncheckedUpdateWithoutAssignmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type StudentGroupCreateWithoutExamAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: Prisma.StudentProfileCreateNestedOneWithoutGroupsCreatedInput
+  memberships?: Prisma.StudentGroupMembershipCreateNestedManyWithoutGroupInput
+  assignments?: Prisma.LessonPlanAssignmentCreateNestedManyWithoutGroupInput
+}
+
+export type StudentGroupUncheckedCreateWithoutExamAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  isActive?: boolean
+  createdById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.StudentGroupMembershipUncheckedCreateNestedManyWithoutGroupInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type StudentGroupCreateOrConnectWithoutExamAssignmentsInput = {
+  where: Prisma.StudentGroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentGroupCreateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedCreateWithoutExamAssignmentsInput>
+}
+
+export type StudentGroupUpsertWithoutExamAssignmentsInput = {
+  update: Prisma.XOR<Prisma.StudentGroupUpdateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedUpdateWithoutExamAssignmentsInput>
+  create: Prisma.XOR<Prisma.StudentGroupCreateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedCreateWithoutExamAssignmentsInput>
+  where?: Prisma.StudentGroupWhereInput
+}
+
+export type StudentGroupUpdateToOneWithWhereWithoutExamAssignmentsInput = {
+  where?: Prisma.StudentGroupWhereInput
+  data: Prisma.XOR<Prisma.StudentGroupUpdateWithoutExamAssignmentsInput, Prisma.StudentGroupUncheckedUpdateWithoutExamAssignmentsInput>
+}
+
+export type StudentGroupUpdateWithoutExamAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StudentProfileUpdateOneRequiredWithoutGroupsCreatedNestedInput
+  memberships?: Prisma.StudentGroupMembershipUpdateManyWithoutGroupNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutGroupNestedInput
+}
+
+export type StudentGroupUncheckedUpdateWithoutExamAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
+  assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupCreateManyCreatedByInput = {
@@ -656,6 +753,7 @@ export type StudentGroupUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.StudentGroupMembershipUpdateManyWithoutGroupNestedInput
   assignments?: Prisma.LessonPlanAssignmentUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupUncheckedUpdateWithoutCreatedByInput = {
@@ -667,6 +765,7 @@ export type StudentGroupUncheckedUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.StudentGroupMembershipUncheckedUpdateManyWithoutGroupNestedInput
   assignments?: Prisma.LessonPlanAssignmentUncheckedUpdateManyWithoutGroupNestedInput
+  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type StudentGroupUncheckedUpdateManyWithoutCreatedByInput = {
@@ -686,11 +785,13 @@ export type StudentGroupUncheckedUpdateManyWithoutCreatedByInput = {
 export type StudentGroupCountOutputType = {
   memberships: number
   assignments: number
+  examAssignments: number
 }
 
 export type StudentGroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | StudentGroupCountOutputTypeCountMembershipsArgs
   assignments?: boolean | StudentGroupCountOutputTypeCountAssignmentsArgs
+  examAssignments?: boolean | StudentGroupCountOutputTypeCountExamAssignmentsArgs
 }
 
 /**
@@ -717,6 +818,13 @@ export type StudentGroupCountOutputTypeCountAssignmentsArgs<ExtArgs extends runt
   where?: Prisma.LessonPlanAssignmentWhereInput
 }
 
+/**
+ * StudentGroupCountOutputType without action
+ */
+export type StudentGroupCountOutputTypeCountExamAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExamAssignmentWhereInput
+}
+
 
 export type StudentGroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -729,6 +837,7 @@ export type StudentGroupSelect<ExtArgs extends runtime.Types.Extensions.Internal
   createdBy?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   memberships?: boolean | Prisma.StudentGroup$membershipsArgs<ExtArgs>
   assignments?: boolean | Prisma.StudentGroup$assignmentsArgs<ExtArgs>
+  examAssignments?: boolean | Prisma.StudentGroup$examAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentGroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentGroup"]>
 
@@ -769,6 +878,7 @@ export type StudentGroupInclude<ExtArgs extends runtime.Types.Extensions.Interna
   createdBy?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   memberships?: boolean | Prisma.StudentGroup$membershipsArgs<ExtArgs>
   assignments?: boolean | Prisma.StudentGroup$assignmentsArgs<ExtArgs>
+  examAssignments?: boolean | Prisma.StudentGroup$examAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentGroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentGroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -784,6 +894,7 @@ export type $StudentGroupPayload<ExtArgs extends runtime.Types.Extensions.Intern
     createdBy: Prisma.$StudentProfilePayload<ExtArgs>
     memberships: Prisma.$StudentGroupMembershipPayload<ExtArgs>[]
     assignments: Prisma.$LessonPlanAssignmentPayload<ExtArgs>[]
+    examAssignments: Prisma.$ExamAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1190,6 +1301,7 @@ export interface Prisma__StudentGroupClient<T, Null = never, ExtArgs extends run
   createdBy<T extends Prisma.StudentProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentProfileClient<runtime.Types.Result.GetResult<Prisma.$StudentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   memberships<T extends Prisma.StudentGroup$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentGroup$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentGroupMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignments<T extends Prisma.StudentGroup$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentGroup$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  examAssignments<T extends Prisma.StudentGroup$examAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentGroup$examAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1672,6 +1784,30 @@ export type StudentGroup$assignmentsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.LessonPlanAssignmentScalarFieldEnum | Prisma.LessonPlanAssignmentScalarFieldEnum[]
+}
+
+/**
+ * StudentGroup.examAssignments
+ */
+export type StudentGroup$examAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExamAssignment
+   */
+  select?: Prisma.ExamAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExamAssignment
+   */
+  omit?: Prisma.ExamAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExamAssignmentInclude<ExtArgs> | null
+  where?: Prisma.ExamAssignmentWhereInput
+  orderBy?: Prisma.ExamAssignmentOrderByWithRelationInput | Prisma.ExamAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.ExamAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExamAssignmentScalarFieldEnum | Prisma.ExamAssignmentScalarFieldEnum[]
 }
 
 /**

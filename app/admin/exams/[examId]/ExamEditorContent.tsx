@@ -46,6 +46,7 @@ export default async function ExamEditorContent({
       categoryId: true,
       availableFrom: true,
       availableUntil: true,
+      visibility: true,
       subject: {
         select: {
           name: true,
@@ -227,7 +228,56 @@ export default async function ExamEditorContent({
               />
             </div>
           </div>
-
+          <div>
+            <label htmlFor="visibility" className={labelBase}>
+              Who can start this exam
+            </label>
+            <select
+              id="visibility"
+              name="visibility"
+              defaultValue={exam.visibility}
+              className={inputBase}
+            >
+              <option value="ASSIGNED_ONLY">
+                Only students it is assigned to
+              </option>
+              <option value="OPEN_PRACTICE">
+                Open practice — any student who finished onboarding
+              </option>
+            </select>
+            <p className="mt-2 flex items-start gap-2 text-xs leading-relaxed text-neutral-500">
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+              >
+                <circle
+                  cx="8"
+                  cy="8"
+                  r="6.25"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                />
+                <path
+                  d="M8 5v3M8 10.5h.01"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span>
+                <strong className="font-medium text-neutral-400">
+                  Assigned only:
+                </strong>{" "}
+                students see this exam when you assign it.{" "}
+                <strong className="font-medium text-neutral-400">
+                  Open practice:
+                </strong>{" "}
+                any onboarded student can start it from their dashboard.
+              </span>
+            </p>
+          </div>
           <p className="flex items-start gap-2 text-xs text-neutral-500">
             <svg aria-hidden viewBox="0 0 16 16" fill="none" className="mt-0.5 h-3.5 w-3.5 flex-shrink-0">
               <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
