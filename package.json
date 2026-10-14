@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "check:safety": "tsx scripts/check-exam-safety.ts"
+    "check:safety": "tsx scripts/check-exam-safety.ts",
+    "check:window": "tsx scripts/check-exam-window.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.13",
