@@ -36,7 +36,7 @@ export default function HomePage() {
       </header>
 
       {/* ============ HERO ============ */}
-      <section className="flex w-full max-w-xl flex-col items-center text-center">
+      <section className="flex w-full max-w-2xl flex-col items-center text-center">
         {/* Badge */}
         <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-neutral-300 backdrop-blur">
           <span className="relative flex h-1.5 w-1.5">
@@ -48,13 +48,16 @@ export default function HomePage() {
 
         {/* Title */}
         <h1 className="bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
-          Master the SAT &amp; AP Chem
+          Master any subject,
+          <br />
+          one step at a time
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-5 max-w-md text-balance text-base leading-relaxed text-neutral-400 sm:text-lg">
-          Adaptive practice, worked solutions, and progress you can see — built
-          step by step for real understanding.
+        <p className="mt-5 max-w-xl text-balance text-base leading-relaxed text-neutral-400 sm:text-lg">
+          Lunora is an adaptive learning platform for every student and every
+          subject — guided lessons, real-time progress, and feedback that
+          actually helps.
         </p>
 
         {/* Auth */}
@@ -64,8 +67,47 @@ export default function HomePage() {
 
         {/* Footer note */}
         <p className="mt-8 text-xs text-neutral-500">
-          Free to start · No credit card required
+          Free to start · No credit card required · Cancel anytime
         </p>
+
+        {/* ============ SUBJECT STRIP ============ */}
+        <div className="mt-14 flex flex-col items-center gap-4">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">
+            Built for every subject
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {[
+              "SAT",
+              "AP Chemistry",
+              "AP Biology",
+              "Algebra",
+              "Physics",
+              "English",
+              "History",
+              "More coming",
+            ].map((tag, i) => {
+              const isComing = tag === "More coming";
+              return (
+                <span
+                  key={tag}
+                  className={`rounded-full border px-3.5 py-1.5 text-xs font-medium backdrop-blur transition-colors ${
+                    isComing
+                      ? "border-dashed border-white/15 bg-white/[0.02] text-neutral-500"
+                      : "border-white/10 bg-white/[0.04] text-neutral-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+                  }`}
+                >
+                  {tag}
+                </span>
+              );
+            })}
+          </div>
+
+          <p className="mt-2 max-w-md text-xs text-neutral-500">
+            Currently enrolling for SAT and AP Chemistry. More subjects added
+            every term.
+          </p>
+        </div>
       </section>
     </main>
   );
