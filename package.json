@@ -9,6 +9,7 @@
     "lint": "eslint",
     "check:safety": "tsx scripts/check-exam-safety.ts",
     "check:attempts": "tsx scripts/check-attempt-rules.ts",
+    "check:order": "tsx scripts/check-attempt-order.ts",
     "check:window": "tsx scripts/check-exam-window.ts"
   },
   "dependencies": {

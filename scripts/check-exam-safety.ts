@@ -90,7 +90,7 @@ async function main() {
   }
 
   // 3. Student-facing code never touches the answer key directly.
-  const SCAN_DIRS = ["app/(student)", "app/api/exam-images", "app/api/resources", "components"];
+  const SCAN_DIRS = ["app/(student)", "app/api/exam-images", "app/api/resources", "app/api/attempts", "components"];
   const FORBIDDEN = ["isCorrect", "acceptedAnswers", "prisma.answerOption", "prisma.question"];
 
   const offenders: string[] = [];
