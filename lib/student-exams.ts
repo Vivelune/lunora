@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "./prisma";
 import { examWindow } from "./exam-window";
+import { finalizeExpiredForStudent } from "./attempts";
 
 export type StudentExamCard = {
   key: string;
@@ -50,7 +51,7 @@ export async function getStudentExams(studentId: string): Promise<{
   practice: StudentExamCard[];
 }> {
   const now = new Date();
-
+  await finalizeExpiredForStudent(studentId);
   const assignments = await prisma.examAssignment.findMany({
     where: { studentId, status: "ACTIVE" },
     select: {
