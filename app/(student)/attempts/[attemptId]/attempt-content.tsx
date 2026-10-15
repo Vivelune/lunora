@@ -10,6 +10,7 @@ import {
 import prisma from "@/lib/prisma";
 import { ExamRunner, type InitialAnswer } from "./exam-runner";
 import { tryGradeAttempt } from "@/lib/attempt-grading";
+import { getAttemptRelease } from "@/lib/results-release";
 
 const stamp = (d: Date) =>
   d.toISOString().slice(0, 16).replace("T", " ") + " UTC";
@@ -105,6 +106,8 @@ export default async function AttemptContent({
           )
         )
       : null;
+
+    const release = await getAttemptRelease(attempt.id);
 
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-10 sm:px-10 sm:py-14">
@@ -241,40 +244,68 @@ export default async function AttemptContent({
           </dl>
         </section>
 
-        {/* ============ RESULTS PLACEHOLDER ============ */}
-        <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4">
-          <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full bg-white/[0.04] text-neutral-400">
+        {/* ============ RESULTS ============ */}
+        {release?.resultsReleased ? (
+          <Link
+            href={`/attempts/${attempt.id}/results`}
+            className="group inline-flex h-12 w-fit items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 px-6 text-sm font-semibold text-white shadow-lg shadow-violet-500/25 transition-opacity hover:opacity-90"
+          >
+            View your results
             <svg
               aria-hidden
               viewBox="0 0 16 16"
               fill="none"
-              className="h-4 w-4"
+              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
             >
-              <circle
-                cx="8"
-                cy="8"
-                r="6.25"
-                stroke="currentColor"
-                strokeWidth="1.4"
-              />
               <path
-                d="M8 5v3M8 10.5h.01"
+                d="M3 8h10m0 0-4-4m4 4-4 4"
                 stroke="currentColor"
                 strokeWidth="1.6"
                 strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
-          </span>
-          <div>
-            <p className="text-sm font-medium text-neutral-300">
-              Results coming soon
-            </p>
-            <p className="mt-0.5 text-xs text-neutral-500">
-              Your score and answer review will appear here once your tutor
-              releases them.
-            </p>
+          </Link>
+        ) : (
+          <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4">
+            <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full bg-white/[0.04] text-neutral-400">
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="h-4 w-4"
+              >
+                <circle
+                  cx="8"
+                  cy="8"
+                  r="6.25"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                />
+                <path
+                  d="M8 5v3M8 10.5h.01"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+            <div>
+              <p className="text-sm font-medium text-neutral-300">
+                {release?.availableAfter
+                  ? "Results not yet released"
+                  : "Waiting for your tutor"}
+              </p>
+              <p className="mt-0.5 text-xs text-neutral-500">
+                {release?.availableAfter
+                  ? `Your results will be available after ${stamp(
+                      release.availableAfter
+                    )}.`
+                  : "Your tutor will release your results when they are ready."}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* ============ BACK LINK ============ */}
         <Link
