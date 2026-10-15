@@ -221,7 +221,7 @@ export default async function NewExamContent({
             strokeLinejoin="round"
           />
         </svg>
-        Back to exams 
+        Back to exams
       </Link>
     </div>
   );
