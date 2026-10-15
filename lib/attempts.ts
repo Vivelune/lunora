@@ -41,3 +41,15 @@ export async function finalizeIfExpired(attemptId: string): Promise<boolean> {
     return true;
   });
 }
+
+/** Ends every expired in-progress attempt of one student. Cheap, and safe to call often. */
+export async function finalizeExpiredForStudent(studentId: string): Promise<void> {
+  const cutoff = new Date(Date.now() - GRACE_SECONDS * 1000);
+  const stale = await prisma.examAttempt.findMany({
+    where: { studentId, status: "IN_PROGRESS", deadlineAt: { lt: cutoff } },
+    select: { id: true },
+  });
+  for (const { id } of stale) {
+    await finalizeIfExpired(id);
+  }
+}

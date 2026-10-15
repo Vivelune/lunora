@@ -9,6 +9,7 @@ import {
   type ServerAnswer,
 } from "./use-answer-saver";
 import { Markdown } from "@/app/components/markdown";
+import { SubmitExam } from "./submit-exam";
 
 export type InitialAnswer = AnswerState & { revision: number };
 
@@ -745,16 +746,16 @@ export function ExamRunner({
               </ul>
             </nav>
 
-            <button
-              type="button"
-              disabled
-              className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] text-sm font-medium text-neutral-500 opacity-60"
-            >
-              Submit exam
-              <span className="text-[10px] uppercase tracking-[0.14em] opacity-70">
-                coming soon
-              </span>
-            </button>
+            <SubmitExam
+              attemptId={attemptId}
+              questionIds={questions.map((q) => q.id)}
+              answers={answers}
+              pending={saver.pending}
+              failing={saver.failing}
+              flushAll={saver.flushAll}
+              settle={saver.settle}
+              onJump={goTo}
+            />
           </div>
         </aside>
       </div>

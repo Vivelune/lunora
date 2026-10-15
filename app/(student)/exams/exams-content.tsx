@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentExams } from "@/lib/student-exams";
 import { ExamCard } from "./exam-card";
+import prisma from "@/lib/prisma";
 
 const emptyState =
   "rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center";
@@ -14,6 +15,20 @@ export default async function ExamsContent({
   const { profile } = await requireCompletedProfile();
   const { error } = await searchParams;
   const { assigned, practice } = await getStudentExams(profile.id);
+  const recent = await prisma.examAttempt.findMany({
+    where: { studentId: profile.id },
+    orderBy: { startedAt: "desc" },
+    take: 10,
+    select: {
+      id: true,
+      attemptNumber: true,
+      status: true,
+      startedAt: true,
+      submittedAt: true,
+      endReason: true,
+      exam: { select: { title: true } },
+    },
+  });
 
   const inProgress = [...assigned, ...practice].filter(
     (e) => e.inProgressAttemptId !== null
@@ -180,6 +195,95 @@ export default async function ExamsContent({
         )}
       </section>
 
+      {/* ============ RECENT ATTEMPTS ============ */}
+      {recent.length > 0 && (
+        <section>
+          <div className="mb-4 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-violet-400" />
+            <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-neutral-300">
+              Your recent attempts
+            </h2>
+          </div>
+
+          <ul className="flex flex-col gap-2">
+            {recent.map((a) => {
+              const isInProgress = a.status === "IN_PROGRESS";
+              const timedOut = a.endReason === "TIMEOUT";
+              const graded = a.status === "GRADED";
+
+              return (
+                <li key={a.id}>
+                  <Link
+                    href={`/attempts/${a.id}`}
+                    className="group flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/[0.04]"
+                  >
+                    {/* Left: number badge + title + state */}
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span
+                        className={`grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg border text-[11px] font-bold tabular-nums ${
+                          isInProgress
+                            ? "border-amber-400/30 bg-amber-500/10 text-amber-300"
+                            : "border-white/10 bg-white/[0.04] text-neutral-400"
+                        }`}
+                      >
+                        #{a.attemptNumber}
+                      </span>
+
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-white">
+                          {a.exam.title}
+                        </p>
+
+                        <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-neutral-500">
+                          <AttemptStatePill
+                            inProgress={isInProgress}
+                            timedOut={timedOut}
+                            graded={graded}
+                          />
+                          {a.submittedAt && (
+                            <>
+                              <span className="text-neutral-700">·</span>
+                              <span className="tabular-nums">
+                                {a.submittedAt.toISOString().slice(0, 10)}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: action + chevron */}
+                    <div className="flex flex-shrink-0 items-center gap-3">
+                      <span
+                        className={`text-xs font-medium ${
+                          isInProgress ? "text-amber-300" : "text-neutral-400"
+                        }`}
+                      >
+                        {isInProgress ? "Resume" : "View"}
+                      </span>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        className="h-3.5 w-3.5 text-neutral-600 transition-transform group-hover:translate-x-0.5 group-hover:text-neutral-300"
+                      >
+                        <path
+                          d="M6 3.5 10.5 8 6 12.5"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
       {/* ============ CLOSED ============ */}
       {closed.length > 0 && (
         <section>
@@ -220,5 +324,55 @@ export default async function ExamsContent({
         Back to dashboard
       </Link>
     </div>
+  );
+}
+
+/* ============================================================
+   AttemptStatePill — recent-attempts status badge
+   ============================================================ */
+function AttemptStatePill({
+  inProgress,
+  timedOut,
+  graded,
+}: {
+  inProgress: boolean;
+  timedOut: boolean;
+  graded: boolean;
+}) {
+  if (inProgress) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-300">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-400" />
+        </span>
+        In progress
+      </span>
+    );
+  }
+
+  if (timedOut) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-300">
+        <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+        Time ran out
+      </span>
+    );
+  }
+
+  if (graded) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+        Graded
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2 py-0.5 text-[11px] font-medium text-indigo-300">
+      <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
+      Submitted
+    </span>
   );
 }

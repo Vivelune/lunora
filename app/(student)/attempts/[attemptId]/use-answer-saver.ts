@@ -172,6 +172,25 @@ export function useAnswerSaver(options: {
     for (const questionId of entries.current.keys()) flush(questionId);
   }, [flush]);
 
+    /** Waits until every answer is saved. Returns false if time runs out or any save keeps failing. */
+    const settle = useCallback(async (timeoutMs: number): Promise<boolean> => {
+      const started = Date.now();
+      const unsaved = () => {
+        for (const entry of entries.current.values()) {
+          if (entry.dirty || entry.inFlight) return true;
+        }
+        return false;
+      };
+      while (unsaved()) {
+        if (Date.now() - started > timeoutMs) return false;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      for (const entry of entries.current.values()) {
+        if (entry.rejected || entry.failures > 0) return false;
+      }
+      return true;
+    }, []);
+
   // Save pending answers when the connection returns or the tab is hidden.
   useEffect(() => {
     const onOnline = () => flushAll();
@@ -226,5 +245,5 @@ export function useAnswerSaver(options: {
     else if (entry.dirty || entry.inFlight) pending += 1;
   }
 
-  return { schedule, flush, flushAll, statusOf, pending, failing };
+  return { schedule, flush, flushAll, statusOf, pending, failing, settle };
 }
