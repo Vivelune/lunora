@@ -74,7 +74,17 @@ export async function recordFocusEvent(input: {
   attemptId: string;
   studentId: string;
   type: FocusEventType;
+  occurredAt?: Date;
 }): Promise<FocusResult> {
+  // Use the client's reported time when it is plausible, so a slow network
+  // does not distort how long a student was away. Clamp to +/- 60s.
+  const serverNow = new Date();
+  const now =
+    input.occurredAt &&
+    Math.abs(serverNow.getTime() - input.occurredAt.getTime()) < 60_000
+      ? input.occurredAt
+      : serverNow;
+
   // Only the student who owns the attempt can report on it.
   const owned = await prisma.examAttempt.findFirst({
     where: { id: input.attemptId, studentId: input.studentId },
@@ -115,8 +125,6 @@ export async function recordFocusEvent(input: {
   const total = await prisma.attemptEvent.count({ where: { attemptId: owned.id } });
   if (total >= MAX_EVENTS_PER_ATTEMPT) return quiet;
 
-  const now = new Date();
-
   if (input.type === "FOCUS_LOST") {
     await prisma.$transaction(async (tx) => {
       const marked = await tx.examAttempt.updateMany({
@@ -143,7 +151,21 @@ export async function recordFocusEvent(input: {
         where: { id: owned.id, status: "IN_PROGRESS", focusLostAt: lostAt },
         data: { focusLostAt: null },
       });
-      if (cleared.count === 0) return quiet;
+      if (cleared.count === 0) {
+        // The other concurrent return already cleared it. Report the current
+        // count so callers still see fresh numbers, but do not count again.
+        const fresh = await tx.examAttempt.findUnique({
+          where: { id: owned.id },
+          select: { focusViolations: true },
+        });
+        return {
+          kind: "recorded",
+          counted: false,
+          violations: fresh?.focusViolations ?? attempt.focusViolations,
+          limit,
+          action: "NONE",
+        };
+      }
 
       await tx.attemptEvent.create({
         data: { attemptId: owned.id, type: "FOCUS_RETURNED", details: { awayMs, counted: counts } },
