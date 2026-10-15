@@ -11,6 +11,7 @@
     "check:attempts": "tsx scripts/check-attempt-rules.ts",
     "check:order": "tsx scripts/check-attempt-order.ts",
     "check:window": "tsx scripts/check-exam-window.ts",
+    "check:focus": "tsx scripts/check-focus-rules.ts",
     "check:answers": "tsx scripts/check-answer-input.ts"
   },
   "dependencies": {

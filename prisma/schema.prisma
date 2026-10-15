@@ -471,6 +471,8 @@ model ExamAttempt {
   shuffleSeed      Int
   focusViolations  Int             @default(0)
   flaggedForReview Boolean         @default(false)
+  focusLostAt      DateTime?
+  lastViolationAt  DateTime?
   inProgressKey    String?         @unique
   answers          AttemptAnswer[]
   events           AttemptEvent[]

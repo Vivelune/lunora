@@ -10,6 +10,8 @@ import {
 } from "./use-answer-saver";
 import { Markdown } from "@/app/components/markdown";
 import { SubmitExam } from "./submit-exam";
+import { FocusOverlays } from "./focus-overlays";
+import { Monitoring, useFocusMonitor } from "./use-focus-monitor";
 
 export type InitialAnswer = AnswerState & { revision: number };
 
@@ -42,6 +44,7 @@ export function ExamRunner({
   initialAnswers,
   deadlineAt,
   serverNow,
+  monitoring,
 }: {
   attemptId: string;
   title: string;
@@ -50,6 +53,7 @@ export function ExamRunner({
   initialAnswers: Record<string, InitialAnswer>;
   deadlineAt: string;
   serverNow: string;
+  monitoring: Monitoring;
 }) {
   const router = useRouter();
 
@@ -86,6 +90,12 @@ export function ExamRunner({
         `Question ${number} was changed somewhere else (another tab?). Showing the latest saved answer.`
       );
     },
+    onEnded: () => router.refresh(),
+  });
+
+  const focus = useFocusMonitor({
+    attemptId,
+    monitoring,
     onEnded: () => router.refresh(),
   });
 
@@ -367,6 +377,46 @@ export function ExamRunner({
           >
             Dismiss
           </button>
+        </div>
+      )}
+
+      {/* ============ FOCUS MONITORING STRIP ============ */}
+      {focus.monitored && (
+        <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 border-b border-white/5 bg-white/[0.02] px-6 py-2 text-[11px] text-neutral-500">
+          <span className="inline-flex items-center gap-1.5">
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-3.5 w-3.5 text-amber-300/70"
+            >
+              <path
+                d="M8 2.5c-2 0-3.5 1.5-3.5 3.5v1.5h-1v6h9v-6h-1V6c0-2-1.5-3.5-3.5-3.5ZM6.5 6V5.5a1.5 1.5 0 1 1 3 0V6"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>
+              Focus monitoring is on — leaving this page is recorded and your
+              tutor can review it.
+            </span>
+          </span>
+
+          {monitoring.policy !== "LOG_ONLY" && (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="h-1 w-1 rounded-full bg-amber-400/60" />
+              <span>
+                You are allowed to leave{" "}
+                <span className="tabular-nums text-amber-300/80">
+                  {monitoring.limit}
+                </span>{" "}
+                time{monitoring.limit === 1 ? "" : "s"} before it counts against
+                you.
+              </span>
+            </span>
+          )}
         </div>
       )}
 
@@ -759,6 +809,15 @@ export function ExamRunner({
           </div>
         </aside>
       </div>
+
+      {/* ============ FOCUS OVERLAYS ============ */}
+      <FocusOverlays
+        monitoring={monitoring}
+        warning={focus.warning}
+        dismissWarning={focus.dismissWarning}
+        needsFullscreen={focus.needsFullscreen}
+        enterFullscreen={focus.enterFullscreen}
+      />
     </div>
   );
 }
