@@ -50,6 +50,12 @@ const ADMIN_LINKS = [
     description: "Exams assigned to students.",
     icon: ExamAssignIcon,
   },
+  {
+    href: "/admin/attempts",
+    label: "Exam attempts",
+    description: "Submissions and focus logs to review.",
+    icon: ExamAttemptIcon,
+  },
 ];
 
 export default async function AdminHomeContent() {
@@ -296,6 +302,40 @@ function ExamAssignIcon() {
         strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ExamAttemptIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+      {/* Document base — same shape as ExamIcon for family continuity */}
+      <path
+        d="M4 2.5h6.5L13 5v8.5H4z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 2.5V5h2.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      {/* Clock overlay — signals "submitted attempt / time spent" */}
+      <circle
+        cx="8"
+        cy="10"
+        r="2.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+      />
+      <path
+        d="M8 8.5V10l1.2.8"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
       />
     </svg>
   );

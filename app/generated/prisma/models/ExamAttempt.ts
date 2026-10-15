@@ -54,6 +54,8 @@ export type ExamAttemptMinAggregateOutputType = {
   shuffleSeed: number | null
   focusViolations: number | null
   flaggedForReview: boolean | null
+  focusLostAt: Date | null
+  lastViolationAt: Date | null
   inProgressKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -75,6 +77,8 @@ export type ExamAttemptMaxAggregateOutputType = {
   shuffleSeed: number | null
   focusViolations: number | null
   flaggedForReview: boolean | null
+  focusLostAt: Date | null
+  lastViolationAt: Date | null
   inProgressKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -96,6 +100,8 @@ export type ExamAttemptCountAggregateOutputType = {
   shuffleSeed: number
   focusViolations: number
   flaggedForReview: number
+  focusLostAt: number
+  lastViolationAt: number
   inProgressKey: number
   createdAt: number
   updatedAt: number
@@ -131,6 +137,8 @@ export type ExamAttemptMinAggregateInputType = {
   shuffleSeed?: true
   focusViolations?: true
   flaggedForReview?: true
+  focusLostAt?: true
+  lastViolationAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -152,6 +160,8 @@ export type ExamAttemptMaxAggregateInputType = {
   shuffleSeed?: true
   focusViolations?: true
   flaggedForReview?: true
+  focusLostAt?: true
+  lastViolationAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -173,6 +183,8 @@ export type ExamAttemptCountAggregateInputType = {
   shuffleSeed?: true
   focusViolations?: true
   flaggedForReview?: true
+  focusLostAt?: true
+  lastViolationAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -281,6 +293,8 @@ export type ExamAttemptGroupByOutputType = {
   shuffleSeed: number
   focusViolations: number
   flaggedForReview: boolean
+  focusLostAt: Date | null
+  lastViolationAt: Date | null
   inProgressKey: string | null
   createdAt: Date
   updatedAt: Date
@@ -325,6 +339,8 @@ export type ExamAttemptWhereInput = {
   shuffleSeed?: Prisma.IntFilter<"ExamAttempt"> | number
   focusViolations?: Prisma.IntFilter<"ExamAttempt"> | number
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
+  focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
@@ -352,6 +368,8 @@ export type ExamAttemptOrderByWithRelationInput = {
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
+  focusLostAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastViolationAt?: Prisma.SortOrderInput | Prisma.SortOrder
   inProgressKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -384,6 +402,8 @@ export type ExamAttemptWhereUniqueInput = Prisma.AtLeast<{
   shuffleSeed?: Prisma.IntFilter<"ExamAttempt"> | number
   focusViolations?: Prisma.IntFilter<"ExamAttempt"> | number
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
+  focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   student?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
@@ -410,6 +430,8 @@ export type ExamAttemptOrderByWithAggregationInput = {
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
+  focusLostAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastViolationAt?: Prisma.SortOrderInput | Prisma.SortOrder
   inProgressKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -439,6 +461,8 @@ export type ExamAttemptScalarWhereWithAggregatesInput = {
   shuffleSeed?: Prisma.IntWithAggregatesFilter<"ExamAttempt"> | number
   focusViolations?: Prisma.IntWithAggregatesFilter<"ExamAttempt"> | number
   flaggedForReview?: Prisma.BoolWithAggregatesFilter<"ExamAttempt"> | boolean
+  focusLostAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
+  lastViolationAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableWithAggregatesFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExamAttempt"> | Date | string
@@ -456,6 +480,8 @@ export type ExamAttemptCreateInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -483,6 +509,8 @@ export type ExamAttemptUncheckedCreateInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -502,6 +530,8 @@ export type ExamAttemptUpdateInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -529,6 +559,8 @@ export type ExamAttemptUncheckedUpdateInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -552,6 +584,8 @@ export type ExamAttemptCreateManyInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -569,6 +603,8 @@ export type ExamAttemptUpdateManyMutationInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -590,6 +626,8 @@ export type ExamAttemptUncheckedUpdateManyInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -627,6 +665,8 @@ export type ExamAttemptCountOrderByAggregateInput = {
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
+  focusLostAt?: Prisma.SortOrder
+  lastViolationAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -654,6 +694,8 @@ export type ExamAttemptMaxOrderByAggregateInput = {
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
+  focusLostAt?: Prisma.SortOrder
+  lastViolationAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -675,6 +717,8 @@ export type ExamAttemptMinOrderByAggregateInput = {
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
   flaggedForReview?: Prisma.SortOrder
+  focusLostAt?: Prisma.SortOrder
+  lastViolationAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -907,6 +951,8 @@ export type ExamAttemptCreateWithoutStudentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -932,6 +978,8 @@ export type ExamAttemptUncheckedCreateWithoutStudentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -984,6 +1032,8 @@ export type ExamAttemptScalarWhereInput = {
   shuffleSeed?: Prisma.IntFilter<"ExamAttempt"> | number
   focusViolations?: Prisma.IntFilter<"ExamAttempt"> | number
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
+  focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
@@ -1001,6 +1051,8 @@ export type ExamAttemptCreateWithoutExamInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1026,6 +1078,8 @@ export type ExamAttemptUncheckedCreateWithoutExamInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1071,6 +1125,8 @@ export type ExamAttemptCreateWithoutVersionInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1096,6 +1152,8 @@ export type ExamAttemptUncheckedCreateWithoutVersionInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1141,6 +1199,8 @@ export type ExamAttemptCreateWithoutAssignmentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1166,6 +1226,8 @@ export type ExamAttemptUncheckedCreateWithoutAssignmentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1211,6 +1273,8 @@ export type ExamAttemptCreateWithoutAnswersInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1237,6 +1301,8 @@ export type ExamAttemptUncheckedCreateWithoutAnswersInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1271,6 +1337,8 @@ export type ExamAttemptUpdateWithoutAnswersInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1297,6 +1365,8 @@ export type ExamAttemptUncheckedUpdateWithoutAnswersInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1315,6 +1385,8 @@ export type ExamAttemptCreateWithoutEventsInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1341,6 +1413,8 @@ export type ExamAttemptUncheckedCreateWithoutEventsInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1375,6 +1449,8 @@ export type ExamAttemptUpdateWithoutEventsInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1401,6 +1477,8 @@ export type ExamAttemptUncheckedUpdateWithoutEventsInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1422,6 +1500,8 @@ export type ExamAttemptCreateManyStudentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1439,6 +1519,8 @@ export type ExamAttemptUpdateWithoutStudentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1464,6 +1546,8 @@ export type ExamAttemptUncheckedUpdateWithoutStudentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1486,6 +1570,8 @@ export type ExamAttemptUncheckedUpdateManyWithoutStudentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1506,6 +1592,8 @@ export type ExamAttemptCreateManyExamInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1523,6 +1611,8 @@ export type ExamAttemptUpdateWithoutExamInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1548,6 +1638,8 @@ export type ExamAttemptUncheckedUpdateWithoutExamInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1570,6 +1662,8 @@ export type ExamAttemptUncheckedUpdateManyWithoutExamInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1590,6 +1684,8 @@ export type ExamAttemptCreateManyVersionInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1607,6 +1703,8 @@ export type ExamAttemptUpdateWithoutVersionInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1632,6 +1730,8 @@ export type ExamAttemptUncheckedUpdateWithoutVersionInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1654,6 +1754,8 @@ export type ExamAttemptUncheckedUpdateManyWithoutVersionInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1674,6 +1776,8 @@ export type ExamAttemptCreateManyAssignmentInput = {
   shuffleSeed: number
   focusViolations?: number
   flaggedForReview?: boolean
+  focusLostAt?: Date | string | null
+  lastViolationAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1691,6 +1795,8 @@ export type ExamAttemptUpdateWithoutAssignmentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1716,6 +1822,8 @@ export type ExamAttemptUncheckedUpdateWithoutAssignmentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1738,6 +1846,8 @@ export type ExamAttemptUncheckedUpdateManyWithoutAssignmentInput = {
   shuffleSeed?: Prisma.IntFieldUpdateOperationsInput | number
   focusViolations?: Prisma.IntFieldUpdateOperationsInput | number
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1799,6 +1909,8 @@ export type ExamAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   shuffleSeed?: boolean
   focusViolations?: boolean
   flaggedForReview?: boolean
+  focusLostAt?: boolean
+  lastViolationAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1827,6 +1939,8 @@ export type ExamAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   shuffleSeed?: boolean
   focusViolations?: boolean
   flaggedForReview?: boolean
+  focusLostAt?: boolean
+  lastViolationAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1852,6 +1966,8 @@ export type ExamAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   shuffleSeed?: boolean
   focusViolations?: boolean
   flaggedForReview?: boolean
+  focusLostAt?: boolean
+  lastViolationAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1877,12 +1993,14 @@ export type ExamAttemptSelectScalar = {
   shuffleSeed?: boolean
   focusViolations?: boolean
   flaggedForReview?: boolean
+  focusLostAt?: boolean
+  lastViolationAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExamAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "examId" | "versionId" | "assignmentId" | "attemptNumber" | "status" | "startedAt" | "deadlineAt" | "lastActivityAt" | "submittedAt" | "endReason" | "shuffleSeed" | "focusViolations" | "flaggedForReview" | "inProgressKey" | "createdAt" | "updatedAt", ExtArgs["result"]["examAttempt"]>
+export type ExamAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "examId" | "versionId" | "assignmentId" | "attemptNumber" | "status" | "startedAt" | "deadlineAt" | "lastActivityAt" | "submittedAt" | "endReason" | "shuffleSeed" | "focusViolations" | "flaggedForReview" | "focusLostAt" | "lastViolationAt" | "inProgressKey" | "createdAt" | "updatedAt", ExtArgs["result"]["examAttempt"]>
 export type ExamAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
@@ -1931,6 +2049,8 @@ export type $ExamAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     shuffleSeed: number
     focusViolations: number
     flaggedForReview: boolean
+    focusLostAt: Date | null
+    lastViolationAt: Date | null
     inProgressKey: string | null
     createdAt: Date
     updatedAt: Date
@@ -2378,6 +2498,8 @@ export interface ExamAttemptFieldRefs {
   readonly shuffleSeed: Prisma.FieldRef<"ExamAttempt", 'Int'>
   readonly focusViolations: Prisma.FieldRef<"ExamAttempt", 'Int'>
   readonly flaggedForReview: Prisma.FieldRef<"ExamAttempt", 'Boolean'>
+  readonly focusLostAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
+  readonly lastViolationAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
   readonly inProgressKey: Prisma.FieldRef<"ExamAttempt", 'String'>
   readonly createdAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>

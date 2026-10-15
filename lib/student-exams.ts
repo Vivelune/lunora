@@ -22,6 +22,7 @@ export type StudentExamCard = {
   assignmentId: string | null;
   attemptsUsed: number;
   inProgressAttemptId: string | null;
+  monitoring: { focus: boolean; fullscreen: boolean };
 };
 
 type SubjectShape = { name: string; parent: { name: string } | null };
@@ -60,6 +61,7 @@ export async function getStudentExams(studentId: string): Promise<{
       dueDate: true,
       maxAttemptsOverride: true,
       instructions: true,
+      focusExempt: true,
       exam: {
         select: {
           id: true,
@@ -71,7 +73,16 @@ export async function getStudentExams(studentId: string): Promise<{
           subject: { select: { name: true, parent: { select: { name: true } } } },
         },
       },
-      version: { select: { id: true, durationMinutes: true, maxAttempts: true, passingPercent: true } },
+      version: {
+        select: {
+          id: true,
+          durationMinutes: true,
+          maxAttempts: true,
+          passingPercent: true,
+          focusPolicy: true,
+          requireFullscreen: true,
+        },
+      },
     },
   });
 
@@ -96,7 +107,14 @@ export async function getStudentExams(studentId: string): Promise<{
         where: { publishedAt: { not: null } },
         orderBy: { versionNumber: "desc" },
         take: 1,
-        select: { id: true, durationMinutes: true, maxAttempts: true, passingPercent: true },
+        select: {
+          id: true,
+          durationMinutes: true,
+          maxAttempts: true,
+          passingPercent: true,
+          focusPolicy: true,
+          requireFullscreen: true,
+        },
       },
     },
   });
@@ -130,8 +148,13 @@ export async function getStudentExams(studentId: string): Promise<{
         examUntil: a.exam.availableUntil,
       });
       const t = totals.get(a.version.id);
+
       return {
         key: a.id,
+        monitoring: {
+          focus: a.version.focusPolicy !== "OFF" && !a.focusExempt,
+          fullscreen: a.version.requireFullscreen && !a.focusExempt,
+        },
         examId: a.exam.id,
         assignmentId: a.id,
         attemptsUsed: usedByExam.get(a.exam.id) ?? 0,
@@ -149,7 +172,6 @@ export async function getStudentExams(studentId: string): Promise<{
         opensAt: window.opensAt,
         closesAt: window.closesAt,
         state: a.exam.status === "PUBLISHED" ? window.state : ("UNAVAILABLE" as const),
-        
       };
     })
     .sort((x, y) => {
@@ -166,6 +188,7 @@ export async function getStudentExams(studentId: string): Promise<{
     return [
       {
         key: e.id,
+        monitoring: { focus: version.focusPolicy !== "OFF", fullscreen: version.requireFullscreen },
         examId: e.id,
         assignmentId: null,
         attemptsUsed: usedByExam.get(e.id) ?? 0,

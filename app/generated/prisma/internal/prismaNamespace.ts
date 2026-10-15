@@ -2413,6 +2413,8 @@ export const ExamAttemptScalarFieldEnum = {
   shuffleSeed: 'shuffleSeed',
   focusViolations: 'focusViolations',
   flaggedForReview: 'flaggedForReview',
+  focusLostAt: 'focusLostAt',
+  lastViolationAt: 'lastViolationAt',
   inProgressKey: 'inProgressKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

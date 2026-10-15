@@ -44,6 +44,8 @@ export default async function AttemptContent({
       submittedAt: true,
       endReason: true,
       shuffleSeed: true,
+      focusViolations: true,
+      assignment: { select: { focusExempt: true } },
       exam: { select: { title: true } },
       version: {
         select: {
@@ -52,6 +54,9 @@ export default async function AttemptContent({
           instructions: true,
           shuffleQuestions: true,
           shuffleOptions: true,
+          focusPolicy: true,
+          maxFocusViolations: true,
+          requireFullscreen: true,
         },
       },
       answers: {
@@ -317,7 +322,13 @@ export default async function AttemptContent({
       revision: a.revision,
     };
   }
-
+  const exempt = attempt.assignment?.focusExempt ?? false;
+  const monitoring = {
+    policy: exempt ? ("OFF" as const) : attempt.version.focusPolicy,
+    limit: attempt.version.maxFocusViolations,
+    requireFullscreen: attempt.version.requireFullscreen && !exempt,
+    initialViolations: attempt.focusViolations,
+  };
   return (
     <ExamRunner
       attemptId={attempt.id}
@@ -327,6 +338,7 @@ export default async function AttemptContent({
       initialAnswers={initialAnswers}
       deadlineAt={attempt.deadlineAt.toISOString()}
       serverNow={new Date().toISOString()}
+      monitoring={monitoring}
     />
   );
 }
