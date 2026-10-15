@@ -23,6 +23,7 @@ export default async function AttemptContent({
     where: { id: attemptId, studentId: profile.id },
     select: { id: true },
   });
+
   if (!owned) {
     notFound();
   }
@@ -61,6 +62,7 @@ export default async function AttemptContent({
       },
     },
   });
+
   if (!attempt) {
     notFound();
   }
