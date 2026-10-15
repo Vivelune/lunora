@@ -30,12 +30,18 @@ export type ExamAttemptAvgAggregateOutputType = {
   attemptNumber: number | null
   shuffleSeed: number | null
   focusViolations: number | null
+  pointsEarned: runtime.Decimal | null
+  pointsPossible: runtime.Decimal | null
+  percentage: runtime.Decimal | null
 }
 
 export type ExamAttemptSumAggregateOutputType = {
   attemptNumber: number | null
   shuffleSeed: number | null
   focusViolations: number | null
+  pointsEarned: runtime.Decimal | null
+  pointsPossible: runtime.Decimal | null
+  percentage: runtime.Decimal | null
 }
 
 export type ExamAttemptMinAggregateOutputType = {
@@ -56,6 +62,13 @@ export type ExamAttemptMinAggregateOutputType = {
   flaggedForReview: boolean | null
   focusLostAt: Date | null
   lastViolationAt: Date | null
+  pointsEarned: runtime.Decimal | null
+  pointsPossible: runtime.Decimal | null
+  percentage: runtime.Decimal | null
+  passed: boolean | null
+  gradedAt: Date | null
+  resultsReleasedAt: Date | null
+  explanationsReleasedAt: Date | null
   inProgressKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -79,6 +92,13 @@ export type ExamAttemptMaxAggregateOutputType = {
   flaggedForReview: boolean | null
   focusLostAt: Date | null
   lastViolationAt: Date | null
+  pointsEarned: runtime.Decimal | null
+  pointsPossible: runtime.Decimal | null
+  percentage: runtime.Decimal | null
+  passed: boolean | null
+  gradedAt: Date | null
+  resultsReleasedAt: Date | null
+  explanationsReleasedAt: Date | null
   inProgressKey: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -102,6 +122,13 @@ export type ExamAttemptCountAggregateOutputType = {
   flaggedForReview: number
   focusLostAt: number
   lastViolationAt: number
+  pointsEarned: number
+  pointsPossible: number
+  percentage: number
+  passed: number
+  gradedAt: number
+  resultsReleasedAt: number
+  explanationsReleasedAt: number
   inProgressKey: number
   createdAt: number
   updatedAt: number
@@ -113,12 +140,18 @@ export type ExamAttemptAvgAggregateInputType = {
   attemptNumber?: true
   shuffleSeed?: true
   focusViolations?: true
+  pointsEarned?: true
+  pointsPossible?: true
+  percentage?: true
 }
 
 export type ExamAttemptSumAggregateInputType = {
   attemptNumber?: true
   shuffleSeed?: true
   focusViolations?: true
+  pointsEarned?: true
+  pointsPossible?: true
+  percentage?: true
 }
 
 export type ExamAttemptMinAggregateInputType = {
@@ -139,6 +172,13 @@ export type ExamAttemptMinAggregateInputType = {
   flaggedForReview?: true
   focusLostAt?: true
   lastViolationAt?: true
+  pointsEarned?: true
+  pointsPossible?: true
+  percentage?: true
+  passed?: true
+  gradedAt?: true
+  resultsReleasedAt?: true
+  explanationsReleasedAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -162,6 +202,13 @@ export type ExamAttemptMaxAggregateInputType = {
   flaggedForReview?: true
   focusLostAt?: true
   lastViolationAt?: true
+  pointsEarned?: true
+  pointsPossible?: true
+  percentage?: true
+  passed?: true
+  gradedAt?: true
+  resultsReleasedAt?: true
+  explanationsReleasedAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -185,6 +232,13 @@ export type ExamAttemptCountAggregateInputType = {
   flaggedForReview?: true
   focusLostAt?: true
   lastViolationAt?: true
+  pointsEarned?: true
+  pointsPossible?: true
+  percentage?: true
+  passed?: true
+  gradedAt?: true
+  resultsReleasedAt?: true
+  explanationsReleasedAt?: true
   inProgressKey?: true
   createdAt?: true
   updatedAt?: true
@@ -295,6 +349,13 @@ export type ExamAttemptGroupByOutputType = {
   flaggedForReview: boolean
   focusLostAt: Date | null
   lastViolationAt: Date | null
+  pointsEarned: runtime.Decimal | null
+  pointsPossible: runtime.Decimal | null
+  percentage: runtime.Decimal | null
+  passed: boolean | null
+  gradedAt: Date | null
+  resultsReleasedAt: Date | null
+  explanationsReleasedAt: Date | null
   inProgressKey: string | null
   createdAt: Date
   updatedAt: Date
@@ -341,6 +402,13 @@ export type ExamAttemptWhereInput = {
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
   focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  pointsEarned?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.BoolNullableFilter<"ExamAttempt"> | boolean | null
+  gradedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  resultsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  explanationsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
@@ -370,6 +438,13 @@ export type ExamAttemptOrderByWithRelationInput = {
   flaggedForReview?: Prisma.SortOrder
   focusLostAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastViolationAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  passed?: Prisma.SortOrderInput | Prisma.SortOrder
+  gradedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  resultsReleasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  explanationsReleasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   inProgressKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -404,6 +479,13 @@ export type ExamAttemptWhereUniqueInput = Prisma.AtLeast<{
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
   focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  pointsEarned?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.BoolNullableFilter<"ExamAttempt"> | boolean | null
+  gradedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  resultsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  explanationsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   student?: Prisma.XOR<Prisma.StudentProfileScalarRelationFilter, Prisma.StudentProfileWhereInput>
@@ -432,6 +514,13 @@ export type ExamAttemptOrderByWithAggregationInput = {
   flaggedForReview?: Prisma.SortOrder
   focusLostAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastViolationAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  passed?: Prisma.SortOrderInput | Prisma.SortOrder
+  gradedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  resultsReleasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  explanationsReleasedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   inProgressKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -463,6 +552,13 @@ export type ExamAttemptScalarWhereWithAggregatesInput = {
   flaggedForReview?: Prisma.BoolWithAggregatesFilter<"ExamAttempt"> | boolean
   focusLostAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
   lastViolationAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
+  pointsEarned?: Prisma.DecimalNullableWithAggregatesFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.DecimalNullableWithAggregatesFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.DecimalNullableWithAggregatesFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.BoolNullableWithAggregatesFilter<"ExamAttempt"> | boolean | null
+  gradedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
+  resultsReleasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
+  explanationsReleasedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableWithAggregatesFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExamAttempt"> | Date | string
@@ -482,6 +578,13 @@ export type ExamAttemptCreateInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -511,6 +614,13 @@ export type ExamAttemptUncheckedCreateInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -532,6 +642,13 @@ export type ExamAttemptUpdateInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -561,6 +678,13 @@ export type ExamAttemptUncheckedUpdateInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -586,6 +710,13 @@ export type ExamAttemptCreateManyInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -605,6 +736,13 @@ export type ExamAttemptUpdateManyMutationInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -628,6 +766,13 @@ export type ExamAttemptUncheckedUpdateManyInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -667,6 +812,13 @@ export type ExamAttemptCountOrderByAggregateInput = {
   flaggedForReview?: Prisma.SortOrder
   focusLostAt?: Prisma.SortOrder
   lastViolationAt?: Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  passed?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  resultsReleasedAt?: Prisma.SortOrder
+  explanationsReleasedAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -676,6 +828,9 @@ export type ExamAttemptAvgOrderByAggregateInput = {
   attemptNumber?: Prisma.SortOrder
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
 }
 
 export type ExamAttemptMaxOrderByAggregateInput = {
@@ -696,6 +851,13 @@ export type ExamAttemptMaxOrderByAggregateInput = {
   flaggedForReview?: Prisma.SortOrder
   focusLostAt?: Prisma.SortOrder
   lastViolationAt?: Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  passed?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  resultsReleasedAt?: Prisma.SortOrder
+  explanationsReleasedAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -719,6 +881,13 @@ export type ExamAttemptMinOrderByAggregateInput = {
   flaggedForReview?: Prisma.SortOrder
   focusLostAt?: Prisma.SortOrder
   lastViolationAt?: Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  passed?: Prisma.SortOrder
+  gradedAt?: Prisma.SortOrder
+  resultsReleasedAt?: Prisma.SortOrder
+  explanationsReleasedAt?: Prisma.SortOrder
   inProgressKey?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -728,6 +897,9 @@ export type ExamAttemptSumOrderByAggregateInput = {
   attemptNumber?: Prisma.SortOrder
   shuffleSeed?: Prisma.SortOrder
   focusViolations?: Prisma.SortOrder
+  pointsEarned?: Prisma.SortOrder
+  pointsPossible?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
 }
 
 export type ExamAttemptScalarRelationFilter = {
@@ -911,6 +1083,18 @@ export type NullableEnumEndReasonFieldUpdateOperationsInput = {
   set?: $Enums.EndReason | null
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type ExamAttemptCreateNestedOneWithoutAnswersInput = {
   create?: Prisma.XOR<Prisma.ExamAttemptCreateWithoutAnswersInput, Prisma.ExamAttemptUncheckedCreateWithoutAnswersInput>
   connectOrCreate?: Prisma.ExamAttemptCreateOrConnectWithoutAnswersInput
@@ -953,6 +1137,13 @@ export type ExamAttemptCreateWithoutStudentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -980,6 +1171,13 @@ export type ExamAttemptUncheckedCreateWithoutStudentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1034,6 +1232,13 @@ export type ExamAttemptScalarWhereInput = {
   flaggedForReview?: Prisma.BoolFilter<"ExamAttempt"> | boolean
   focusLostAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   lastViolationAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  pointsEarned?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.DecimalNullableFilter<"ExamAttempt"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.BoolNullableFilter<"ExamAttempt"> | boolean | null
+  gradedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  resultsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
+  explanationsReleasedAt?: Prisma.DateTimeNullableFilter<"ExamAttempt"> | Date | string | null
   inProgressKey?: Prisma.StringNullableFilter<"ExamAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamAttempt"> | Date | string
@@ -1053,6 +1258,13 @@ export type ExamAttemptCreateWithoutExamInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1080,6 +1292,13 @@ export type ExamAttemptUncheckedCreateWithoutExamInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1127,6 +1346,13 @@ export type ExamAttemptCreateWithoutVersionInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1154,6 +1380,13 @@ export type ExamAttemptUncheckedCreateWithoutVersionInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1201,6 +1434,13 @@ export type ExamAttemptCreateWithoutAssignmentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1228,6 +1468,13 @@ export type ExamAttemptUncheckedCreateWithoutAssignmentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1275,6 +1522,13 @@ export type ExamAttemptCreateWithoutAnswersInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1303,6 +1557,13 @@ export type ExamAttemptUncheckedCreateWithoutAnswersInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1339,6 +1600,13 @@ export type ExamAttemptUpdateWithoutAnswersInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1367,6 +1635,13 @@ export type ExamAttemptUncheckedUpdateWithoutAnswersInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1387,6 +1662,13 @@ export type ExamAttemptCreateWithoutEventsInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1415,6 +1697,13 @@ export type ExamAttemptUncheckedCreateWithoutEventsInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1451,6 +1740,13 @@ export type ExamAttemptUpdateWithoutEventsInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1479,6 +1775,13 @@ export type ExamAttemptUncheckedUpdateWithoutEventsInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1502,6 +1805,13 @@ export type ExamAttemptCreateManyStudentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1521,6 +1831,13 @@ export type ExamAttemptUpdateWithoutStudentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1548,6 +1865,13 @@ export type ExamAttemptUncheckedUpdateWithoutStudentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1572,6 +1896,13 @@ export type ExamAttemptUncheckedUpdateManyWithoutStudentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1594,6 +1925,13 @@ export type ExamAttemptCreateManyExamInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1613,6 +1951,13 @@ export type ExamAttemptUpdateWithoutExamInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1640,6 +1985,13 @@ export type ExamAttemptUncheckedUpdateWithoutExamInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1664,6 +2016,13 @@ export type ExamAttemptUncheckedUpdateManyWithoutExamInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1686,6 +2045,13 @@ export type ExamAttemptCreateManyVersionInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1705,6 +2071,13 @@ export type ExamAttemptUpdateWithoutVersionInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1732,6 +2105,13 @@ export type ExamAttemptUncheckedUpdateWithoutVersionInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1756,6 +2136,13 @@ export type ExamAttemptUncheckedUpdateManyWithoutVersionInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1778,6 +2165,13 @@ export type ExamAttemptCreateManyAssignmentInput = {
   flaggedForReview?: boolean
   focusLostAt?: Date | string | null
   lastViolationAt?: Date | string | null
+  pointsEarned?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: boolean | null
+  gradedAt?: Date | string | null
+  resultsReleasedAt?: Date | string | null
+  explanationsReleasedAt?: Date | string | null
   inProgressKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1797,6 +2191,13 @@ export type ExamAttemptUpdateWithoutAssignmentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1824,6 +2225,13 @@ export type ExamAttemptUncheckedUpdateWithoutAssignmentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1848,6 +2256,13 @@ export type ExamAttemptUncheckedUpdateManyWithoutAssignmentInput = {
   flaggedForReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   focusLostAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastViolationAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointsEarned?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  pointsPossible?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  percentage?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  passed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  gradedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  resultsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  explanationsReleasedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   inProgressKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1911,6 +2326,13 @@ export type ExamAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   flaggedForReview?: boolean
   focusLostAt?: boolean
   lastViolationAt?: boolean
+  pointsEarned?: boolean
+  pointsPossible?: boolean
+  percentage?: boolean
+  passed?: boolean
+  gradedAt?: boolean
+  resultsReleasedAt?: boolean
+  explanationsReleasedAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1941,6 +2363,13 @@ export type ExamAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   flaggedForReview?: boolean
   focusLostAt?: boolean
   lastViolationAt?: boolean
+  pointsEarned?: boolean
+  pointsPossible?: boolean
+  percentage?: boolean
+  passed?: boolean
+  gradedAt?: boolean
+  resultsReleasedAt?: boolean
+  explanationsReleasedAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1968,6 +2397,13 @@ export type ExamAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   flaggedForReview?: boolean
   focusLostAt?: boolean
   lastViolationAt?: boolean
+  pointsEarned?: boolean
+  pointsPossible?: boolean
+  percentage?: boolean
+  passed?: boolean
+  gradedAt?: boolean
+  resultsReleasedAt?: boolean
+  explanationsReleasedAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1995,12 +2431,19 @@ export type ExamAttemptSelectScalar = {
   flaggedForReview?: boolean
   focusLostAt?: boolean
   lastViolationAt?: boolean
+  pointsEarned?: boolean
+  pointsPossible?: boolean
+  percentage?: boolean
+  passed?: boolean
+  gradedAt?: boolean
+  resultsReleasedAt?: boolean
+  explanationsReleasedAt?: boolean
   inProgressKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExamAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "examId" | "versionId" | "assignmentId" | "attemptNumber" | "status" | "startedAt" | "deadlineAt" | "lastActivityAt" | "submittedAt" | "endReason" | "shuffleSeed" | "focusViolations" | "flaggedForReview" | "focusLostAt" | "lastViolationAt" | "inProgressKey" | "createdAt" | "updatedAt", ExtArgs["result"]["examAttempt"]>
+export type ExamAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "examId" | "versionId" | "assignmentId" | "attemptNumber" | "status" | "startedAt" | "deadlineAt" | "lastActivityAt" | "submittedAt" | "endReason" | "shuffleSeed" | "focusViolations" | "flaggedForReview" | "focusLostAt" | "lastViolationAt" | "pointsEarned" | "pointsPossible" | "percentage" | "passed" | "gradedAt" | "resultsReleasedAt" | "explanationsReleasedAt" | "inProgressKey" | "createdAt" | "updatedAt", ExtArgs["result"]["examAttempt"]>
 export type ExamAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.StudentProfileDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
@@ -2051,6 +2494,13 @@ export type $ExamAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     flaggedForReview: boolean
     focusLostAt: Date | null
     lastViolationAt: Date | null
+    pointsEarned: runtime.Decimal | null
+    pointsPossible: runtime.Decimal | null
+    percentage: runtime.Decimal | null
+    passed: boolean | null
+    gradedAt: Date | null
+    resultsReleasedAt: Date | null
+    explanationsReleasedAt: Date | null
     inProgressKey: string | null
     createdAt: Date
     updatedAt: Date
@@ -2500,6 +2950,13 @@ export interface ExamAttemptFieldRefs {
   readonly flaggedForReview: Prisma.FieldRef<"ExamAttempt", 'Boolean'>
   readonly focusLostAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
   readonly lastViolationAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
+  readonly pointsEarned: Prisma.FieldRef<"ExamAttempt", 'Decimal'>
+  readonly pointsPossible: Prisma.FieldRef<"ExamAttempt", 'Decimal'>
+  readonly percentage: Prisma.FieldRef<"ExamAttempt", 'Decimal'>
+  readonly passed: Prisma.FieldRef<"ExamAttempt", 'Boolean'>
+  readonly gradedAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
+  readonly resultsReleasedAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
+  readonly explanationsReleasedAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
   readonly inProgressKey: Prisma.FieldRef<"ExamAttempt", 'String'>
   readonly createdAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ExamAttempt", 'DateTime'>

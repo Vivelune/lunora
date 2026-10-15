@@ -64,6 +64,9 @@ export default async function AttemptsContent({
         endReason: true,
         focusViolations: true,
         flaggedForReview: true,
+        pointsEarned: true,
+        pointsPossible: true,
+        percentage: true,
         student: { select: { firstName: true, lastName: true } },
         exam: { select: { title: true } },
       },
@@ -224,6 +227,9 @@ export default async function AttemptsContent({
                   <th className="hidden px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-neutral-500 md:table-cell">
                     Left page
                   </th>
+                  <th className="hidden px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-neutral-500 md:table-cell">
+                    Score
+                  </th>
                   <th className="px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-neutral-500">
                     Review
                   </th>
@@ -331,6 +337,29 @@ export default async function AttemptsContent({
                             </svg>
                             {leftPage}
                           </span>
+                        ) : (
+                          <span className="text-neutral-600">—</span>
+                        )}
+                      </td>
+
+                      {/* Score */}
+                      <td className="hidden px-5 py-4 md:table-cell">
+                        {r.pointsEarned !== null &&
+                        r.pointsPossible !== null ? (
+                          <div className="flex items-baseline gap-2">
+                            <span className="tabular-nums text-neutral-200">
+                              {r.pointsEarned.toString()}
+                              <span className="text-neutral-500">
+                                {" "}
+                                / {r.pointsPossible.toString()}
+                              </span>
+                            </span>
+                            {r.percentage !== null && (
+                              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] tabular-nums text-neutral-400">
+                                {r.percentage.toString()}%
+                              </span>
+                            )}
+                          </div>
                         ) : (
                           <span className="text-neutral-600">—</span>
                         )}

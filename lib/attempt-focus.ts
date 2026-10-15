@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "./prisma";
 import { finalizeIfExpired } from "./attempts";
+import { tryGradeAttempt } from "./attempt-grading";
 import {
   actionFor,
   awayCounts,
@@ -70,7 +71,7 @@ async function countViolation(
   return { violations, action };
 }
 
-export async function recordFocusEvent(input: {
+async function recordFocusEventInner(input: {
   attemptId: string;
   studentId: string;
   type: FocusEventType;
@@ -188,4 +189,17 @@ export async function recordFocusEvent(input: {
     const result = await countViolation(tx, { attemptId: owned.id, policy, limit, now });
     return { kind: "recorded", counted: true, violations: result.violations, limit, action: result.action };
   });
+}
+
+export async function recordFocusEvent(input: {
+  attemptId: string;
+  studentId: string;
+  type: FocusEventType;
+  occurredAt?: Date;
+}): Promise<FocusResult> {
+  const result = await recordFocusEventInner(input);
+  if (result.kind === "recorded" && result.action === "END") {
+    await tryGradeAttempt(input.attemptId);
+  }
+  return result;
 }

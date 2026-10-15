@@ -9,6 +9,7 @@ import {
 } from "@/lib/exam-student-view";
 import prisma from "@/lib/prisma";
 import { ExamRunner, type InitialAnswer } from "./exam-runner";
+import { tryGradeAttempt } from "@/lib/attempt-grading";
 
 const stamp = (d: Date) =>
   d.toISOString().slice(0, 16).replace("T", " ") + " UTC";
@@ -32,6 +33,8 @@ export default async function AttemptContent({
   }
 
   await finalizeIfExpired(owned.id);
+  // Self-healing: an ended attempt that somehow was not graded yet is graded now.
+  await tryGradeAttempt(owned.id);
 
   const attempt = await prisma.examAttempt.findUnique({
     where: { id: owned.id },
@@ -102,8 +105,6 @@ export default async function AttemptContent({
           )
         )
       : null;
-
-    const graded = attempt.status === "GRADED";
 
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-10 sm:px-10 sm:py-14">
@@ -236,10 +237,7 @@ export default async function AttemptContent({
                 }
               />
             )}
-            <InfoRow
-              label="Status"
-              value={<AttemptStatusPill graded={graded} />}
-            />
+            <InfoRow label="Status" value={<ReceivedPill />} />
           </dl>
         </section>
 
@@ -329,6 +327,7 @@ export default async function AttemptContent({
     requireFullscreen: attempt.version.requireFullscreen && !exempt,
     initialViolations: attempt.focusViolations,
   };
+
   return (
     <ExamRunner
       attemptId={attempt.id}
@@ -374,15 +373,7 @@ function InfoRow({
   );
 }
 
-function AttemptStatusPill({ graded }: { graded: boolean }) {
-  if (graded) {
-    return (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-        Graded
-      </span>
-    );
-  }
+function ReceivedPill() {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/30 bg-indigo-500/10 px-2.5 py-0.5 text-[11px] font-medium text-indigo-300">
       <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />

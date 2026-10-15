@@ -401,6 +401,13 @@ export const ExamAttemptScalarFieldEnum = {
   flaggedForReview: 'flaggedForReview',
   focusLostAt: 'focusLostAt',
   lastViolationAt: 'lastViolationAt',
+  pointsEarned: 'pointsEarned',
+  pointsPossible: 'pointsPossible',
+  percentage: 'percentage',
+  passed: 'passed',
+  gradedAt: 'gradedAt',
+  resultsReleasedAt: 'resultsReleasedAt',
+  explanationsReleasedAt: 'explanationsReleasedAt',
   inProgressKey: 'inProgressKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -416,6 +423,8 @@ export const AttemptAnswerScalarFieldEnum = {
   selectedOptionIds: 'selectedOptionIds',
   textAnswer: 'textAnswer',
   flagged: 'flagged',
+  isCorrect: 'isCorrect',
+  pointsAwarded: 'pointsAwarded',
   revision: 'revision',
   updatedAt: 'updatedAt'
 } as const
