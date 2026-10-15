@@ -188,6 +188,38 @@ export function ExamSettingsForm({ initial }: { initial: SettingsInitial }) {
         </div>
       </div>
 
+      {/* ============ RELEASE POLICY NOTE ============ */}
+      <p className="flex items-start gap-2 text-xs leading-relaxed text-neutral-500">
+        <svg
+          aria-hidden
+          viewBox="0 0 16 16"
+          fill="none"
+          className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+        >
+          <circle
+            cx="8"
+            cy="8"
+            r="6.25"
+            stroke="currentColor"
+            strokeWidth="1.4"
+          />
+          <path
+            d="M8 5v3M8 10.5h.01"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+        </svg>
+        <span>
+          <strong className="font-medium text-neutral-400">
+            &ldquo;After the deadline passes&rdquo;
+          </strong>{" "}
+          means after the last day to start plus the time limit, so nobody is
+          still taking the exam. With no due date or end date, an admin has to
+          release results. Explanations are never shown before results.
+        </span>
+      </p>
+
       {/* ============ FOCUS MONITORING ============ */}
       <fieldset className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <legend className="flex items-center gap-2 px-2">
@@ -254,7 +286,13 @@ export function ExamSettingsForm({ initial }: { initial: SettingsInitial }) {
             fill="none"
             className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
           >
-            <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
+            <circle
+              cx="8"
+              cy="8"
+              r="6.25"
+              stroke="currentColor"
+              strokeWidth="1.4"
+            />
             <path
               d="M8 5v3M8 10.5h.01"
               stroke="currentColor"
@@ -262,7 +300,8 @@ export function ExamSettingsForm({ initial }: { initial: SettingsInitial }) {
               strokeLinecap="round"
             />
           </svg>
-          Browsers cannot block students from switching tabs. This detects and records it for review.
+          Browsers cannot block students from switching tabs. This detects and
+          records it for review.
         </p>
       </fieldset>
 

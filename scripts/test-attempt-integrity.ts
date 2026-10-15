@@ -6,6 +6,8 @@ import { finalizeIfExpired } from "../lib/attempts";
 import { submitAttempt } from "../lib/attempt-submit";
 import { recordFocusEvent, type FocusEventType } from "../lib/attempt-focus";
 import { gradeAttemptById } from "../lib/attempt-grading";
+import { getStudentResult } from "../lib/student-results";
+
 
 const MARK = "ZZ-INTEGRITY";
 const STUDENT_PREFIX = "zz_integrity_";
@@ -318,7 +320,40 @@ async function main() {
   check("every question has a graded answer row", gradedRows.length === 3 && gradedRows.every((r) => r.isCorrect !== null));
   const q3row = gradedRows.find((r) => r.questionId === q3.id);
   check("the short answer '7' earned its 1.5 points", q3row?.isCorrect === true && q3row.pointsAwarded?.toString() === "1.5");
+  section("Releasing results");
+  await prisma.question.update({ where: { id: q1.id }, data: { explanation: "Because." } });
 
+  const released = await getStudentResult(A1, a);
+  check("immediate policy: results are released right after grading", released.kind === "released");
+  if (released.kind === "released") {
+    check("the review shows the correct answer", released.review[0].options.some((o) => o.right));
+    check("explanations stay hidden while their own policy has not released them", released.review.every((r) => r.explanation === null));
+    check("the score matches the grading (1.5 of 4.5)", released.summary.pointsEarned === "1.5" && released.summary.pointsPossible === "4.5");
+  }
+
+  await prisma.examVersion.update({ where: { id: versionId }, data: { resultRelease: "MANUAL" } });
+  const hidden = await getStudentResult(A1, a);
+  check(
+    "manual policy: nothing at all is revealed before an admin releases",
+    hidden.kind === "pending" && !("summary" in hidden) && !("review" in hidden)
+  );
+
+  await prisma.examAttempt.update({ where: { id: A1 }, data: { resultsReleasedAt: new Date() } });
+  check("a manual release reveals the results", (await getStudentResult(A1, a)).kind === "released");
+
+  await prisma.examVersion.update({ where: { id: versionId }, data: { explanationRelease: "IMMEDIATE" } });
+  const withExplanation = await getStudentResult(A1, a);
+  check(
+    "explanations appear once their own policy allows it",
+    withExplanation.kind === "released" && withExplanation.review[0].explanation === "Because."
+  );
+
+  await prisma.examAttempt.update({ where: { id: A1 }, data: { resultsReleasedAt: null } });
+  const hiddenAgain = await getStudentResult(A1, a);
+  check("withdrawing the release hides results again, and explanations with them", hiddenAgain.kind === "pending");
+
+  check("another student cannot read these results", (await getStudentResult(A1, c)).kind === "not_found");
+  await prisma.examVersion.update({ where: { id: versionId }, data: { resultRelease: "IMMEDIATE", explanationRelease: "AFTER_DEADLINE" } });
   // ---------- 5. Submitting ----------
   section("Submitting");
   const A2 = (await createAttempt(a, 3)).id;

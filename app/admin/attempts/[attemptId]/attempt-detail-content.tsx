@@ -4,6 +4,8 @@ import { requireAdmin } from "@/lib/auth";
 import { finalizeIfExpired } from "@/lib/attempts";
 import prisma from "@/lib/prisma";
 import { clearAttemptFlag } from "../actions";
+import { releaseFromRow } from "@/lib/results-release";
+import { setAttemptRelease } from "../release-actions";
 
 const stamp = (d: Date | null) =>
   d ? d.toISOString().slice(0, 19).replace("T", " ") + " UTC" : "—";
@@ -56,11 +58,11 @@ export default async function AttemptDetailContent({
   searchParams,
 }: {
   params: Promise<{ attemptId: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{ saved?: string; error?: string }>;
 }) {
   await requireAdmin();
   const { attemptId } = await params;
-  const { saved } = await searchParams;
+  const { saved, error } = await searchParams;
 
   await finalizeIfExpired(attemptId);
 
@@ -82,10 +84,12 @@ export default async function AttemptDetailContent({
       percentage: true,
       passed: true,
       gradedAt: true,
+      resultsReleasedAt: true,
+      explanationsReleasedAt: true,
       student: {
         select: { firstName: true, lastName: true, gradeLevel: true },
       },
-      exam: { select: { title: true } },
+      exam: { select: { title: true, availableUntil: true } },
       version: {
         select: {
           id: true,
@@ -93,9 +97,11 @@ export default async function AttemptDetailContent({
           durationMinutes: true,
           focusPolicy: true,
           maxFocusViolations: true,
+          resultRelease: true,
+          explanationRelease: true,
         },
       },
-      assignment: { select: { focusExempt: true } },
+      assignment: { select: { focusExempt: true, dueDate: true } },
       events: {
         orderBy: { occurredAt: "asc" },
         select: {
@@ -126,6 +132,21 @@ export default async function AttemptDetailContent({
   ]);
 
   const exempt = attempt.assignment?.focusExempt ?? false;
+
+  const release = releaseFromRow({
+    gradedAt: attempt.gradedAt,
+    resultsReleasedAt: attempt.resultsReleasedAt,
+    explanationsReleasedAt: attempt.explanationsReleasedAt,
+    version: {
+      resultRelease: attempt.version.resultRelease,
+      explanationRelease: attempt.version.explanationRelease,
+      durationMinutes: attempt.version.durationMinutes,
+    },
+    assignment: attempt.assignment
+      ? { dueDate: attempt.assignment.dueDate }
+      : null,
+    exam: { availableUntil: attempt.exam.availableUntil },
+  });
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10 sm:px-10 sm:py-14">
@@ -167,7 +188,7 @@ export default async function AttemptDetailContent({
         </div>
       </header>
 
-      {/* ============ STATUS MESSAGE ============ */}
+      {/* ============ STATUS MESSAGES ============ */}
       {saved && (
         <p
           role="status"
@@ -188,6 +209,35 @@ export default async function AttemptDetailContent({
             />
           </svg>
           <span>{saved}</span>
+        </p>
+      )}
+
+      {error && (
+        <p
+          role="alert"
+          className="flex items-start gap-2.5 rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-200"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 16 16"
+            fill="none"
+            className="mt-0.5 h-4 w-4 flex-shrink-0"
+          >
+            <circle
+              cx="8"
+              cy="8"
+              r="6.25"
+              stroke="currentColor"
+              strokeWidth="1.4"
+            />
+            <path
+              d="M8 5v3.5M8 11h.01"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+          <span>{error}</span>
         </p>
       )}
 
@@ -405,6 +455,219 @@ export default async function AttemptDetailContent({
         </dl>
       </section>
 
+      {/* ============ RELEASING RESULTS ============ */}
+      {attempt.status === "GRADED" && (
+        <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur sm:p-7">
+          <div className="mb-5">
+            <SectionHeader dot="from-emerald-400 to-teal-400" label="Releasing results" />
+            <p className="mt-2 text-sm leading-relaxed text-neutral-500">
+              Control when the student can see their score and answer review.
+            </p>
+          </div>
+
+          {/* Policy summary */}
+          <dl className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+              <dt className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-500">
+                Policy · results
+              </dt>
+              <dd className="mt-1 text-sm text-neutral-200 capitalize">
+                {attempt.version.resultRelease
+                  .toLowerCase()
+                  .replaceAll("_", " ")}
+              </dd>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+              <dt className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-500">
+                Policy · explanations
+              </dt>
+              <dd className="mt-1 text-sm text-neutral-200 capitalize">
+                {attempt.version.explanationRelease
+                  .toLowerCase()
+                  .replaceAll("_", " ")}
+              </dd>
+            </div>
+          </dl>
+
+          {/* Visibility status */}
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Student can see
+            </span>
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${
+                release.resultsReleased
+                  ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-300"
+                  : "border-white/10 bg-white/[0.03] text-neutral-500"
+              }`}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  release.resultsReleased
+                    ? "bg-emerald-400"
+                    : "bg-neutral-600"
+                }`}
+              />
+              Results {release.resultsReleased ? "yes" : "no"}
+            </span>
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${
+                release.explanationsReleased
+                  ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-300"
+                  : "border-white/10 bg-white/[0.03] text-neutral-500"
+              }`}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  release.explanationsReleased
+                    ? "bg-emerald-400"
+                    : "bg-neutral-600"
+                }`}
+              />
+              Explanations {release.explanationsReleased ? "yes" : "no"}
+            </span>
+          </div>
+
+          {release.availableAfter && (
+            <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-neutral-500">
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+              >
+                <circle
+                  cx="8"
+                  cy="8"
+                  r="6"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                />
+                <path
+                  d="M8 4.5V8l2 1.5"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
+              </svg>
+              Results unlock automatically after{" "}
+              <span className="tabular-nums text-neutral-400">
+                {release.availableAfter
+                  .toISOString()
+                  .slice(0, 16)
+                  .replace("T", " ")}{" "}
+                UTC
+              </span>
+              .
+            </p>
+          )}
+
+          {/* Action buttons */}
+          <div className="mt-5 flex flex-wrap gap-2">
+            {[
+              { kind: "results", mode: "release", label: "Release results now" },
+              {
+                kind: "results",
+                mode: "withdraw",
+                label: "Withdraw manual release of results",
+              },
+              {
+                kind: "explanations",
+                mode: "release",
+                label: "Release explanations now",
+              },
+              {
+                kind: "explanations",
+                mode: "withdraw",
+                label: "Withdraw manual release of explanations",
+              },
+            ].map((b) => {
+              const isRelease = b.mode === "release";
+              return (
+                <form key={`${b.kind}-${b.mode}`} action={setAttemptRelease}>
+                  <input type="hidden" name="id" value={attempt.id} />
+                  <input type="hidden" name="kind" value={b.kind} />
+                  <input type="hidden" name="mode" value={b.mode} />
+                  <button
+                    type="submit"
+                    className={`inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors ${
+                      isRelease
+                        ? "border border-emerald-400/30 bg-emerald-500/10 text-emerald-200 hover:bg-emerald-500/[0.18]"
+                        : "border border-white/10 bg-white/[0.04] text-neutral-200 hover:bg-white/[0.08]"
+                    }`}
+                  >
+                    {isRelease ? (
+                      <>
+                        <svg
+                          aria-hidden
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="h-3.5 w-3.5"
+                        >
+                          <path
+                            d="M3.5 8.5 6.5 11.5 12.5 5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {b.label}
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          aria-hidden
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="h-3.5 w-3.5"
+                        >
+                          <path
+                            d="M13 8H3m0 0 4-4M3 8l4 4"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {b.label}
+                      </>
+                    )}
+                  </button>
+                </form>
+              );
+            })}
+          </div>
+
+          <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-neutral-500">
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              fill="none"
+              className="mt-0.5 h-3.5 w-3.5 flex-shrink-0"
+            >
+              <circle
+                cx="8"
+                cy="8"
+                r="6.25"
+                stroke="currentColor"
+                strokeWidth="1.4"
+              />
+              <path
+                d="M8 5v3M8 10.5h.01"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span>
+              A policy of &ldquo;immediately&rdquo; cannot be withdrawn here.
+              Change the exam&apos;s policy in a new version instead.
+            </span>
+          </p>
+        </section>
+      )}
+
       {/* ============ TIMELINE ============ */}
       <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur sm:p-7">
         <div className="mb-5">
@@ -436,13 +699,11 @@ export default async function AttemptDetailContent({
                   className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/[0.04]"
                 >
                   <div className="flex flex-wrap items-start gap-3">
-                    {/* Event dot */}
                     <span
                       className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-br ${style.dot}`}
                     />
 
                     <div className="min-w-0 flex-1">
-                      {/* Event type label + time */}
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
                         <p className="text-sm font-medium text-white">
                           {LABELS[e.type] ?? e.type}
@@ -452,7 +713,6 @@ export default async function AttemptDetailContent({
                         </p>
                       </div>
 
-                      {/* Event details */}
                       {detail && (
                         <p className="mt-1 text-xs text-neutral-400">
                           {detail}

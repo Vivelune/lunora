@@ -14,6 +14,7 @@ import { setExamArchived, updateExamDetails } from "../actions";
 import { ExamSettingsForm } from "./exam-settings-form";
 import { QuestionsSection } from "./questions-section";
 import { PublishPanel } from "./publish-panel";
+import { ResultsReleasePanel } from "./results-release-panel";
 
 const day = (date: Date | null) =>
   date ? date.toISOString().slice(0, 10) : "";
@@ -228,6 +229,7 @@ export default async function ExamEditorContent({
               />
             </div>
           </div>
+
           <div>
             <label htmlFor="visibility" className={labelBase}>
               Who can start this exam
@@ -278,6 +280,7 @@ export default async function ExamEditorContent({
               </span>
             </p>
           </div>
+
           <p className="flex items-start gap-2 text-xs text-neutral-500">
             <svg aria-hidden viewBox="0 0 16 16" fill="none" className="mt-0.5 h-3.5 w-3.5 flex-shrink-0">
               <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.4" />
@@ -352,6 +355,9 @@ export default async function ExamEditorContent({
 
       {/* ============ PUBLISHING ============ */}
       <PublishPanel examId={exam.id} />
+
+      {/* ============ RESULTS RELEASE ============ */}
+      <ResultsReleasePanel examId={exam.id} />
 
       {/* ============ QUESTIONS ============ */}
       <QuestionsSection examId={exam.id} />
