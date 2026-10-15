@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "./prisma";
 import { GRACE_SECONDS, canTransition, type AttemptStatusValue } from "./attempt-rules";
+import { tryGradeAttempt } from "./attempt-grading";
 import { finalizeIfExpired } from "./attempts";
 
 export type SubmitResult =
@@ -22,7 +23,7 @@ export async function submitAttempt(attemptId: string, studentId: string): Promi
   const now = new Date();
   const cutoff = new Date(now.getTime() - GRACE_SECONDS * 1000);
 
-  return prisma.$transaction(async (tx): Promise<SubmitResult> => {
+  const result = await prisma.$transaction(async (tx): Promise<SubmitResult> => {
     const attempt = await tx.examAttempt.findUnique({
       where: { id: owned.id },
       select: { status: true, deadlineAt: true },
@@ -34,7 +35,7 @@ export async function submitAttempt(attemptId: string, studentId: string): Promi
     }
 
     // The status condition makes this a compare-and-swap. Two submits at once: one wins.
-    const result = await tx.examAttempt.updateMany({
+    const updated = await tx.examAttempt.updateMany({
       where: { id: owned.id, status: "IN_PROGRESS", deadlineAt: { gte: cutoff } },
       data: {
         status: "SUBMITTED",
@@ -45,7 +46,7 @@ export async function submitAttempt(attemptId: string, studentId: string): Promi
       },
     });
 
-    if (result.count === 0) {
+    if (updated.count === 0) {
       const latest = await tx.examAttempt.findUnique({ where: { id: owned.id }, select: { status: true } });
       return { kind: "already_ended", status: latest?.status ?? attempt.status };
     }
@@ -53,4 +54,9 @@ export async function submitAttempt(attemptId: string, studentId: string): Promi
     await tx.attemptEvent.create({ data: { attemptId: owned.id, type: "SUBMITTED" } });
     return { kind: "submitted" };
   });
+
+  if (result.kind === "submitted") {
+    await tryGradeAttempt(owned.id);
+  }
+  return result;
 }

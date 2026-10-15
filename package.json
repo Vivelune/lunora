@@ -13,6 +13,8 @@
     "check:window": "tsx scripts/check-exam-window.ts",
     "check:focus": "tsx scripts/check-focus-rules.ts",
     "test:attempts": "NODE_OPTIONS=--conditions=react-server tsx scripts/test-attempt-integrity.ts",
+    "check:grading": "tsx scripts/check-grading.ts",
+    "grade:pending": "NODE_OPTIONS=--conditions=react-server tsx scripts/grade-pending.ts",
     "check:answers": "tsx scripts/check-answer-input.ts"
   },
   "dependencies": {

@@ -77,6 +77,11 @@ export default async function AttemptDetailContent({
       endReason: true,
       focusViolations: true,
       flaggedForReview: true,
+      pointsEarned: true,
+      pointsPossible: true,
+      percentage: true,
+      passed: true,
+      gradedAt: true,
       student: {
         select: { firstName: true, lastName: true, gradeLevel: true },
       },
@@ -358,6 +363,42 @@ export default async function AttemptDetailContent({
                 <span className="inline-flex items-center gap-1.5 tabular-nums text-neutral-500">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/60" />0
                 </span>
+              )
+            }
+          />
+          <InfoRow
+            label="Score"
+            value={
+              attempt.pointsEarned !== null &&
+              attempt.pointsPossible !== null ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="tabular-nums">
+                    {attempt.pointsEarned.toString()}
+                    <span className="text-neutral-500">
+                      {" "}
+                      of {attempt.pointsPossible.toString()}
+                    </span>
+                  </span>
+                  {attempt.percentage !== null && (
+                    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] tabular-nums text-neutral-400">
+                      {attempt.percentage.toString()}%
+                    </span>
+                  )}
+                  {attempt.passed === true && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+                      <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                      Passed
+                    </span>
+                  )}
+                  {attempt.passed === false && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/30 bg-rose-500/10 px-2 py-0.5 text-[11px] font-medium text-rose-300">
+                      <span className="h-1 w-1 rounded-full bg-rose-400" />
+                      Not passed
+                    </span>
+                  )}
+                </span>
+              ) : (
+                <span className="text-neutral-500">Not graded yet</span>
               )
             }
           />

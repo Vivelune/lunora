@@ -5,6 +5,7 @@ import { computeDeadline, inProgressKey } from "../lib/attempt-rules";
 import { finalizeIfExpired } from "../lib/attempts";
 import { submitAttempt } from "../lib/attempt-submit";
 import { recordFocusEvent, type FocusEventType } from "../lib/attempt-focus";
+import { gradeAttemptById } from "../lib/attempt-grading";
 
 const MARK = "ZZ-INTEGRITY";
 const STUDENT_PREFIX = "zz_integrity_";
@@ -280,8 +281,8 @@ async function main() {
   check("five simultaneous time-outs: exactly one of them ends the attempt", finals.filter(Boolean).length === 1, finals.join(","));
   const expired = await attemptRow(A1);
   check(
-    "the attempt is EXPIRED with reason TIMEOUT and its active-attempt key released",
-    expired?.status === "EXPIRED" && expired.endReason === "TIMEOUT" && expired.inProgressKey === null
+    "the attempt ended by TIMEOUT, was graded, and its active-attempt key was released",
+    expired?.status === "GRADED" && expired.endReason === "TIMEOUT" && expired.inProgressKey === null
   );
   check("exactly one AUTO_SUBMITTED event was recorded", (await eventCount(A1, "AUTO_SUBMITTED")) === 1);
 
@@ -294,7 +295,29 @@ async function main() {
   check("the late save did not change the stored answer", keptText?.textAnswer === "7", String(keptText?.textAnswer));
 
   const lateSubmit = await submitAttempt(A1, a);
-  check("submitting an expired attempt does not revive it", lateSubmit.kind === "already_ended" && lateSubmit.status === "EXPIRED");
+  check("submitting an expired attempt does not revive it", lateSubmit.kind === "already_ended" && lateSubmit.status === "GRADED");
+
+  // ---------- Grading ----------
+  section("Grading");
+  const gradedA1 = await prisma.examAttempt.findUnique({
+    where: { id: A1 },
+    select: { status: true, pointsEarned: true, pointsPossible: true, percentage: true, passed: true },
+  });
+  check(
+    "the timed-out attempt was graded on its saved answers: 1.5 of 4.5 points",
+    gradedA1?.status === "GRADED" && gradedA1.pointsEarned?.toString() === "1.5" && gradedA1.pointsPossible?.toString() === "4.5",
+    JSON.stringify(gradedA1)
+  );
+  check("the percentage is 33.33", gradedA1?.percentage?.toString() === "33.33");
+  check("there is no pass or fail without a passing mark", gradedA1?.passed === null);
+  check("grading the same attempt again does nothing", (await gradeAttemptById(A1)) === false);
+  const gradedRows = await prisma.attemptAnswer.findMany({
+    where: { attemptId: A1 },
+    select: { questionId: true, isCorrect: true, pointsAwarded: true },
+  });
+  check("every question has a graded answer row", gradedRows.length === 3 && gradedRows.every((r) => r.isCorrect !== null));
+  const q3row = gradedRows.find((r) => r.questionId === q3.id);
+  check("the short answer '7' earned its 1.5 points", q3row?.isCorrect === true && q3row.pointsAwarded?.toString() === "1.5");
 
   // ---------- 5. Submitting ----------
   section("Submitting");
@@ -307,14 +330,14 @@ async function main() {
   check("five simultaneous submits: exactly one submits, the rest are told it already ended", submitted === 1 && already === 4, `${submitted}/${already}`);
   check("exactly one SUBMITTED event was recorded", (await eventCount(A2, "SUBMITTED")) === 1);
   const sub = await attemptRow(A2);
-  check("status SUBMITTED, reason STUDENT, key released", sub?.status === "SUBMITTED" && sub.endReason === "STUDENT" && sub.inProgressKey === null);
+  check("status GRADED after a student submit, reason STUDENT, key released", sub?.status === "GRADED" && sub.endReason === "STUDENT" && sub.inProgressKey === null);
 
   const afterSubmit = await save(A2, a, q1.id, [q1o[0]], "", false, 0);
   check("saving after submit is refused as ended", afterSubmit.kind === "ended", afterSubmit.kind);
 
   await setDeadline(A2, -60_000);
   const revived = await finalizeIfExpired(A2);
-  check("a submitted attempt is never re-finalized as expired", revived === false && (await attemptRow(A2))?.status === "SUBMITTED");
+  check("a submitted attempt is never re-finalized as expired", revived === false && (await attemptRow(A2))?.status === "GRADED");
 
   const A3 = (await createAttempt(a, 4)).id;
   await setDeadline(A3, -4_000);
@@ -322,7 +345,7 @@ async function main() {
   const graceRow = await attemptRow(A3);
   check(
     "submitting inside the grace counts as submitted, with the end time capped at the deadline",
-    graceSubmit.kind === "submitted" && graceRow?.status === "SUBMITTED" && graceRow.submittedAt?.getTime() === graceRow.deadlineAt.getTime()
+    graceSubmit.kind === "submitted" && graceRow?.status === "GRADED" && graceRow.submittedAt?.getTime() === graceRow.deadlineAt.getTime()
   );
 
   // ---------- 6. Focus monitoring ----------
@@ -362,7 +385,7 @@ async function main() {
   const ended = await attemptRow(B1);
   check(
     "going past the limit with auto-submit ends the attempt (FOCUS_VIOLATION)",
-    ended?.status === "EXPIRED" && ended.endReason === "FOCUS_VIOLATION" && ended.focusViolations === 2,
+    ended?.status === "GRADED" && ended.endReason === "FOCUS_VIOLATION" && ended.focusViolations === 2,
     JSON.stringify(ended)
   );
   check("the ending was recorded exactly once", (await eventCount(B1, "AUTO_SUBMITTED")) === 1);

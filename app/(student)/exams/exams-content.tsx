@@ -209,7 +209,6 @@ export default async function ExamsContent({
             {recent.map((a) => {
               const isInProgress = a.status === "IN_PROGRESS";
               const timedOut = a.endReason === "TIMEOUT";
-              const graded = a.status === "GRADED";
 
               return (
                 <li key={a.id}>
@@ -238,7 +237,6 @@ export default async function ExamsContent({
                           <AttemptStatePill
                             inProgress={isInProgress}
                             timedOut={timedOut}
-                            graded={graded}
                           />
                           {a.submittedAt && (
                             <>
@@ -333,11 +331,9 @@ export default async function ExamsContent({
 function AttemptStatePill({
   inProgress,
   timedOut,
-  graded,
 }: {
   inProgress: boolean;
   timedOut: boolean;
-  graded: boolean;
 }) {
   if (inProgress) {
     return (
@@ -356,15 +352,6 @@ function AttemptStatePill({
       <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-300">
         <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
         Time ran out
-      </span>
-    );
-  }
-
-  if (graded) {
-    return (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-        Graded
       </span>
     );
   }

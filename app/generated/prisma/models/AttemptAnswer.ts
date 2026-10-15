@@ -27,10 +27,12 @@ export type AggregateAttemptAnswer = {
 }
 
 export type AttemptAnswerAvgAggregateOutputType = {
+  pointsAwarded: runtime.Decimal | null
   revision: number | null
 }
 
 export type AttemptAnswerSumAggregateOutputType = {
+  pointsAwarded: runtime.Decimal | null
   revision: number | null
 }
 
@@ -40,6 +42,8 @@ export type AttemptAnswerMinAggregateOutputType = {
   questionId: string | null
   textAnswer: string | null
   flagged: boolean | null
+  isCorrect: boolean | null
+  pointsAwarded: runtime.Decimal | null
   revision: number | null
   updatedAt: Date | null
 }
@@ -50,6 +54,8 @@ export type AttemptAnswerMaxAggregateOutputType = {
   questionId: string | null
   textAnswer: string | null
   flagged: boolean | null
+  isCorrect: boolean | null
+  pointsAwarded: runtime.Decimal | null
   revision: number | null
   updatedAt: Date | null
 }
@@ -61,6 +67,8 @@ export type AttemptAnswerCountAggregateOutputType = {
   selectedOptionIds: number
   textAnswer: number
   flagged: number
+  isCorrect: number
+  pointsAwarded: number
   revision: number
   updatedAt: number
   _all: number
@@ -68,10 +76,12 @@ export type AttemptAnswerCountAggregateOutputType = {
 
 
 export type AttemptAnswerAvgAggregateInputType = {
+  pointsAwarded?: true
   revision?: true
 }
 
 export type AttemptAnswerSumAggregateInputType = {
+  pointsAwarded?: true
   revision?: true
 }
 
@@ -81,6 +91,8 @@ export type AttemptAnswerMinAggregateInputType = {
   questionId?: true
   textAnswer?: true
   flagged?: true
+  isCorrect?: true
+  pointsAwarded?: true
   revision?: true
   updatedAt?: true
 }
@@ -91,6 +103,8 @@ export type AttemptAnswerMaxAggregateInputType = {
   questionId?: true
   textAnswer?: true
   flagged?: true
+  isCorrect?: true
+  pointsAwarded?: true
   revision?: true
   updatedAt?: true
 }
@@ -102,6 +116,8 @@ export type AttemptAnswerCountAggregateInputType = {
   selectedOptionIds?: true
   textAnswer?: true
   flagged?: true
+  isCorrect?: true
+  pointsAwarded?: true
   revision?: true
   updatedAt?: true
   _all?: true
@@ -200,6 +216,8 @@ export type AttemptAnswerGroupByOutputType = {
   selectedOptionIds: string[]
   textAnswer: string | null
   flagged: boolean
+  isCorrect: boolean | null
+  pointsAwarded: runtime.Decimal | null
   revision: number
   updatedAt: Date
   _count: AttemptAnswerCountAggregateOutputType | null
@@ -234,6 +252,8 @@ export type AttemptAnswerWhereInput = {
   selectedOptionIds?: Prisma.StringNullableListFilter<"AttemptAnswer">
   textAnswer?: Prisma.StringNullableFilter<"AttemptAnswer"> | string | null
   flagged?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"AttemptAnswer"> | boolean | null
+  pointsAwarded?: Prisma.DecimalNullableFilter<"AttemptAnswer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFilter<"AttemptAnswer"> | number
   updatedAt?: Prisma.DateTimeFilter<"AttemptAnswer"> | Date | string
   attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
@@ -247,6 +267,8 @@ export type AttemptAnswerOrderByWithRelationInput = {
   selectedOptionIds?: Prisma.SortOrder
   textAnswer?: Prisma.SortOrderInput | Prisma.SortOrder
   flagged?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsAwarded?: Prisma.SortOrderInput | Prisma.SortOrder
   revision?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   attempt?: Prisma.ExamAttemptOrderByWithRelationInput
@@ -264,6 +286,8 @@ export type AttemptAnswerWhereUniqueInput = Prisma.AtLeast<{
   selectedOptionIds?: Prisma.StringNullableListFilter<"AttemptAnswer">
   textAnswer?: Prisma.StringNullableFilter<"AttemptAnswer"> | string | null
   flagged?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"AttemptAnswer"> | boolean | null
+  pointsAwarded?: Prisma.DecimalNullableFilter<"AttemptAnswer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFilter<"AttemptAnswer"> | number
   updatedAt?: Prisma.DateTimeFilter<"AttemptAnswer"> | Date | string
   attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
@@ -277,6 +301,8 @@ export type AttemptAnswerOrderByWithAggregationInput = {
   selectedOptionIds?: Prisma.SortOrder
   textAnswer?: Prisma.SortOrderInput | Prisma.SortOrder
   flagged?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrderInput | Prisma.SortOrder
+  pointsAwarded?: Prisma.SortOrderInput | Prisma.SortOrder
   revision?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AttemptAnswerCountOrderByAggregateInput
@@ -296,6 +322,8 @@ export type AttemptAnswerScalarWhereWithAggregatesInput = {
   selectedOptionIds?: Prisma.StringNullableListFilter<"AttemptAnswer">
   textAnswer?: Prisma.StringNullableWithAggregatesFilter<"AttemptAnswer"> | string | null
   flagged?: Prisma.BoolWithAggregatesFilter<"AttemptAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableWithAggregatesFilter<"AttemptAnswer"> | boolean | null
+  pointsAwarded?: Prisma.DecimalNullableWithAggregatesFilter<"AttemptAnswer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntWithAggregatesFilter<"AttemptAnswer"> | number
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AttemptAnswer"> | Date | string
 }
@@ -305,6 +333,8 @@ export type AttemptAnswerCreateInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
   attempt: Prisma.ExamAttemptCreateNestedOneWithoutAnswersInput
@@ -318,6 +348,8 @@ export type AttemptAnswerUncheckedCreateInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -327,6 +359,8 @@ export type AttemptAnswerUpdateInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempt?: Prisma.ExamAttemptUpdateOneRequiredWithoutAnswersNestedInput
@@ -340,6 +374,8 @@ export type AttemptAnswerUncheckedUpdateInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -351,6 +387,8 @@ export type AttemptAnswerCreateManyInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -360,6 +398,8 @@ export type AttemptAnswerUpdateManyMutationInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -371,6 +411,8 @@ export type AttemptAnswerUncheckedUpdateManyInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -397,11 +439,14 @@ export type AttemptAnswerCountOrderByAggregateInput = {
   selectedOptionIds?: Prisma.SortOrder
   textAnswer?: Prisma.SortOrder
   flagged?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrder
+  pointsAwarded?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AttemptAnswerAvgOrderByAggregateInput = {
+  pointsAwarded?: Prisma.SortOrder
   revision?: Prisma.SortOrder
 }
 
@@ -411,6 +456,8 @@ export type AttemptAnswerMaxOrderByAggregateInput = {
   questionId?: Prisma.SortOrder
   textAnswer?: Prisma.SortOrder
   flagged?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrder
+  pointsAwarded?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -421,11 +468,14 @@ export type AttemptAnswerMinOrderByAggregateInput = {
   questionId?: Prisma.SortOrder
   textAnswer?: Prisma.SortOrder
   flagged?: Prisma.SortOrder
+  isCorrect?: Prisma.SortOrder
+  pointsAwarded?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type AttemptAnswerSumOrderByAggregateInput = {
+  pointsAwarded?: Prisma.SortOrder
   revision?: Prisma.SortOrder
 }
 
@@ -527,6 +577,8 @@ export type AttemptAnswerCreateWithoutQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
   attempt: Prisma.ExamAttemptCreateNestedOneWithoutAnswersInput
@@ -538,6 +590,8 @@ export type AttemptAnswerUncheckedCreateWithoutQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -578,6 +632,8 @@ export type AttemptAnswerScalarWhereInput = {
   selectedOptionIds?: Prisma.StringNullableListFilter<"AttemptAnswer">
   textAnswer?: Prisma.StringNullableFilter<"AttemptAnswer"> | string | null
   flagged?: Prisma.BoolFilter<"AttemptAnswer"> | boolean
+  isCorrect?: Prisma.BoolNullableFilter<"AttemptAnswer"> | boolean | null
+  pointsAwarded?: Prisma.DecimalNullableFilter<"AttemptAnswer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFilter<"AttemptAnswer"> | number
   updatedAt?: Prisma.DateTimeFilter<"AttemptAnswer"> | Date | string
 }
@@ -587,6 +643,8 @@ export type AttemptAnswerCreateWithoutAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
   question: Prisma.QuestionCreateNestedOneWithoutAnswersInput
@@ -598,6 +656,8 @@ export type AttemptAnswerUncheckedCreateWithoutAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -634,6 +694,8 @@ export type AttemptAnswerCreateManyQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -643,6 +705,8 @@ export type AttemptAnswerUpdateWithoutQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempt?: Prisma.ExamAttemptUpdateOneRequiredWithoutAnswersNestedInput
@@ -654,6 +718,8 @@ export type AttemptAnswerUncheckedUpdateWithoutQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -664,6 +730,8 @@ export type AttemptAnswerUncheckedUpdateManyWithoutQuestionInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -674,6 +742,8 @@ export type AttemptAnswerCreateManyAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerCreateselectedOptionIdsInput | string[]
   textAnswer?: string | null
   flagged?: boolean
+  isCorrect?: boolean | null
+  pointsAwarded?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: number
   updatedAt?: Date | string
 }
@@ -683,6 +753,8 @@ export type AttemptAnswerUpdateWithoutAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   question?: Prisma.QuestionUpdateOneRequiredWithoutAnswersNestedInput
@@ -694,6 +766,8 @@ export type AttemptAnswerUncheckedUpdateWithoutAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -704,6 +778,8 @@ export type AttemptAnswerUncheckedUpdateManyWithoutAttemptInput = {
   selectedOptionIds?: Prisma.AttemptAnswerUpdateselectedOptionIdsInput | string[]
   textAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   flagged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isCorrect?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  pointsAwarded?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   revision?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -717,6 +793,8 @@ export type AttemptAnswerSelect<ExtArgs extends runtime.Types.Extensions.Interna
   selectedOptionIds?: boolean
   textAnswer?: boolean
   flagged?: boolean
+  isCorrect?: boolean
+  pointsAwarded?: boolean
   revision?: boolean
   updatedAt?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
@@ -730,6 +808,8 @@ export type AttemptAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   selectedOptionIds?: boolean
   textAnswer?: boolean
   flagged?: boolean
+  isCorrect?: boolean
+  pointsAwarded?: boolean
   revision?: boolean
   updatedAt?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
@@ -743,6 +823,8 @@ export type AttemptAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   selectedOptionIds?: boolean
   textAnswer?: boolean
   flagged?: boolean
+  isCorrect?: boolean
+  pointsAwarded?: boolean
   revision?: boolean
   updatedAt?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
@@ -756,11 +838,13 @@ export type AttemptAnswerSelectScalar = {
   selectedOptionIds?: boolean
   textAnswer?: boolean
   flagged?: boolean
+  isCorrect?: boolean
+  pointsAwarded?: boolean
   revision?: boolean
   updatedAt?: boolean
 }
 
-export type AttemptAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "questionId" | "selectedOptionIds" | "textAnswer" | "flagged" | "revision" | "updatedAt", ExtArgs["result"]["attemptAnswer"]>
+export type AttemptAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "questionId" | "selectedOptionIds" | "textAnswer" | "flagged" | "isCorrect" | "pointsAwarded" | "revision" | "updatedAt", ExtArgs["result"]["attemptAnswer"]>
 export type AttemptAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
@@ -787,6 +871,8 @@ export type $AttemptAnswerPayload<ExtArgs extends runtime.Types.Extensions.Inter
     selectedOptionIds: string[]
     textAnswer: string | null
     flagged: boolean
+    isCorrect: boolean | null
+    pointsAwarded: runtime.Decimal | null
     revision: number
     updatedAt: Date
   }, ExtArgs["result"]["attemptAnswer"]>
@@ -1220,6 +1306,8 @@ export interface AttemptAnswerFieldRefs {
   readonly selectedOptionIds: Prisma.FieldRef<"AttemptAnswer", 'String[]'>
   readonly textAnswer: Prisma.FieldRef<"AttemptAnswer", 'String'>
   readonly flagged: Prisma.FieldRef<"AttemptAnswer", 'Boolean'>
+  readonly isCorrect: Prisma.FieldRef<"AttemptAnswer", 'Boolean'>
+  readonly pointsAwarded: Prisma.FieldRef<"AttemptAnswer", 'Decimal'>
   readonly revision: Prisma.FieldRef<"AttemptAnswer", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"AttemptAnswer", 'DateTime'>
 }

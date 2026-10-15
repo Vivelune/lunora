@@ -473,6 +473,13 @@ model ExamAttempt {
   flaggedForReview Boolean         @default(false)
   focusLostAt      DateTime?
   lastViolationAt  DateTime?
+    pointsEarned          Decimal?       @db.Decimal(8, 2)
+  pointsPossible        Decimal?       @db.Decimal(8, 2)
+  percentage            Decimal?       @db.Decimal(5, 2)
+  passed                Boolean?
+  gradedAt              DateTime?
+  resultsReleasedAt     DateTime?
+  explanationsReleasedAt DateTime?
   inProgressKey    String?         @unique
   answers          AttemptAnswer[]
   events           AttemptEvent[]
@@ -494,6 +501,8 @@ model AttemptAnswer {
   selectedOptionIds String[]
   textAnswer        String?
   flagged           Boolean     @default(false)
+    isCorrect         Boolean?
+  pointsAwarded     Decimal?    @db.Decimal(6, 2)
   revision          Int         @default(1)
   updatedAt         DateTime    @updatedAt
 
