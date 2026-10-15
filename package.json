@@ -10,7 +10,8 @@
     "check:safety": "tsx scripts/check-exam-safety.ts",
     "check:attempts": "tsx scripts/check-attempt-rules.ts",
     "check:order": "tsx scripts/check-attempt-order.ts",
-    "check:window": "tsx scripts/check-exam-window.ts"
+    "check:window": "tsx scripts/check-exam-window.ts",
+    "check:answers": "tsx scripts/check-answer-input.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.13",
