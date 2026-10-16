@@ -489,7 +489,7 @@ export default async function DashboardContent() {
         {/* ============ RECENTLY GRADED EXAMS ============ */}
         {recentResults.length > 0 && (
           <section>
-            <div className="mb-4 flex items-center justify-between gap-4">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="text-lg font-semibold tracking-tight">
                   Recently graded exams
@@ -500,26 +500,49 @@ export default async function DashboardContent() {
                 </p>
               </div>
 
-              <Link
-                href="/results"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
-              >
-                All my results
-                <svg
-                  aria-hidden
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="h-3.5 w-3.5"
+              <div className="flex flex-wrap items-center gap-4">
+                <Link
+                  href="/performance"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
                 >
-                  <path
-                    d="M3 8h10m0 0-4-4m4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Link>
+                  My performance
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="h-3.5 w-3.5"
+                  >
+                    <path
+                      d="M3 8h10m0 0-4-4m4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+
+                <Link
+                  href="/results"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+                >
+                  All my results
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    className="h-3.5 w-3.5"
+                  >
+                    <path
+                      d="M3 8h10m0 0-4-4m4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </div>
             </div>
 
             <ul className="flex flex-col gap-2">
