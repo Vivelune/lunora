@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { requireCompletedProfile } from "@/lib/auth";
+import { ScoreTrendChart } from "@/components/charts/score-trend-chart";
+import { SubjectBars } from "@/components/charts/subject-bars";
 import { loadAttemptFacts, loadTopicAnswers } from "@/lib/analytics";
 import {
   bestPerExam,
@@ -10,6 +11,8 @@ import {
   type Summary,
   type TopicLabel,
 } from "@/lib/analytics-core";
+import { requireCompletedProfile } from "@/lib/auth";
+import { buildSubjectBars, buildTrend } from "@/lib/chart-data";
 import { formatHundredths } from "@/lib/points";
 
 const day = (d: Date) => d.toISOString().slice(0, 10);
@@ -39,6 +42,9 @@ export default async function PerformanceContent() {
   const bestIds = new Set(bestPerExam(facts).map((f) => f.attemptId));
   const answers = await loadTopicAnswers([...bestIds]);
   const topics = topicStats(answers, bestIds);
+
+  const { rows: trendRows, series: trendSeries } = buildTrend(trend, subjects);
+  const barRows = buildSubjectBars(subjects);
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 py-10 sm:px-10 sm:py-14">
@@ -76,10 +82,43 @@ export default async function PerformanceContent() {
           {/* ============ OVERALL ============ */}
           <section>
             <div className="mb-4">
-              <SectionHeader dot="from-indigo-400 to-violet-400" label="Overall" />
+              <SectionHeader
+                dot="from-indigo-400 to-violet-400"
+                label="Overall"
+              />
             </div>
             <Metrics summary={overall} />
           </section>
+
+          {/* ============ SCORE TREND ============ */}
+          <section>
+            <div className="mb-4">
+              <SectionHeader
+                dot="from-sky-400 to-indigo-400"
+                label="Score trend"
+              />
+              <p className="mt-2 text-sm text-neutral-500">
+                Every graded attempt, in order.
+              </p>
+            </div>
+            <ScoreTrendChart rows={trendRows} series={trendSeries} />
+          </section>
+
+          {/* ============ SUBJECTS COMPARED ============ */}
+          {barRows.length > 1 && (
+            <section>
+              <div className="mb-4">
+                <SectionHeader
+                  dot="from-violet-400 to-fuchsia-400"
+                  label="Subjects compared"
+                />
+                <p className="mt-2 text-sm text-neutral-500">
+                  Average, best and latest side by side.
+                </p>
+              </div>
+              <SubjectBars rows={barRows} />
+            </section>
+          )}
 
           {/* ============ METHODOLOGY ============ */}
           <details className="group rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur open:bg-white/[0.03]">
@@ -101,51 +140,40 @@ export default async function PerformanceContent() {
               How these numbers are calculated
             </summary>
             <ul className="flex flex-col gap-2 border-t border-white/5 px-5 py-4 text-xs leading-relaxed text-neutral-400">
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
-                <span>
-                  <strong className="font-medium text-neutral-300">
-                    Latest score:
-                  </strong>{" "}
-                  your most recent graded attempt.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
-                <span>
-                  <strong className="font-medium text-neutral-300">
-                    Best score:
-                  </strong>{" "}
-                  your highest single attempt.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
-                <span>
-                  <strong className="font-medium text-neutral-300">
-                    Average:
-                  </strong>{" "}
-                  total points earned divided by total points possible, using
-                  only the best attempt of each exam. Exams worth more points
-                  count for more.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
-                <span>
-                  <strong className="font-medium text-neutral-300">
-                    Exams completed
-                  </strong>{" "}
-                  counts different exams. Attempts counts every try.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
-                <span>
-                  Attempts whose results have not been released yet are not
-                  included.
-                </span>
-              </li>
+              <MethodologyItem>
+                <strong className="font-medium text-neutral-300">
+                  Latest score:
+                </strong>{" "}
+                your most recent graded attempt.
+              </MethodologyItem>
+              <MethodologyItem>
+                <strong className="font-medium text-neutral-300">
+                  Best score:
+                </strong>{" "}
+                your highest single attempt.
+              </MethodologyItem>
+              <MethodologyItem>
+                <strong className="font-medium text-neutral-300">
+                  Average:
+                </strong>{" "}
+                total points earned divided by total points possible, using
+                only the best attempt of each exam. Exams worth more points
+                count for more.
+              </MethodologyItem>
+              <MethodologyItem>
+                <strong className="font-medium text-neutral-300">
+                  Exams completed
+                </strong>{" "}
+                counts different exams. Attempts counts every try.
+              </MethodologyItem>
+              <MethodologyItem>
+                The trend chart shows every attempt, including the ones that
+                are not your best.
+              </MethodologyItem>
+              <MethodologyItem>
+                Attempts whose results have not been released yet are not
+                included.
+              </MethodologyItem>
             </ul>
           </details>
 
@@ -159,7 +187,7 @@ export default async function PerformanceContent() {
               <section key={subject.subjectId}>
                 <div className="mb-4">
                   <SectionHeader
-                    dot="from-sky-400 to-indigo-400"
+                    dot="from-emerald-400 to-teal-400"
                     label={subject.subjectName}
                   />
                 </div>
@@ -167,11 +195,18 @@ export default async function PerformanceContent() {
                 <Metrics summary={subject.summary} />
 
                 {/* Topics */}
-                <div className="mt-8 mb-4">
+                <div className="mb-4 mt-8">
                   <SectionHeader
                     dot="from-violet-400 to-fuchsia-400"
                     label="Topics"
                   />
+                  <p className="mt-2 text-sm text-neutral-500">
+                    {subjectTopics.length === 0
+                      ? "Not enough answers to break down by topic yet."
+                      : `${subjectTopics.length} topic${
+                          subjectTopics.length === 1 ? "" : "s"
+                        } with enough answers.`}
+                  </p>
                 </div>
 
                 {subjectTopics.length === 0 ? (
@@ -220,9 +255,13 @@ export default async function PerformanceContent() {
           {/* ============ ATTEMPT HISTORY ============ */}
           <section>
             <div className="mb-4">
-              <SectionHeader dot="from-emerald-400 to-teal-400" label="Attempt history" />
+              <SectionHeader
+                dot="from-neutral-400 to-neutral-600"
+                label="Attempt history"
+              />
               <p className="mt-2 text-sm text-neutral-500">
-                Every graded attempt, oldest first.
+                Every graded attempt, oldest first. This table has the same
+                data as the chart.
               </p>
             </div>
 
@@ -293,7 +332,7 @@ export default async function PerformanceContent() {
         </>
       )}
 
-      {/* ============ BACK LINKS ============ */}
+      {/* ============ FOOTER LINKS ============ */}
       <div className="flex flex-wrap items-center gap-5">
         <Link
           href="/results"
@@ -361,7 +400,9 @@ function Metrics({ summary }: { summary: Summary }) {
               )
             : "—"
         }
-        hint={latest ? `${latest.examTitle} · ${day(latest.endedAt)}` : undefined}
+        hint={
+          latest ? `${latest.examTitle} · ${day(latest.endedAt)}` : undefined
+        }
         tone="violet"
       />
 
@@ -385,7 +426,9 @@ function Metrics({ summary }: { summary: Summary }) {
         value={pct(summary.averageHundredths)}
         hint={
           summary.averageHundredths !== null
-            ? `${formatHundredths(summary.weightedEarned)} of ${formatHundredths(
+            ? `${formatHundredths(
+                summary.weightedEarned
+              )} of ${formatHundredths(
                 summary.weightedPossible
               )} pts · best attempt each`
             : undefined
@@ -444,9 +487,7 @@ function MetricCard({
       </p>
 
       {hint && (
-        <p className="mt-2 text-xs leading-relaxed text-neutral-500">
-          {hint}
-        </p>
+        <p className="mt-2 text-xs leading-relaxed text-neutral-500">{hint}</p>
       )}
     </div>
   );
@@ -463,6 +504,18 @@ function SectionHeader({ dot, label }: { dot: string; label: string }) {
         {label}
       </h2>
     </div>
+  );
+}
+
+/* ============================================================
+   MethodologyItem
+   ============================================================ */
+function MethodologyItem({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex items-start gap-2">
+      <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-violet-400/60" />
+      <span>{children}</span>
+    </li>
   );
 }
 

@@ -11,6 +11,7 @@ import {
   type AnswerFact,
   type AttemptFact,
 } from "../lib/analytics-core";
+import { buildSubjectBars, buildTrend } from "@/lib/chart-data";
 
 let n = 0;
 const day = (d: number) => new Date(Date.UTC(2026, 9, d, 12, 0, 0));
@@ -146,5 +147,30 @@ assert.equal(topicLabel(7999), "DEVELOPING");
 assert.equal(topicLabel(8000), "STRONG");
 assert.equal(topicLabel(5999), "NEEDS_ATTENTION");
 assert.equal(topicLabel(6000), "DEVELOPING");
+// Chart data: one value per row, under that attempt's own subject, with plain serializable values.
+const chartAttempts = [
+  fact({ attemptId: "c1", examId: "ex1", subjectId: "math", subjectName: "SAT Mathematics", earned: 500, possible: 1000, endedAt: day(2), assigned: true }),
+  fact({ attemptId: "c2", examId: "ex2", subjectId: "chem", subjectName: "AP Chemistry", earned: 900, possible: 1000, endedAt: day(1), assigned: false }),
+  fact({ attemptId: "c3", examId: "ex1", subjectId: "math", subjectName: "SAT Mathematics", earned: 800, possible: 1000, endedAt: day(3), assigned: true }),
+];
+const chart = buildTrend(trendPoints(chartAttempts), bySubject(chartAttempts));
+assert.equal(chart.rows.length, 3);
+assert.deepEqual(chart.rows.map((r) => r.n), [1, 2, 3]);
+assert.deepEqual(chart.rows.map((r) => r.date), ["2026-10-01", "2026-10-02", "2026-10-03"]);
+assert.equal(chart.rows[0].s_chem, 90, "the first (oldest) attempt is chemistry");
+assert.equal(chart.rows[0].s_math, undefined, "no value under another subject's key");
+assert.equal(chart.rows[2].s_math, 80);
+assert.equal(chart.rows[0].assigned, false);
+assert.equal(chart.series.length, 2);
+assert.ok(chart.series.every((s) => /^#[0-9a-f]{6}$/i.test(s.color)));
+assert.equal(JSON.stringify(chart.rows).includes("[object"), false, "rows are plain values");
+
+const bars = buildSubjectBars(bySubject(chartAttempts));
+assert.deepEqual(bars.map((b) => b.subject), ["AP Chemistry", "SAT Mathematics"]);
+assert.deepEqual(bars[0], { subject: "AP Chemistry", average: 90, best: 90, latest: 90 });
+assert.equal(bars[1].best, 80);
+assert.equal(bars[1].latest, 80);
+assert.equal(bars[1].average, 80, "the average uses only the best attempt of the exam");
+assert.deepEqual(buildSubjectBars([]), []);
 
 console.log("All analytics checks passed.");
