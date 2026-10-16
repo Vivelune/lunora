@@ -156,27 +156,28 @@ export default async function ResultsListContent() {
         </ul>
       )}
 
-      {/* ============ BACK LINK ============ */}
-      <Link
-        href="/dashboard"
-        className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
-      >
-        <svg
-          aria-hidden
-          viewBox="0 0 16 16"
-          fill="none"
-          className="h-3.5 w-3.5"
+            {/* ============ FOOTER LINKS ============ */}
+            <div className="flex flex-wrap items-center gap-5">
+        <Link
+          href="/performance"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200"
         >
-          <path
-            d="M13 8H3m0 0 4-4M3 8l4 4"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        Back to dashboard
-      </Link>
+          My performance
+          <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
+            <path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+        >
+          <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5">
+            <path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Back to dashboard
+        </Link>
+      </div>
     </div>
   );
 }

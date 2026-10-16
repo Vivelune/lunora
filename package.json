@@ -17,7 +17,8 @@
     "grade:pending": "NODE_OPTIONS=--conditions=react-server tsx scripts/grade-pending.ts",
     "check:release": "tsx scripts/check-release.ts",
     "check:all": "npm run check:safety && npm run check:window && npm run check:attempts && npm run check:order && npm run check:answers && npm run check:focus && npm run check:grading && npm run check:release",
-    "check:answers": "tsx scripts/check-answer-input.ts"
+    "check:answers": "tsx scripts/check-answer-input.ts",
+    "check:analytics": "tsx scripts/check-analytics.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.13",
