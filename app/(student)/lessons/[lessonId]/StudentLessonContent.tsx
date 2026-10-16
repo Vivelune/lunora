@@ -26,10 +26,11 @@ export default async function StudentLessonContent({
 
   const lesson = await getLessonForStudent(lessonId, profile.id);
 
-  // Same 404 for missing, draft, archived, locked,
-  // and unassigned lessons.
+  // A blocked lesson (locked, draft, archived, unassigned) gets a friendly
+  // page instead of a raw 404. Only a lesson that genuinely doesn't exist
+  // is worth a 404 — but even that is handled here for consistency.
   if (!lesson) {
-    notFound();
+    return <LessonUnavailable assignmentId={assignmentId} />;
   }
 
   let completion: {
@@ -424,3 +425,105 @@ export default async function StudentLessonContent({
     </main>
   );
 }
+
+/* ============================================================
+   LessonUnavailable — friendly state for blocked lessons
+   ============================================================ */
+   function LessonUnavailable({ assignmentId }: { assignmentId?: string }) {
+    const backHref = assignmentId ? `/plans/${assignmentId}` : "/plans";
+    const backLabel = assignmentId ? "Back to your plan" : "Back to my plans";
+  
+    return (
+      <div className="mx-auto flex w-full max-w-xl flex-col gap-8 px-6 py-16 sm:py-24">
+        {/* Back link */}
+        <Link
+          href={backHref}
+          className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 16 16"
+            fill="none"
+            className="h-3.5 w-3.5"
+          >
+            <path
+              d="M13 8H3m0 0 4-4M3 8l4 4"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          {backLabel}
+        </Link>
+  
+        {/* Info card */}
+        <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-6 backdrop-blur">
+          <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-full bg-white/[0.04] text-neutral-400">
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-4 w-4"
+            >
+              <circle
+                cx="8"
+                cy="8"
+                r="6.25"
+                stroke="currentColor"
+                strokeWidth="1.4"
+              />
+              <path
+                d="M8 5v3M8 10.5h.01"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+  
+          <div className="min-w-0">
+            <h1 className="text-xl font-semibold tracking-tight text-white">
+              This lesson isn&apos;t available
+            </h1>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+              It may be locked behind earlier lessons, still being prepared, or
+              not part of your current plan. Head back to your plans to see
+              what&apos;s next.
+            </p>
+          </div>
+        </div>
+  
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href={backHref}
+            className="group inline-flex h-10 items-center justify-center gap-2 rounded-full bg-white/[0.06] px-5 text-sm font-medium text-white transition-colors hover:bg-white/[0.12]"
+          >
+            {backLabel}
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+            >
+              <path
+                d="M3 8h10m0 0-4-4m4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+  
+          <Link
+            href="/subjects"
+            className="inline-flex h-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-5 text-sm font-medium text-neutral-200 transition-colors hover:bg-white/[0.06] hover:text-white"
+          >
+            Browse subjects
+          </Link>
+        </div>
+      </div>
+    );
+  }
