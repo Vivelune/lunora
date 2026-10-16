@@ -11,7 +11,6 @@ const NAV_GROUPS = [
     items: [
       { href: "/dashboard", label: "Dashboard", icon: HomeIcon },
       { href: "/plans", label: "Plans", icon: PathIcon },
-      { href: "/lessons", label: "Lessons", icon: LessonIcon },
       { href: "/subjects", label: "Subjects", icon: BookIcon },
       { href: "/exams", label: "Exams", icon: ExamIcon },
     ],
@@ -27,28 +26,24 @@ const NAV_GROUPS = [
 
 const STORAGE_KEY = "lunora:sidebar-collapsed";
 
+/**
+ * StudentSidebar — the persistent shell (brand, mobile trigger, collapse
+ * state, footer). The nav itself is a separate component inside Suspense
+ * so `usePathname()` never blocks prerendering.
+ */
 export function StudentSidebar() {
-  const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Restore collapse preference once on mount.
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "1") setCollapsed(true);
   }, []);
 
-  // Persist collapse preference.
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
   }, [collapsed]);
 
-  // Close the mobile drawer whenever the route changes.
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  // Lock body scroll while the mobile drawer is open.
   useEffect(() => {
     if (!mobileOpen) return;
     const prev = document.body.style.overflow;
@@ -58,7 +53,6 @@ export function StudentSidebar() {
     };
   }, [mobileOpen]);
 
-  // Close on Escape when the mobile drawer is open.
   useEffect(() => {
     if (!mobileOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -94,9 +88,9 @@ export function StudentSidebar() {
         className={`fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-white/5 bg-neutral-950/70 backdrop-blur-xl transition-[width] duration-200 ease-out lg:flex ${width}`}
       >
         <SidebarInner
-          pathname={pathname}
           collapsed={collapsed}
           onToggleCollapse={() => setCollapsed((c) => !c)}
+          onMobileNav={() => setMobileOpen(false)}
         />
       </aside>
 
@@ -107,7 +101,6 @@ export function StudentSidebar() {
           role="dialog"
           aria-modal="true"
         >
-          {/* Backdrop */}
           <button
             type="button"
             aria-label="Close navigation"
@@ -115,7 +108,6 @@ export function StudentSidebar() {
             className="absolute inset-0 bg-neutral-950/70 backdrop-blur-sm"
           />
 
-          {/* Panel */}
           <aside className="absolute inset-y-0 left-0 flex w-64 flex-col border-r border-white/10 bg-neutral-950 shadow-2xl shadow-black/60">
             <div className="flex items-center justify-end px-3 pt-3">
               <button
@@ -140,7 +132,10 @@ export function StudentSidebar() {
               </button>
             </div>
 
-            <SidebarInner pathname={pathname} collapsed={false} />
+            <SidebarInner
+              collapsed={false}
+              onMobileNav={() => setMobileOpen(false)}
+            />
           </aside>
         </div>
       )}
@@ -149,21 +144,28 @@ export function StudentSidebar() {
 }
 
 /* ============================================================
-   SidebarInner — the actual nav content, shared between
-   desktop and mobile
+   SidebarInner — brand, nav, footer. Nav uses usePathname()
+   internally, so this component must be inside <Suspense>.
    ============================================================ */
 function SidebarInner({
-  pathname,
   collapsed,
   onToggleCollapse,
+  onMobileNav,
 }: {
-  pathname: string;
   collapsed: boolean;
   onToggleCollapse?: () => void;
+  onMobileNav?: () => void;
 }) {
+  const pathname = usePathname();
+
+  // Close mobile drawer on navigation.
+  useEffect(() => {
+    if (onMobileNav) onMobileNav();
+  }, [pathname, onMobileNav]);
+
   return (
     <div className="flex h-full min-h-0 flex-col">
-      {/* ============ BRAND ============ */}
+      {/* BRAND */}
       <div
         className={`flex items-center gap-3 border-b border-white/5 px-4 py-4 ${
           collapsed ? "justify-center px-2" : ""
@@ -184,7 +186,7 @@ function SidebarInner({
         </Link>
       </div>
 
-      {/* ============ NAV ============ */}
+      {/* NAV */}
       <nav className="flex-1 overflow-y-auto px-2 py-3">
         {NAV_GROUPS.map((group) => (
           <div key={group.label} className="mb-3 last:mb-0">
@@ -231,7 +233,7 @@ function SidebarInner({
         ))}
       </nav>
 
-      {/* ============ FOOTER ============ */}
+      {/* FOOTER */}
       <div
         className={`border-t border-white/5 ${
           collapsed ? "px-2 py-3" : "px-3 py-3"
@@ -262,7 +264,7 @@ function SidebarInner({
         </div>
       </div>
 
-      {/* ============ COLLAPSE TOGGLE (desktop only) ============ */}
+      {/* COLLAPSE TOGGLE */}
       {onToggleCollapse && (
         <button
           type="button"
@@ -293,7 +295,7 @@ function SidebarInner({
 }
 
 /* ============================================================
-   Icons
+   Icons — unchanged
    ============================================================ */
 function HomeIcon() {
   return (
@@ -327,15 +329,6 @@ function PathIcon() {
         strokeWidth="1.4"
         strokeLinecap="round"
       />
-    </svg>
-  );
-}
-
-function LessonIcon() {
-  return (
-    <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-4 w-4 flex-shrink-0">
-      <path d="M3 2.5h10v11H3z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-      <path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   );
 }
