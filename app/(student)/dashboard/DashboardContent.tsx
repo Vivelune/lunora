@@ -5,6 +5,8 @@ import { loadAttemptFacts } from "@/lib/analytics";
 import { bySubject, summarize, trendPoints } from "@/lib/analytics-core";
 import { buildTrend } from "@/lib/chart-data";
 import { formatHundredths } from "@/lib/points";
+import { loadStudentProgress } from "@/lib/progress";
+import { summarizeExams, summarizePlans } from "@/lib/progress-core";
 import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentAssignments } from "@/lib/plan-progress";
 import { getStudentExams } from "@/lib/student-exams";
@@ -22,45 +24,47 @@ export default async function DashboardContent() {
       profile.gradeLevel as keyof typeof GRADE_LABELS
     ] ?? profile.gradeLevel;
 
-  const [subjects, assignments, exams, results, facts] = await Promise.all([
-    prisma.subject.findMany({
-      where: {
-        isActive: true,
-        children: {
-          none: {
-            isActive: true,
+  const [subjects, assignments, exams, results, facts, progress] =
+    await Promise.all([
+      prisma.subject.findMany({
+        where: {
+          isActive: true,
+          children: {
+            none: {
+              isActive: true,
+            },
           },
         },
-      },
-      orderBy: {
-        sortOrder: "asc",
-      },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        parent: {
-          select: {
-            name: true,
-          },
+        orderBy: {
+          sortOrder: "asc",
         },
-        _count: {
-          select: {
-            categories: {
-              where: {
-                isActive: true,
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          parent: {
+            select: {
+              name: true,
+            },
+          },
+          _count: {
+            select: {
+              categories: {
+                where: {
+                  isActive: true,
+                },
               },
             },
           },
         },
-      },
-    }),
+      }),
 
-    getStudentAssignments(profile.id),
-    getStudentExams(profile.id),
-    getStudentResultsList(profile.id, 10),
-    loadAttemptFacts({ studentId: profile.id, releasedOnly: true }),
-  ]);
+      getStudentAssignments(profile.id),
+      getStudentExams(profile.id),
+      getStudentResultsList(profile.id, 10),
+      loadAttemptFacts({ studentId: profile.id, releasedOnly: true }),
+      loadStudentProgress(profile.id),
+    ]);
 
   const examsOpen = exams.assigned.filter(
     (e) => e.state === "AVAILABLE",
@@ -88,6 +92,10 @@ export default async function DashboardContent() {
   );
   const percentOf = (e: number, p: number) =>
     `${formatHundredths(Math.round((e * 10000) / p))}%`;
+
+  const planProgress = summarizePlans(progress.plans, new Date());
+  const examProgress = summarizeExams(progress.exams, new Date());
+  const overdueTotal = planProgress.overdue + examProgress.missed;
 
   // Separate unfinished plans from completed plans.
   const active = assignments.filter((a) => !a.completedAt);
@@ -251,6 +259,99 @@ export default async function DashboardContent() {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+        </section>
+
+        {/* ============ ASSIGNMENT PROGRESS ============ */}
+        <section>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold tracking-tight">
+                Assignment progress
+              </h2>
+
+              <p className="mt-1 text-sm text-neutral-500">
+                What you have done. Scores are under{" "}
+                <Link
+                  href="/performance"
+                  className="font-medium text-violet-300 underline-offset-2 transition-colors hover:text-violet-200 hover:underline"
+                >
+                  My performance
+                </Link>
+                .
+              </p>
+            </div>
+
+            <Link
+              href="/profile"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+            >
+              My profile
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="h-3.5 w-3.5"
+              >
+                <path
+                  d="M3 8h10m0 0-4-4m4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          {planProgress.total === 0 && examProgress.total === 0 ? (
+            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+              <p className="text-sm text-neutral-400">
+                Nothing is assigned to you yet.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                Progress will appear here once your tutor adds work.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:grid-cols-3">
+              <ProgressCard
+                label="Lesson plan completion"
+                value={
+                  planProgress.completionHundredths === null
+                    ? "—"
+                    : `${formatHundredths(
+                        planProgress.completionHundredths
+                      )}%`
+                }
+                hint={`${planProgress.completed} of ${planProgress.total} plans completed`}
+                tone="violet"
+              />
+
+              <ProgressCard
+                label="Assigned exams taken"
+                value={`${examProgress.completed} of ${examProgress.total}`}
+                hint={
+                  examProgress.total === 0
+                    ? "No exams assigned"
+                    : examProgress.completed === examProgress.total
+                      ? "All taken"
+                      : "Keep going — exams still open"
+                }
+                tone="indigo"
+              />
+
+              <ProgressCard
+                label="Overdue or missed"
+                value={String(overdueTotal)}
+                hint={
+                  overdueTotal > 0
+                    ? "Needs attention"
+                    : "You're all caught up"
+                }
+                tone={overdueTotal > 0 ? "rose" : "neutral"}
+              />
             </div>
           )}
         </section>
@@ -896,6 +997,48 @@ function MetricCard({
       <p className="mt-3 text-2xl font-semibold tracking-tight text-white tabular-nums">
         {value}
       </p>
+    </div>
+  );
+}
+
+/* ============================================================
+   ProgressCard — assignment-progress card with tone
+   ============================================================ */
+function ProgressCard({
+  label,
+  value,
+  hint,
+  tone,
+}: {
+  label: string;
+  value: string;
+  hint: string;
+  tone: "violet" | "indigo" | "rose" | "emerald" | "neutral";
+}) {
+  const accents: Record<typeof tone, string> = {
+    violet: "from-violet-400 to-fuchsia-400",
+    indigo: "from-indigo-400 to-sky-400",
+    rose: "from-rose-400 to-fuchsia-400",
+    emerald: "from-emerald-400 to-teal-400",
+    neutral: "from-neutral-500 to-neutral-600",
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+      <div
+        aria-hidden
+        className={`absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br ${accents[tone]} opacity-20 blur-2xl`}
+      />
+
+      <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-500">
+        {label}
+      </p>
+
+      <p className="mt-3 text-2xl font-semibold tracking-tight text-white tabular-nums">
+        {value}
+      </p>
+
+      <p className="mt-1 text-xs leading-relaxed text-neutral-500">{hint}</p>
     </div>
   );
 }
