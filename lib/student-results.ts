@@ -1,23 +1,9 @@
 import "server-only";
 import prisma from "./prisma";
 import { releaseFromRow } from "./results-release";
-import type { QuestionTypeValue } from "./question-input";
+import { loadReview, type ReviewQuestion } from "./review-builder";
 
-export type ReviewQuestion = {
-  id: string;
-  number: number;
-  type: QuestionTypeValue;
-  prompt: string;
-  imageId: string | null;
-  imageAlt: string | null;
-  pointsPossible: string;
-  pointsAwarded: string;
-  status: "CORRECT" | "INCORRECT" | "UNANSWERED";
-  options: { id: string; text: string; chosen: boolean; right: boolean }[];
-  givenText: string | null;
-  acceptedList: string[];
-  explanation: string | null;
-};
+export type { ReviewQuestion };
 
 export type ResultSummary = {
   examTitle: string;
@@ -43,6 +29,9 @@ export type StudentResult =
   | { kind: "in_progress" }
   | { kind: "pending"; availableAfter: Date | null }
   | { kind: "released"; summary: ResultSummary; review: ReviewQuestion[] };
+
+const subjectLabel = (s: { name: string; parent: { name: string } | null }) =>
+  s.parent ? `${s.parent.name} ${s.name}` : s.name;
 
 export async function getStudentResult(attemptId: string, studentId: string): Promise<StudentResult> {
   // Only the student who owns the attempt can read it.
@@ -80,57 +69,16 @@ export async function getStudentResult(attemptId: string, studentId: string): Pr
   const state = releaseFromRow(attempt);
 
   // Not released: reveal nothing at all, and do not even load the answer key.
-  if (!state.resultsReleased || attempt.pointsEarned === null || attempt.pointsPossible === null || attempt.percentage === null) {
+  if (
+    !state.resultsReleased ||
+    attempt.pointsEarned === null ||
+    attempt.pointsPossible === null ||
+    attempt.percentage === null
+  ) {
     return { kind: "pending", availableAfter: state.availableAfter };
   }
 
-  const [questions, answers] = await Promise.all([
-    prisma.question.findMany({
-      where: { versionId: attempt.versionId },
-      orderBy: { position: "asc" },
-      select: {
-        id: true,
-        type: true,
-        prompt: true,
-        imageId: true,
-        imageAlt: true,
-        points: true,
-        explanation: true,
-        acceptedAnswers: true,
-        options: { orderBy: { position: "asc" }, select: { id: true, text: true, isCorrect: true } },
-      },
-    }),
-    prisma.attemptAnswer.findMany({
-      where: { attemptId },
-      select: { questionId: true, selectedOptionIds: true, textAnswer: true, isCorrect: true, pointsAwarded: true },
-    }),
-  ]);
-
-  const given = new Map(answers.map((a) => [a.questionId, a]));
-
-  const review: ReviewQuestion[] = questions.map((q, index) => {
-    const row = given.get(q.id);
-    const selected = new Set(row?.selectedOptionIds ?? []);
-    const text = row?.textAnswer ?? null;
-    const answered = selected.size > 0 || (text !== null && text.trim() !== "");
-
-    return {
-      id: q.id,
-      number: index + 1,
-      type: q.type,
-      prompt: q.prompt,
-      imageId: q.imageId,
-      imageAlt: q.imageAlt,
-      pointsPossible: q.points.toString(),
-      pointsAwarded: row?.pointsAwarded?.toString() ?? "0",
-      status: !answered ? "UNANSWERED" : row?.isCorrect === true ? "CORRECT" : "INCORRECT",
-      options: q.options.map((o) => ({ id: o.id, text: o.text, chosen: selected.has(o.id), right: o.isCorrect })),
-      givenText: text,
-      acceptedList: q.type === "SHORT_ANSWER" ? q.acceptedAnswers : [],
-      // Explanations have their own release. Never included until released.
-      explanation: state.explanationsReleased ? q.explanation : null,
-    };
-  });
+  const review = await loadReview(attempt.id, attempt.versionId, state.explanationsReleased);
 
   const minutesUsed = attempt.submittedAt
     ? Math.max(1, Math.round((attempt.submittedAt.getTime() - attempt.startedAt.getTime()) / 60000))
@@ -141,9 +89,7 @@ export async function getStudentResult(attemptId: string, studentId: string): Pr
     review,
     summary: {
       examTitle: attempt.exam.title,
-      subject: attempt.exam.subject.parent
-        ? `${attempt.exam.subject.parent.name} ${attempt.exam.subject.name}`
-        : attempt.exam.subject.name,
+      subject: subjectLabel(attempt.exam.subject),
       attemptNumber: attempt.attemptNumber,
       startedAt: attempt.startedAt,
       submittedAt: attempt.submittedAt,
@@ -160,4 +106,68 @@ export async function getStudentResult(attemptId: string, studentId: string): Pr
       explanationsReleased: state.explanationsReleased,
     },
   };
+}
+
+export type ResultListItem = {
+  attemptId: string;
+  examTitle: string;
+  subject: string;
+  attemptNumber: number;
+  endedAt: Date | null;
+  released: boolean;
+  availableAfter: Date | null;
+  /** Filled in ONLY when the results are released. Otherwise always null. */
+  percentage: string | null;
+  pointsEarned: string | null;
+  pointsPossible: string | null;
+  passed: boolean | null;
+};
+
+/** A student's ended attempts, newest first. Scores are included only for released results. */
+export async function getStudentResultsList(studentId: string, limit = 50): Promise<ResultListItem[]> {
+  const rows = await prisma.examAttempt.findMany({
+    where: { studentId, status: { in: ["SUBMITTED", "EXPIRED", "GRADED"] } },
+    orderBy: { startedAt: "desc" },
+    take: limit,
+    select: {
+      id: true,
+      attemptNumber: true,
+      submittedAt: true,
+      pointsEarned: true,
+      pointsPossible: true,
+      percentage: true,
+      passed: true,
+      gradedAt: true,
+      resultsReleasedAt: true,
+      explanationsReleasedAt: true,
+      version: { select: { resultRelease: true, explanationRelease: true, durationMinutes: true } },
+      assignment: { select: { dueDate: true } },
+      exam: {
+        select: {
+          title: true,
+          availableUntil: true,
+          subject: { select: { name: true, parent: { select: { name: true } } } },
+        },
+      },
+    },
+  });
+
+  const now = new Date();
+  return rows.map((row) => {
+    const state = releaseFromRow(row, now);
+    const showScore = state.resultsReleased && row.percentage !== null;
+    return {
+      attemptId: row.id,
+      examTitle: row.exam.title,
+      subject: subjectLabel(row.exam.subject),
+      attemptNumber: row.attemptNumber,
+      endedAt: row.submittedAt,
+      released: state.resultsReleased,
+      availableAfter: state.availableAfter,
+      percentage: showScore ? row.percentage?.toString() ?? null : null,
+      pointsEarned: showScore ? row.pointsEarned?.toString() ?? null : null,
+      pointsPossible: showScore ? row.pointsPossible?.toString() ?? null : null,
+      passed: showScore ? row.passed : null,
+    };
+  });
 }

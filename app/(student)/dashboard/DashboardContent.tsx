@@ -1,9 +1,9 @@
-
 import Link from "next/link";
 
 import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentAssignments } from "@/lib/plan-progress";
 import { getStudentExams } from "@/lib/student-exams";
+import { getStudentResultsList } from "@/lib/student-results";
 import prisma from "@/lib/prisma";
 import { GRADE_LABELS } from "@/lib/validation/profile";
 
@@ -17,7 +17,7 @@ export default async function DashboardContent() {
       profile.gradeLevel as keyof typeof GRADE_LABELS
     ] ?? profile.gradeLevel;
 
-  const [subjects, assignments, exams] = await Promise.all([
+  const [subjects, assignments, exams, results] = await Promise.all([
     prisma.subject.findMany({
       where: {
         isActive: true,
@@ -53,6 +53,7 @@ export default async function DashboardContent() {
 
     getStudentAssignments(profile.id),
     getStudentExams(profile.id),
+    getStudentResultsList(profile.id, 10),
   ]);
 
   const examsOpen = exams.assigned.filter(
@@ -62,7 +63,14 @@ export default async function DashboardContent() {
   const nextExam = exams.assigned.find(
     (e) => e.state === "AVAILABLE",
   );
-  const resumeExam = [...exams.assigned, ...exams.practice].find((e) => e.inProgressAttemptId !== null);
+  const resumeExam = [...exams.assigned, ...exams.practice].find(
+    (e) => e.inProgressAttemptId !== null
+  );
+
+  const recentResults = results
+    .filter((r) => r.released && r.percentage !== null)
+    .slice(0, 3);
+
   // Separate unfinished plans from completed plans.
   const active = assignments.filter((a) => !a.completedAt);
   const completed = assignments.filter((a) => a.completedAt);
@@ -230,8 +238,7 @@ export default async function DashboardContent() {
         </section>
 
         {/* ============ EXAMS ============ */}
-                {/* ============ EXAMS ============ */}
-                <section>
+        <section>
           <div className="mb-4 flex items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-semibold tracking-tight">
@@ -269,7 +276,6 @@ export default async function DashboardContent() {
 
           {resumeExam?.inProgressAttemptId && (
             <div className="relative mb-5 overflow-hidden rounded-2xl border border-amber-400/30 bg-amber-500/[0.06] p-5 backdrop-blur">
-              {/* Ambient accent */}
               <span
                 aria-hidden
                 className="absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br from-amber-400 to-orange-400 opacity-20 blur-2xl"
@@ -343,6 +349,7 @@ export default async function DashboardContent() {
               </p>
             </div>
           )}
+
           {examsOpen === 0 ? (
             <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
               <p className="text-sm text-neutral-400">
@@ -356,10 +363,8 @@ export default async function DashboardContent() {
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2">
-              {/* Highlight card — the "next exam" */}
               {nextExam && (
                 <article className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-emerald-400/20 bg-emerald-500/[0.04] p-5 backdrop-blur transition-colors hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]">
-                  {/* Ambient accent */}
                   <span
                     aria-hidden
                     className="absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400 opacity-20 blur-2xl"
@@ -439,7 +444,6 @@ export default async function DashboardContent() {
                 </article>
               )}
 
-              {/* Summary card — count of other open exams */}
               <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
                 <div>
                   <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-500">
@@ -482,6 +486,105 @@ export default async function DashboardContent() {
           )}
         </section>
 
+        {/* ============ RECENTLY GRADED EXAMS ============ */}
+        {recentResults.length > 0 && (
+          <section>
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold tracking-tight">
+                  Recently graded exams
+                </h2>
+
+                <p className="mt-1 text-sm text-neutral-500">
+                  Your latest released scores.
+                </p>
+              </div>
+
+              <Link
+                href="/results"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+              >
+                All my results
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="h-3.5 w-3.5"
+                >
+                  <path
+                    d="M3 8h10m0 0-4-4m4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </div>
+
+            <ul className="flex flex-col gap-2">
+              {recentResults.map((r) => (
+                <li key={r.attemptId}>
+                  <Link
+                    href={`/attempts/${r.attemptId}/results`}
+                    className="group flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/[0.04]"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-white">
+                        {r.examTitle}
+                      </p>
+                      <p className="mt-0.5 text-xs text-neutral-500">
+                        Attempt{" "}
+                        <span className="tabular-nums">{r.attemptNumber}</span>
+                      </p>
+                    </div>
+
+                    <div className="flex flex-shrink-0 items-center gap-4">
+                      <div className="text-right">
+                        <p className="text-lg font-semibold tracking-tight text-white tabular-nums">
+                          {r.percentage}
+                          <span className="text-xs text-neutral-500">%</span>
+                        </p>
+                        <p className="text-[11px] tabular-nums text-neutral-500">
+                          {r.pointsEarned} of {r.pointsPossible}
+                          {r.passed === true && (
+                            <span className="ml-1.5 text-emerald-400">
+                              · Passed
+                            </span>
+                          )}
+                          {r.passed === false && (
+                            <span className="ml-1.5 text-rose-400">
+                              · Not passed
+                            </span>
+                          )}
+                        </p>
+                      </div>
+
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-violet-300 transition-colors group-hover:text-violet-200">
+                        View
+                        <svg
+                          aria-hidden
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                        >
+                          <path
+                            d="M6 3.5 10.5 8 6 12.5"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {/* ============ SUBJECTS ============ */}
         <section>
           <div className="mb-4">
@@ -518,7 +621,6 @@ export default async function DashboardContent() {
                     key={subject.id}
                     className="group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur transition-colors hover:border-white/20 hover:bg-white/[0.05]"
                   >
-                    {/* Accent dot */}
                     <span className="absolute right-4 top-4 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-indigo-400 to-fuchsia-400 opacity-70" />
 
                     <h3 className="text-base font-semibold tracking-tight text-white">
