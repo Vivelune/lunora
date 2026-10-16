@@ -26,11 +26,6 @@ const NAV_GROUPS = [
 
 const STORAGE_KEY = "lunora:sidebar-collapsed";
 
-/**
- * StudentSidebar — the persistent shell (brand, mobile trigger, collapse
- * state, footer). The nav itself is a separate component inside Suspense
- * so `usePathname()` never blocks prerendering.
- */
 export function StudentSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -233,35 +228,55 @@ function SidebarInner({
         ))}
       </nav>
 
-      {/* FOOTER */}
+      {/* FOOTER — clicking the row goes to /profile; clicking the avatar
+          opens Clerk's account menu (stopPropagation prevents both). */}
       <div
         className={`border-t border-white/5 ${
           collapsed ? "px-2 py-3" : "px-3 py-3"
         }`}
       >
-        <div
-          className={`flex items-center gap-3 ${
+        <Link
+          href="/profile"
+          aria-current={
+            pathname === "/profile" || pathname.startsWith("/profile/")
+              ? "page"
+              : undefined
+          }
+          className={`group flex items-center gap-3 rounded-lg px-2 py-2 transition-colors ${
             collapsed ? "justify-center" : ""
+          } ${
+            pathname === "/profile" || pathname.startsWith("/profile/")
+              ? "bg-white/[0.06]"
+              : "hover:bg-white/[0.04]"
           }`}
         >
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "h-8 w-8 ring-0",
-              },
+          {/* Stop propagation so opening Clerk's menu doesn't navigate. */}
+          <span
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
             }}
-          />
+          >
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "h-8 w-8 ring-0",
+                },
+              }}
+            />
+          </span>
+
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-medium text-neutral-300">
+              <p className="truncate text-xs font-medium text-neutral-300 group-hover:text-white">
                 Account
               </p>
               <p className="truncate text-[10px] text-neutral-500">
-                Manage settings
+                View profile
               </p>
             </div>
           )}
-        </div>
+        </Link>
       </div>
 
       {/* COLLAPSE TOGGLE */}

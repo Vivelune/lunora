@@ -18,6 +18,7 @@
     "check:release": "tsx scripts/check-release.ts",
     "check:all": "npm run check:safety && npm run check:window && npm run check:attempts && npm run check:order && npm run check:answers && npm run check:focus && npm run check:grading && npm run check:release",
     "check:answers": "tsx scripts/check-answer-input.ts",
+    "check:progress": "tsx scripts/check-progress.ts",
     "check:analytics": "tsx scripts/check-analytics.ts"
   },
   "dependencies": {
