@@ -452,6 +452,31 @@ export default async function AttemptDetailContent({
               )
             }
           />
+
+          {attempt.status !== "IN_PROGRESS" && (
+            <div className="sm:col-span-2">
+              <Link
+                href={`/admin/attempts/${attempt.id}/review`}
+                className="group inline-flex h-11 w-fit items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm font-medium text-neutral-100 transition-colors hover:bg-white/[0.08]"
+              >
+                View answer review
+                <svg
+                  aria-hidden
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                >
+                  <path
+                    d="M6 3.5 10.5 8 6 12.5"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </div>
+          )}
         </dl>
       </section>
 
