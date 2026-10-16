@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+import { ScoreTrendChart } from "@/components/charts/score-trend-chart";
+import { loadAttemptFacts } from "@/lib/analytics";
+import { bySubject, summarize, trendPoints } from "@/lib/analytics-core";
+import { buildTrend } from "@/lib/chart-data";
+import { formatHundredths } from "@/lib/points";
 import { requireCompletedProfile } from "@/lib/auth";
 import { getStudentAssignments } from "@/lib/plan-progress";
 import { getStudentExams } from "@/lib/student-exams";
@@ -17,7 +22,7 @@ export default async function DashboardContent() {
       profile.gradeLevel as keyof typeof GRADE_LABELS
     ] ?? profile.gradeLevel;
 
-  const [subjects, assignments, exams, results] = await Promise.all([
+  const [subjects, assignments, exams, results, facts] = await Promise.all([
     prisma.subject.findMany({
       where: {
         isActive: true,
@@ -54,6 +59,7 @@ export default async function DashboardContent() {
     getStudentAssignments(profile.id),
     getStudentExams(profile.id),
     getStudentResultsList(profile.id, 10),
+    loadAttemptFacts({ studentId: profile.id, releasedOnly: true }),
   ]);
 
   const examsOpen = exams.assigned.filter(
@@ -70,6 +76,18 @@ export default async function DashboardContent() {
   const recentResults = results
     .filter((r) => r.released && r.percentage !== null)
     .slice(0, 3);
+
+  const overall = summarize(facts);
+  const subjectPerformance = bySubject(facts);
+  const perfBySubject = new Map(
+    subjectPerformance.map((s) => [s.subjectId, s.summary])
+  );
+  const { rows: trendRows, series: trendSeries } = buildTrend(
+    trendPoints(facts),
+    subjectPerformance
+  );
+  const percentOf = (e: number, p: number) =>
+    `${formatHundredths(Math.round((e * 10000) / p))}%`;
 
   // Separate unfinished plans from completed plans.
   const active = assignments.filter((a) => !a.completedAt);
@@ -234,6 +252,113 @@ export default async function DashboardContent() {
                 </div>
               ))}
             </div>
+          )}
+        </section>
+
+        {/* ============ PERFORMANCE OVERVIEW ============ */}
+        <section>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold tracking-tight">
+                Performance overview
+              </h2>
+
+              <p className="mt-1 text-sm text-neutral-500">
+                {facts.length === 0
+                  ? "No released results yet."
+                  : `${overall.examsCompleted} exam${
+                      overall.examsCompleted === 1 ? "" : "s"
+                    } completed.`}
+              </p>
+            </div>
+
+            <Link
+              href="/performance"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-400 transition-colors hover:text-white"
+            >
+              Full performance
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                fill="none"
+                className="h-3.5 w-3.5"
+              >
+                <path
+                  d="M3 8h10m0 0-4-4m4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          {facts.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-8 text-center">
+              <p className="text-sm text-neutral-400">
+                Your scores will appear here.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                Complete a graded exam and wait for its results to be released.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <MetricCard
+                  label="Latest score"
+                  value={
+                    overall.latest
+                      ? percentOf(
+                          overall.latest.earnedHundredths,
+                          overall.latest.possibleHundredths
+                        )
+                      : "—"
+                  }
+                  tone="violet"
+                />
+
+                <MetricCard
+                  label="Best score"
+                  value={
+                    overall.best
+                      ? percentOf(
+                          overall.best.earnedHundredths,
+                          overall.best.possibleHundredths
+                        )
+                      : "—"
+                  }
+                  tone="emerald"
+                />
+
+                <MetricCard
+                  label="Average"
+                  value={
+                    overall.averageHundredths === null
+                      ? "—"
+                      : `${formatHundredths(overall.averageHundredths)}%`
+                  }
+                  tone="indigo"
+                />
+
+                <MetricCard
+                  label="Exams completed"
+                  value={String(overall.examsCompleted)}
+                  tone="neutral"
+                />
+              </div>
+
+              {trendRows.length > 0 && (
+                <div className="mt-4">
+                  <ScoreTrendChart
+                    rows={trendRows}
+                    series={trendSeries}
+                    compact
+                  />
+                </div>
+              )}
+            </>
           )}
         </section>
 
@@ -638,6 +763,7 @@ export default async function DashboardContent() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {subjects.map((subject) => {
                 const assigned = assignedBySubject.get(subject.id) ?? 0;
+                const perf = perfBySubject.get(subject.id);
 
                 return (
                   <article
@@ -675,6 +801,16 @@ export default async function DashboardContent() {
                           : "Not assigned"}
                       </span>
                     </div>
+
+                    <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+                      {perf && perf.averageHundredths !== null
+                        ? `Average ${formatHundredths(
+                            perf.averageHundredths
+                          )}% (points-weighted) · ${perf.examsCompleted} exam${
+                            perf.examsCompleted === 1 ? "" : "s"
+                          } completed`
+                        : "No graded exams yet."}
+                    </p>
                   </article>
                 );
               })}
@@ -687,9 +823,8 @@ export default async function DashboardContent() {
 }
 
 /* ============================================================
-   StatCard — small internal component, no logic dependencies
+   StatCard — small stat card with accent glow
    ============================================================ */
-
 function StatCard({
   label,
   value,
@@ -723,9 +858,44 @@ function StatCard({
         {value}
       </p>
 
-      {hint && (
-        <p className="mt-1 text-xs text-neutral-500">{hint}</p>
-      )}
+      {hint && <p className="mt-1 text-xs text-neutral-500">{hint}</p>}
+    </div>
+  );
+}
+
+/* ============================================================
+   MetricCard — smaller score-oriented card
+   ============================================================ */
+function MetricCard({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone: "violet" | "emerald" | "indigo" | "neutral";
+}) {
+  const accents: Record<typeof tone, string> = {
+    violet: "from-violet-400 to-fuchsia-400",
+    emerald: "from-emerald-400 to-teal-400",
+    indigo: "from-indigo-400 to-sky-400",
+    neutral: "from-neutral-500 to-neutral-600",
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur">
+      <div
+        aria-hidden
+        className={`absolute right-0 top-0 h-24 w-24 rounded-full bg-gradient-to-br ${accents[tone]} opacity-20 blur-2xl`}
+      />
+
+      <p className="text-xs font-medium uppercase tracking-[0.16em] text-neutral-500">
+        {label}
+      </p>
+
+      <p className="mt-3 text-2xl font-semibold tracking-tight text-white tabular-nums">
+        {value}
+      </p>
     </div>
   );
 }

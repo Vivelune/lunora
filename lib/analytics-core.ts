@@ -119,6 +119,7 @@ export type AttemptFact = {
     subjectName: string;
     assigned: boolean;
     percentHundredths: number;
+    subjectId: string;
   };
   
   /** Every eligible attempt, oldest first. The trend shows ALL attempts, not just the best ones. */
@@ -130,6 +131,7 @@ export type AttemptFact = {
         attemptId: a.attemptId,
         endedAt: a.endedAt,
         examTitle: a.examTitle,
+        subjectId: a.subjectId,
         subjectName: a.subjectName,
         assigned: a.assigned,
         percentHundredths: percentHundredths(a.earnedHundredths, a.possibleHundredths),
