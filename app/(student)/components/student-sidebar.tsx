@@ -391,7 +391,7 @@ function ResultsIcon() {
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeLinejoin="round" 
       />
     </svg>
   );
