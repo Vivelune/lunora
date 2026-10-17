@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
@@ -59,14 +59,18 @@ export function StudentSidebar() {
 
   const width = collapsed ? "w-[68px]" : "w-60";
 
+  const openMobile = () => setMobileOpen(true);
+  const closeMobile = () => setMobileOpen(false);
+
   return (
     <>
       {/* ============ MOBILE TRIGGER ============ */}
       <button
         type="button"
-        onClick={() => setMobileOpen(true)}
+        onClick={openMobile}
         aria-label="Open navigation"
-        className="fixed left-4 top-3 z-40 grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-neutral-950/80 text-neutral-300 backdrop-blur-xl transition-colors hover:bg-white/[0.06] hover:text-white lg:hidden"
+        style={{ position: "fixed", zIndex: 9999 }}
+        className="left-4 top-3 grid h-10 w-10 touch-manipulation place-items-center rounded-lg border border-white/15 bg-neutral-900 text-neutral-300 active:bg-neutral-800 lg:hidden"
       >
         <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-4 w-4">
           <path
@@ -85,31 +89,35 @@ export function StudentSidebar() {
         <SidebarInner
           collapsed={collapsed}
           onToggleCollapse={() => setCollapsed((c) => !c)}
-          onMobileNav={() => setMobileOpen(false)}
+          onMobileNav={closeMobile}
         />
       </aside>
 
       {/* ============ MOBILE DRAWER ============ */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 lg:hidden"
+          className="fixed inset-0 lg:hidden"
+          style={{ zIndex: 10000 }}
           role="dialog"
           aria-modal="true"
         >
           <button
             type="button"
             aria-label="Close navigation"
-            onClick={() => setMobileOpen(false)}
-            className="absolute inset-0 bg-neutral-950/70 backdrop-blur-sm"
+            onClick={closeMobile}
+            className="absolute inset-0 bg-black/60 touch-manipulation"
           />
 
-          <aside className="absolute inset-y-0 left-0 flex w-64 flex-col border-r border-white/10 bg-neutral-950 shadow-2xl shadow-black/60">
-            <div className="flex items-center justify-end px-3 pt-3">
+          <aside className="absolute inset-y-0 left-0 flex w-72 flex-col border-r border-white/10 bg-neutral-950 shadow-2xl shadow-black/80">
+            <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
+              <span className="text-sm font-semibold tracking-tight text-white">
+                Menu
+              </span>
               <button
                 type="button"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobile}
                 aria-label="Close navigation"
-                className="grid h-9 w-9 place-items-center rounded-lg text-neutral-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+                className="grid h-9 w-9 touch-manipulation place-items-center rounded-lg text-neutral-400 transition-colors active:bg-white/[0.06]"
               >
                 <svg
                   aria-hidden
@@ -127,10 +135,7 @@ export function StudentSidebar() {
               </button>
             </div>
 
-            <SidebarInner
-              collapsed={false}
-              onMobileNav={() => setMobileOpen(false)}
-            />
+            <SidebarInner collapsed={false} onMobileNav={closeMobile} />
           </aside>
         </div>
       )}
@@ -139,8 +144,7 @@ export function StudentSidebar() {
 }
 
 /* ============================================================
-   SidebarInner — brand, nav, footer. Nav uses usePathname()
-   internally, so this component must be inside <Suspense>.
+   SidebarInner — brand, nav, footer
    ============================================================ */
 function SidebarInner({
   collapsed,
@@ -153,9 +157,16 @@ function SidebarInner({
 }) {
   const pathname = usePathname();
 
-  // Close mobile drawer on navigation.
+  // Close the mobile drawer ONLY when the route actually changes.
+  // The previous version included `onMobileNav` in the deps, which is
+  // a fresh function identity on every parent render — causing the
+  // effect to fire immediately after the drawer mounted and close it.
+  const prevPath = useRef(pathname);
   useEffect(() => {
-    if (onMobileNav) onMobileNav();
+    if (prevPath.current !== pathname) {
+      prevPath.current = pathname;
+      onMobileNav?.();
+    }
   }, [pathname, onMobileNav]);
 
   return (
@@ -202,12 +213,12 @@ function SidebarInner({
                     <Link
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
-                      className={`group relative flex h-9 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors ${
+                      className={`group relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors touch-manipulation ${
                         collapsed ? "justify-center px-0" : ""
                       } ${
                         isActive
                           ? "bg-white/[0.06] text-white"
-                          : "text-neutral-400 hover:bg-white/[0.04] hover:text-white"
+                          : "text-neutral-400 active:bg-white/[0.04] hover:bg-white/[0.04] hover:text-white"
                       }`}
                       title={collapsed ? item.label : undefined}
                     >
@@ -228,8 +239,7 @@ function SidebarInner({
         ))}
       </nav>
 
-      {/* FOOTER — clicking the row goes to /profile; clicking the avatar
-          opens Clerk's account menu (stopPropagation prevents both). */}
+      {/* FOOTER */}
       <div
         className={`border-t border-white/5 ${
           collapsed ? "px-2 py-3" : "px-3 py-3"
@@ -250,7 +260,6 @@ function SidebarInner({
               : "hover:bg-white/[0.04]"
           }`}
         >
-          {/* Stop propagation so opening Clerk's menu doesn't navigate. */}
           <span
             onClick={(e) => {
               e.preventDefault();
@@ -310,7 +319,7 @@ function SidebarInner({
 }
 
 /* ============================================================
-   Icons — unchanged
+   Icons
    ============================================================ */
 function HomeIcon() {
   return (
