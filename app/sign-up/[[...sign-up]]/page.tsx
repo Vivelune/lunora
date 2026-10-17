@@ -56,6 +56,7 @@ export default function SignUpPage() {
               }
             >
               <SignUp
+              forceRedirectUrl="/onboarding" signInForceRedirectUrl="/dashboard" 
                 appearance={{
                   variables: {
                     colorPrimary: "#8b5cf6",
