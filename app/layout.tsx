@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -15,12 +15,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Lunora",
-    template: "%s · Lunora",
+    default: "Vivelune",
+    template: "%s · Vivelune",
   },
   description:
-    "Exam prep for the SAT, AP Chemistry, and more — built step by step.",
-  applicationName: "Lunora",
+    "Vivelune builds tools for learning and teaching. Lunora, our learning platform, is available now.",
+  applicationName: "Vivelune",
+};
+
+export const viewport: Viewport = {
   themeColor: "#0a0a0a",
 };
 
