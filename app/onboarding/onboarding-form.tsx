@@ -138,18 +138,24 @@ export function OnboardingForm() {
           Grade level
         </label>
         <select
-          id="gradeLevel"
-          className={inputBase}
-          aria-invalid={!!errors.gradeLevel}
-          {...register("gradeLevel")}
-        >
-          <option value="">Select…</option>
-          {GRADE_VALUES.map((value) => (
-            <option key={value} value={value}>
-              {GRADE_LABELS[value]}
-            </option>
-          ))}
-        </select>
+  id="gradeLevel"
+  className={inputBase}
+  aria-invalid={!!errors.gradeLevel}
+  {...register("gradeLevel")}
+>
+  <option value="" className="bg-neutral-900 text-neutral-400">
+    Select…
+  </option>
+  {GRADE_VALUES.map((value) => (
+    <option
+      key={value}
+      value={value}
+      className="bg-neutral-900 text-neutral-100"
+    >
+      {GRADE_LABELS[value]}
+    </option>
+  ))}
+</select>
         {errors.gradeLevel && (
           <p className={errorBase}>
             <ErrorIcon />
