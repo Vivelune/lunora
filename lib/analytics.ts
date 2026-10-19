@@ -10,7 +10,9 @@ import type { AnswerFact, AttemptFact } from "./analytics-core";
  */
 export async function loadAttemptFacts(options: {
   studentId?: string;
+  studentIds?: string[];
   releasedOnly: boolean;
+  
 }): Promise<AttemptFact[]> {
   const rows = await prisma.examAttempt.findMany({
     where: {
@@ -18,9 +20,11 @@ export async function loadAttemptFacts(options: {
       pointsEarned: { not: null },
       pointsPossible: { gt: 0 },
       ...(options.studentId ? { studentId: options.studentId } : {}),
+      ...(options.studentIds ? { studentId: { in: options.studentIds } } : {}),
     },
     select: {
       id: true,
+      studentId: true,
       examId: true,
       assignmentId: true,
       startedAt: true,
@@ -52,6 +56,7 @@ export async function loadAttemptFacts(options: {
 
     facts.push({
       attemptId: row.id,
+      studentId: row.studentId,
       examId: row.examId,
       examTitle: row.exam.title,
       subjectId: row.exam.subjectId,

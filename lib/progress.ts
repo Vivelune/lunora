@@ -8,18 +8,23 @@ export type ActivityItem = { kind: "LESSON" | "EXAM"; title: string; detail: str
 const subjectLabel = (s: { name: string; parent: { name: string } | null }) =>
   s.parent ? `${s.parent.name} ${s.name}` : s.name;
 
-export async function loadStudentProgress(studentId: string): Promise<{
-  plans: PlanFact[];
-  exams: ExamFact[];
-  activity: ActivityItem[];
-}> {
+/** Plan and exam progress facts for many students at once, in a fixed number of queries. */
+export async function loadProgressMany(
+  studentIds: string[]
+): Promise<Map<string, { plans: PlanFact[]; exams: ExamFact[] }>> {
+  const result = new Map<string, { plans: PlanFact[]; exams: ExamFact[] }>(
+    studentIds.map((id) => [id, { plans: [], exams: [] }])
+  );
+  if (studentIds.length === 0) return result;
+
   const now = new Date();
 
-  const [planRows, examRows, lessonRows, attemptRows] = await Promise.all([
+  const [planRows, examRows, attemptRows] = await Promise.all([
     prisma.lessonPlanAssignment.findMany({
-      where: { studentId, status: "ACTIVE" },
+      where: { studentId: { in: studentIds }, status: "ACTIVE" },
       select: {
         id: true,
+        studentId: true,
         startDate: true,
         dueDate: true,
         completedAt: true,
@@ -35,9 +40,10 @@ export async function loadStudentProgress(studentId: string): Promise<{
       },
     }),
     prisma.examAssignment.findMany({
-      where: { studentId, status: "ACTIVE" },
+      where: { studentId: { in: studentIds }, status: "ACTIVE" },
       select: {
         id: true,
+        studentId: true,
         examId: true,
         availableFrom: true,
         dueDate: true,
@@ -51,34 +57,17 @@ export async function loadStudentProgress(studentId: string): Promise<{
         },
       },
     }),
-    prisma.lessonPlanItemProgress.findMany({
-      where: { assignment: { studentId } },
-      orderBy: { completedAt: "desc" },
-      take: 8,
-      select: {
-        completedAt: true,
-        item: { select: { lesson: { select: { title: true } } } },
-        assignment: { select: { plan: { select: { title: true } } } },
-      },
-    }),
     prisma.examAttempt.findMany({
-      where: { studentId },
-      orderBy: { startedAt: "desc" },
-      select: {
-        examId: true,
-        status: true,
-        attemptNumber: true,
-        submittedAt: true,
-        exam: { select: { title: true } },
-      },
+      where: { studentId: { in: studentIds } },
+      select: { studentId: true, examId: true, status: true },
     }),
   ]);
 
-  const plans: PlanFact[] = planRows.map((a) => {
+  for (const a of planRows) {
     const done = new Set(a.progress.map((p) => p.itemId));
     const items = a.version.items;
     const required = items.filter((i) => i.isRequired);
-    return {
+    result.get(a.studentId)?.plans.push({
       assignmentId: a.id,
       planTitle: a.plan.title,
       subjectId: a.plan.subjectId,
@@ -90,11 +79,19 @@ export async function loadStudentProgress(studentId: string): Promise<{
       requiredDone: required.filter((i) => done.has(i.id)).length,
       itemsDone: items.filter((i) => done.has(i.id)).length,
       lessonIdsDone: items.filter((i) => done.has(i.id) && i.lessonId).map((i) => i.lessonId as string),
-    };
-  });
+    });
+  }
 
-  const exams: ExamFact[] = examRows.map((a) => {
-    const attempts = attemptRows.filter((t) => t.examId === a.examId);
+  const attemptsByKey = new Map<string, { inProgress: boolean; ended: number }>();
+  for (const t of attemptRows) {
+    const key = `${t.studentId}:${t.examId}`;
+    const entry = attemptsByKey.get(key) ?? { inProgress: false, ended: 0 };
+    if (t.status === "IN_PROGRESS") entry.inProgress = true;
+    else entry.ended += 1;
+    attemptsByKey.set(key, entry);
+  }
+
+  for (const a of examRows) {
     const window = examWindow({
       now,
       assignmentFrom: a.availableFrom,
@@ -102,16 +99,47 @@ export async function loadStudentProgress(studentId: string): Promise<{
       examFrom: a.exam.availableFrom,
       examUntil: a.exam.availableUntil,
     });
-    return {
+    const attempts = attemptsByKey.get(`${a.studentId}:${a.examId}`) ?? { inProgress: false, ended: 0 };
+    result.get(a.studentId)?.exams.push({
       assignmentId: a.id,
       examTitle: a.exam.title,
       subjectName: subjectLabel(a.exam.subject),
       opensAt: window.opensAt,
       closesAt: window.closesAt,
-      inProgress: attempts.some((t) => t.status === "IN_PROGRESS"),
-      endedAttempts: attempts.filter((t) => t.status !== "IN_PROGRESS").length,
-    };
-  });
+      inProgress: attempts.inProgress,
+      endedAttempts: attempts.ended,
+    });
+  }
+
+  return result;
+}
+
+export async function loadStudentProgress(studentId: string): Promise<{
+  plans: PlanFact[];
+  exams: ExamFact[];
+  activity: ActivityItem[];
+}> {
+  const [many, lessonRows, attemptRows] = await Promise.all([
+    loadProgressMany([studentId]),
+    prisma.lessonPlanItemProgress.findMany({
+      where: { assignment: { studentId } },
+      orderBy: { completedAt: "desc" },
+      take: 8,
+      select: {
+        completedAt: true,
+        item: { select: { lesson: { select: { title: true } } } },
+        assignment: { select: { plan: { select: { title: true } } } },
+      },
+    }),
+    prisma.examAttempt.findMany({
+      where: { studentId, status: { not: "IN_PROGRESS" } },
+      orderBy: { startedAt: "desc" },
+      take: 8,
+      select: { attemptNumber: true, submittedAt: true, exam: { select: { title: true } } },
+    }),
+  ]);
+
+  const mine = many.get(studentId) ?? { plans: [], exams: [] };
 
   // Recent activity: lessons completed and exams submitted. Never any scores.
   const activity: ActivityItem[] = [
@@ -121,7 +149,7 @@ export async function loadStudentProgress(studentId: string): Promise<{
         : []
     ),
     ...attemptRows.flatMap((t) =>
-      t.status !== "IN_PROGRESS" && t.submittedAt
+      t.submittedAt
         ? [{ kind: "EXAM" as const, title: t.exam.title, detail: `Finished attempt ${t.attemptNumber}`, at: t.submittedAt }]
         : []
     ),
@@ -129,5 +157,5 @@ export async function loadStudentProgress(studentId: string): Promise<{
     .sort((a, b) => b.at.getTime() - a.at.getTime())
     .slice(0, 8);
 
-  return { plans, exams, activity };
+  return { plans: mine.plans, exams: mine.exams, activity };
 }
