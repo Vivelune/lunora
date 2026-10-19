@@ -67,6 +67,12 @@ const ADMIN_LINKS = [
     description: "Submissions and focus logs to review.",
     icon: ExamAttemptIcon,
   },
+  {
+    href: "/admin/reports",
+    label: "Reports",
+    description: "Exam results and lesson plan progress.",
+    icon: ReportsIcon,
+  },
 ];
 
 export default async function AdminHomeContent() {
@@ -563,6 +569,25 @@ function ExamAttemptIcon() {
       <circle cx="8" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.4" />
       <path
         d="M8 8.5V10l1.2.8"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function ReportsIcon() {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" fill="none" className="h-4 w-4">
+      <path
+        d="M3 13V9M8 13V4M13 13V6.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M2.5 13.5h11"
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinecap="round"
