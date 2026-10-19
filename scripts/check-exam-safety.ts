@@ -81,11 +81,23 @@ async function main() {
       fail(`Unexpected fields: ${[...extraQuestionKeys, ...extraOptionKeys].join(", ")}`);
     }
 
-    const json = JSON.stringify(students);
-    if (/isCorrect|acceptedAnswers|explanation/.test(json)) {
-      fail("Serialized student data contains an answer-key field name");
-    } else {
+    // Check field NAMES only — not values. Question and option text is user
+    // content and may legitimately contain words like "explanation" or
+    // "isCorrect" without being an answer-key leak.
+    const forbiddenKey = /isCorrect|acceptedAnswers|explanation/;
+    const collectKeys = (value: unknown): string[] => {
+      if (value === null || typeof value !== "object") return [];
+      if (Array.isArray(value)) return value.flatMap(collectKeys);
+      return Object.entries(value as Record<string, unknown>).flatMap(([key, child]) => [
+        key,
+        ...collectKeys(child),
+      ]);
+    };
+    const badKeys = collectKeys(students).filter((k) => forbiddenKey.test(k));
+    if (badKeys.length === 0) {
       pass("Serialized student data contains no answer-key field names");
+    } else {
+      fail(`Serialized student data contains answer-key field names: ${[...new Set(badKeys)].join(", ")}`);
     }
   }
 

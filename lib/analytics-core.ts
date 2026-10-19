@@ -1,5 +1,6 @@
 export type AttemptFact = {
     attemptId: string;
+    studentId?: string;
     examId: string;
     examTitle: string;
     subjectId: string;
